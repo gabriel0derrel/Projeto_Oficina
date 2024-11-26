@@ -121,8 +121,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jMenu_Oficina.setText("Oficina");
         jMenu_Oficina.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                jMenu_OficinaMousePressed(evt);
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu_OficinaMouseClicked(evt);
             }
         });
         jMenuBar_Opcoes.add(jMenu_Oficina);
@@ -245,8 +245,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jMenu_OrdemDeServico.setText("Ordem de Serviço");
         jMenu_OrdemDeServico.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mousePressed(java.awt.event.MouseEvent evt) {
-                jMenu_OrdemDeServicoMousePressed(evt);
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu_OrdemDeServicoMouseClicked(evt);
             }
         });
         jMenuBar_Opcoes.add(jMenu_OrdemDeServico);
@@ -272,11 +272,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
-    private void jMenu_OficinaMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu_OficinaMousePressed
-        // Abrir a parte da oficina
-        
-    }//GEN-LAST:event_jMenu_OficinaMousePressed
 
     private void jMenuItem_ClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_ClienteActionPerformed
         // Abrir a parte do cliente
@@ -338,10 +333,13 @@ public class TelaPrincipal extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jMenuItem_ItensDeServicoActionPerformed
 
-    private void jMenu_OrdemDeServicoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu_OrdemDeServicoMousePressed
-        // Abrir parte da Ordem de Serviço
+    private void jMenu_OficinaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu_OficinaMouseClicked
+        // Abrir a parte da oficina
+    }//GEN-LAST:event_jMenu_OficinaMouseClicked
 
-    }//GEN-LAST:event_jMenu_OrdemDeServicoMousePressed
+    private void jMenu_OrdemDeServicoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu_OrdemDeServicoMouseClicked
+        // Abrir a parte da ordem de serviço
+    }//GEN-LAST:event_jMenu_OrdemDeServicoMouseClicked
 
   /**
    * @param args the command line arguments
