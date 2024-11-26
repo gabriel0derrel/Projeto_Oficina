@@ -4,9 +4,12 @@
  */
 package visao;
 
+import conexao.ConexaoBD;
+import java.sql.Connection;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.beans.PropertyVetoException;
+import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.JOptionPane;
@@ -21,10 +24,18 @@ public class TelaPrincipal extends javax.swing.JFrame {
    * Creates new form TelaPrincipal
    */
     
+    private Connection conexao = null;
+    
     public TelaPrincipal() {
         initComponents();
         this.setLocationRelativeTo(null);
         jMenu_Oficina.setPopupMenuVisible(false);
+        jMenu_OrdemDeServico.setPopupMenuVisible(false);
+        try {
+            conexao = ConexaoBD.getConexao();
+        } catch (Exception erro) {
+            JOptionPane.showMessageDialog(rootPane, "Erro na Conexão(TelaPrincipal): " + erro.getMessage());
+        }
         WindowClosingEventHandler();
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         
@@ -51,6 +62,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
             public void windowClosing(WindowEvent e) {
                 int resposta = JOptionPane.showConfirmDialog(null,"Tem certeza que deseja fechar?","Confirmação", JOptionPane.YES_NO_OPTION);
                 if (resposta == JOptionPane.YES_OPTION){
+                    try {
+                        conexao.close();
+                    } catch (SQLException erro) {
+                        JOptionPane.showMessageDialog(rootPane, "Erro no fim da Conexão(TelaPrincipal): " + erro.getMessage());
+                    }
                     dispose();
                 }
             }
@@ -85,21 +101,22 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenuItem_Funcionario = new javax.swing.JMenuItem();
         jMenuItem_Servico = new javax.swing.JMenuItem();
         jMenuItem_ItensDeServico = new javax.swing.JMenuItem();
-        jMenuItem_OrdemDeServico = new javax.swing.JMenuItem();
+        jMenu_OrdemDeServico = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jDesktopPane_InputDeTela.setPreferredSize(new java.awt.Dimension(957, 466));
+        jDesktopPane_InputDeTela.setRequestFocusEnabled(false);
 
         javax.swing.GroupLayout jDesktopPane_InputDeTelaLayout = new javax.swing.GroupLayout(jDesktopPane_InputDeTela);
         jDesktopPane_InputDeTela.setLayout(jDesktopPane_InputDeTelaLayout);
         jDesktopPane_InputDeTelaLayout.setHorizontalGroup(
             jDesktopPane_InputDeTelaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 957, Short.MAX_VALUE)
+            .addGap(0, 1024, Short.MAX_VALUE)
         );
         jDesktopPane_InputDeTelaLayout.setVerticalGroup(
             jDesktopPane_InputDeTelaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 466, Short.MAX_VALUE)
+            .addGap(0, 511, Short.MAX_VALUE)
         );
 
         jMenu_Oficina.setText("Oficina");
@@ -224,15 +241,15 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jMenu_PecasServicos.add(jMenu_OpcoesServico);
 
-        jMenuItem_OrdemDeServico.setText("Ordem de Serviço");
-        jMenuItem_OrdemDeServico.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem_OrdemDeServicoActionPerformed(evt);
+        jMenuBar_Opcoes.add(jMenu_PecasServicos);
+
+        jMenu_OrdemDeServico.setText("Ordem de Serviço");
+        jMenu_OrdemDeServico.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                jMenu_OrdemDeServicoMousePressed(evt);
             }
         });
-        jMenu_PecasServicos.add(jMenuItem_OrdemDeServico);
-
-        jMenuBar_Opcoes.add(jMenu_PecasServicos);
+        jMenuBar_Opcoes.add(jMenu_OrdemDeServico);
 
         setJMenuBar(jMenuBar_Opcoes);
 
@@ -242,15 +259,15 @@ public class TelaPrincipal extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(17, 17, 17)
-                .addComponent(jDesktopPane_InputDeTela, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(22, Short.MAX_VALUE))
+                .addComponent(jDesktopPane_InputDeTela, javax.swing.GroupLayout.PREFERRED_SIZE, 1024, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(21, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(18, 18, 18)
-                .addComponent(jDesktopPane_InputDeTela, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(32, Short.MAX_VALUE))
+                .addComponent(jDesktopPane_InputDeTela, javax.swing.GroupLayout.PREFERRED_SIZE, 511, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(18, Short.MAX_VALUE))
         );
 
         pack();
@@ -296,11 +313,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
         
     }//GEN-LAST:event_jMenuItem_VeiculoAcessorioActionPerformed
 
-    private void jMenuItem_OrdemDeServicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_OrdemDeServicoActionPerformed
-        // Abrir parte da Ordem de Serviço
-        
-    }//GEN-LAST:event_jMenuItem_OrdemDeServicoActionPerformed
-
     private void jMenuItem_PecaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_PecaActionPerformed
         // Abrir parte da Peça
         
@@ -325,6 +337,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         // Abrir parte dos Itens de Serviço
         
     }//GEN-LAST:event_jMenuItem_ItensDeServicoActionPerformed
+
+    private void jMenu_OrdemDeServicoMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu_OrdemDeServicoMousePressed
+        // Abrir parte da Ordem de Serviço
+
+    }//GEN-LAST:event_jMenu_OrdemDeServicoMousePressed
 
   /**
    * @param args the command line arguments
@@ -371,7 +388,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem_ItensDeServico;
     private javax.swing.JMenuItem jMenuItem_Marca;
     private javax.swing.JMenuItem jMenuItem_Modelo;
-    private javax.swing.JMenuItem jMenuItem_OrdemDeServico;
     private javax.swing.JMenuItem jMenuItem_Peca;
     private javax.swing.JMenuItem jMenuItem_Proprietario;
     private javax.swing.JMenuItem jMenuItem_Servico;
@@ -382,6 +398,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu_OpcoesPeca;
     private javax.swing.JMenu jMenu_OpcoesServico;
     private javax.swing.JMenu jMenu_OpcoesVeiculo;
+    private javax.swing.JMenu jMenu_OrdemDeServico;
     private javax.swing.JMenu jMenu_PecasServicos;
     // End of variables declaration//GEN-END:variables
 }
