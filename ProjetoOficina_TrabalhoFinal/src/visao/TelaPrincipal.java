@@ -112,11 +112,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jDesktopPane_InputDeTela.setLayout(jDesktopPane_InputDeTelaLayout);
         jDesktopPane_InputDeTelaLayout.setHorizontalGroup(
             jDesktopPane_InputDeTelaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1024, Short.MAX_VALUE)
+            .addGap(0, 1229, Short.MAX_VALUE)
         );
         jDesktopPane_InputDeTelaLayout.setVerticalGroup(
             jDesktopPane_InputDeTelaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 511, Short.MAX_VALUE)
+            .addGap(0, 639, Short.MAX_VALUE)
         );
 
         jMenu_Oficina.setText("Oficina");
@@ -258,16 +258,16 @@ public class TelaPrincipal extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addComponent(jDesktopPane_InputDeTela, javax.swing.GroupLayout.PREFERRED_SIZE, 1024, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jDesktopPane_InputDeTela, javax.swing.GroupLayout.DEFAULT_SIZE, 1229, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addComponent(jDesktopPane_InputDeTela, javax.swing.GroupLayout.PREFERRED_SIZE, 511, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jDesktopPane_InputDeTela, javax.swing.GroupLayout.DEFAULT_SIZE, 639, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -275,7 +275,17 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void jMenuItem_ClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_ClienteActionPerformed
         // Abrir a parte do cliente
-        
+        jDesktopPane_InputDeTela.removeAll();
+        TelaCliente telaCliente = new TelaCliente();
+        jDesktopPane_InputDeTela.add(telaCliente);
+        try {
+            telaCliente.setVisible(true);
+            telaCliente.setSelected(true);
+            telaCliente.setMaximum(true);
+            telaCliente.setMaximizable(false);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jMenuItem_ClienteActionPerformed
 
     private void jMenuItem_ProprietarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_ProprietarioActionPerformed
@@ -285,7 +295,17 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void jMenuItem_MarcaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_MarcaActionPerformed
         // Abrir parte da Marca
-        
+        jDesktopPane_InputDeTela.removeAll();
+        TelaMarca telaMarca = new TelaMarca();
+        jDesktopPane_InputDeTela.add(telaMarca);
+        try {
+            telaMarca.setVisible(true);
+            telaMarca.setSelected(true);
+            telaMarca.setMaximum(true);
+            telaMarca.setMaximizable(false);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jMenuItem_MarcaActionPerformed
 
     private void jMenuItem_ModeloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_ModeloActionPerformed
@@ -295,7 +315,17 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void jMenuItem_AcessorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_AcessorioActionPerformed
         // Abrir parte do Acessório
-        
+        jDesktopPane_InputDeTela.removeAll();
+        TelaAcessorio telaAcessorio = new TelaAcessorio();
+        jDesktopPane_InputDeTela.add(telaAcessorio);
+        try {
+            telaAcessorio.setVisible(true);
+            telaAcessorio.setSelected(true);
+            telaAcessorio.setMaximum(true);
+            telaAcessorio.setMaximizable(false);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jMenuItem_AcessorioActionPerformed
 
     private void jMenuItem_VeiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_VeiculoActionPerformed
@@ -310,7 +340,17 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void jMenuItem_PecaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_PecaActionPerformed
         // Abrir parte da Peça
-        
+        jDesktopPane_InputDeTela.removeAll();
+        TelaPeca telaPeca = new TelaPeca();
+        jDesktopPane_InputDeTela.add(telaPeca);
+        try {
+            telaPeca.setVisible(true);
+            telaPeca.setSelected(true);
+            telaPeca.setMaximum(true);
+            telaPeca.setMaximizable(false);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jMenuItem_PecaActionPerformed
 
     private void jMenuItem_ItensDePecaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_ItensDePecaActionPerformed
@@ -320,12 +360,32 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void jMenuItem_ServicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_ServicoActionPerformed
         // Abrir parte do Serviço
-        
+        jDesktopPane_InputDeTela.removeAll();
+        TelaCadastroServicos telaServico = new TelaCadastroServicos();
+        jDesktopPane_InputDeTela.add(telaServico);
+        try {
+            telaServico.setVisible(true);
+            telaServico.setSelected(true);
+            telaServico.setMaximum(true);
+            telaServico.setMaximizable(false);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jMenuItem_ServicoActionPerformed
 
     private void jMenuItem_FuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_FuncionarioActionPerformed
         // Abrir parte do Funcionário
-        
+        jDesktopPane_InputDeTela.removeAll();
+        TelaFuncionario telaFuncionario = new TelaFuncionario();
+        jDesktopPane_InputDeTela.add(telaFuncionario);
+        try {
+            telaFuncionario.setVisible(true);
+            telaFuncionario.setSelected(true);
+            telaFuncionario.setMaximum(true);
+            telaFuncionario.setMaximizable(false);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jMenuItem_FuncionarioActionPerformed
 
     private void jMenuItem_ItensDeServicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_ItensDeServicoActionPerformed
@@ -335,6 +395,17 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void jMenu_OficinaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu_OficinaMouseClicked
         // Abrir a parte da oficina
+        jDesktopPane_InputDeTela.removeAll();
+        TelaOficinas telaOficina = new TelaOficinas();
+        jDesktopPane_InputDeTela.add(telaOficina);
+        try {
+            telaOficina.setVisible(true);
+            telaOficina.setSelected(true);
+            telaOficina.setMaximum(true);
+            telaOficina.setMaximizable(false);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jMenu_OficinaMouseClicked
 
     private void jMenu_OrdemDeServicoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu_OrdemDeServicoMouseClicked
