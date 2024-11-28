@@ -4,17 +4,14 @@
  */
 package visao;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelos.Cliente;
 import modelos.Endereco;
 import modelos.ICrud;
 import modelos.Telefone;
+import modelos.enums.TipoClienteEnum;
 import persistencia.ClienteDAO;
 
 /**
@@ -24,25 +21,10 @@ import persistencia.ClienteDAO;
 public class TelaCliente extends javax.swing.JInternalFrame {
 
     
-    private enum TipoDePessoa {
-        PESSOAFISICA("Pessoa Física"),
-        PESSOAJURIDICA("Pessoa Jurídica");
-        
-        private String descricao;
-        
-        TipoDePessoa(String descricao){
-            this.descricao = descricao;
-        }
-        
-        public String getDescricao(){
-            return descricao;
-        }
-    }
-    
     private ICrud<Cliente> clienteDB;
     
     private void carregarValoresDaComboBox(){
-        for(TipoDePessoa tipo : TipoDePessoa.values()){
+        for(TipoClienteEnum tipo : TipoClienteEnum.values()){
             jComboBox_Opcoes.addItem(tipo.getDescricao());
         }
     }

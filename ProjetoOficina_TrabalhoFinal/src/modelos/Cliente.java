@@ -4,6 +4,8 @@
  */
 package modelos;
 
+import modelos.enums.TipoClienteEnum;
+
 /**
  *
  * @author misuka
@@ -15,7 +17,7 @@ public class Cliente {
     private Telefone telefone2 = null;
     private String email = "";
     private Endereco endereco = null;
-    private String tipoCliente = "";
+    private TipoClienteEnum tipoCliente = null;
     private String cpf = ""; 
     private String cnpj = "";
     private String contato = "";
@@ -31,7 +33,7 @@ public class Cliente {
         telefone2 = null;
         email = "";
         endereco = null;
-        tipoCliente = "";
+        tipoCliente = null;
         cpf = ""; 
         cnpj = "";
         contato = "";
@@ -40,14 +42,14 @@ public class Cliente {
     
     public Cliente(int idCliente, String nome, Telefone telefone1, Telefone telefone2, 
             String email, Endereco endereco, String tipoCliente, String cpf, String cnpj, 
-            String contato, String inscricaoEstadual) {
+            String contato, String inscricaoEstadual) throws Exception{
         this.idCliente = idCliente;
         this.nome = nome;
         this.telefone1 = telefone1;
         this.telefone2 = telefone2;
         this.email = email;
         this.endereco = endereco;
-        this.tipoCliente = tipoCliente;
+        this.tipoCliente = TipoClienteEnum.converterDescricao(tipoCliente);
         this.cpf = cpf;
         this.cnpj = cnpj;
         this.contato = contato;
@@ -105,11 +107,11 @@ public class Cliente {
     }
 
     public String getTipoCliente() {
-        return tipoCliente;
+        return tipoCliente.getDescricao();
     }
 
     public void setTipoCliente(String tipoCliente) {
-        this.tipoCliente = tipoCliente;
+        this.tipoCliente = TipoClienteEnum.converterDescricao(tipoCliente);
     }
 
     public String getCpf() {
