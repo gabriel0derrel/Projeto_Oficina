@@ -310,7 +310,17 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void jMenuItem_ModeloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_ModeloActionPerformed
         // Abrir parte do Modelo
-        
+        jDesktopPane_InputDeTela.removeAll();
+        TelaModelo telaModelo = new TelaModelo();
+        jDesktopPane_InputDeTela.add(telaModelo);
+        try {
+            telaModelo.setVisible(true);
+            telaModelo.setSelected(true);
+            telaModelo.setMaximum(true);
+            telaModelo.setMaximizable(false);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        } 
     }//GEN-LAST:event_jMenuItem_ModeloActionPerformed
 
     private void jMenuItem_AcessorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_AcessorioActionPerformed
@@ -330,12 +340,32 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void jMenuItem_VeiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_VeiculoActionPerformed
         // Abrir parte do Veículo
-        
+        jDesktopPane_InputDeTela.removeAll();
+        TelaVeiculo telaVeiculo = new TelaVeiculo();
+        jDesktopPane_InputDeTela.add(telaVeiculo);
+        try {
+            telaVeiculo.setVisible(true);
+            telaVeiculo.setSelected(true);
+            telaVeiculo.setMaximum(true);
+            telaVeiculo.setMaximizable(false);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jMenuItem_VeiculoActionPerformed
 
     private void jMenuItem_VeiculoAcessorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_VeiculoAcessorioActionPerformed
         // Abrir parte dos Acessíos do Veículo(tabela VeiculoAcessorio)
-        
+        jDesktopPane_InputDeTela.removeAll();
+        TelaVeiculoAcessorio telaVeiculoAcessorio = new TelaVeiculoAcessorio();
+        jDesktopPane_InputDeTela.add(telaVeiculoAcessorio);
+        try {
+            telaVeiculoAcessorio.setVisible(true);
+            telaVeiculoAcessorio.setSelected(true);
+            telaVeiculoAcessorio.setMaximum(true);
+            telaVeiculoAcessorio.setMaximizable(false);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jMenuItem_VeiculoAcessorioActionPerformed
 
     private void jMenuItem_PecaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_PecaActionPerformed
