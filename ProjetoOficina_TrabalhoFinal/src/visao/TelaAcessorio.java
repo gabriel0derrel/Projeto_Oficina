@@ -4,9 +4,7 @@
  */
 package visao;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -33,50 +31,52 @@ public class TelaAcessorio extends javax.swing.JInternalFrame {
     private void limparTela(){
       jTextField1_ID.setText("");
       jTextField1_descricao.setText("");
-      jFormattedTextField1.setValue(null);
     }
     
     private void mostrarAcessorioNaGrid(){
-    try {
-      List<Acessorio> listaDeAcessorio = new ArrayList<>();
-      listaDeAcessorio = null;
-      listaDeAcessorio = AcessorioBD.listar();
-      DefaultTableModel model =  (DefaultTableModel) jTableServicos.getModel();
-      model.setNumRows(0); 
-      if(listaDeAcessorio.isEmpty()) 
-        throw new Exception("Lista de Acessorio BD Vazia");
-      for(int j = 0; j<3;j++){
-          jTableServicos.getColumnModel().getColumn(j);
-           }
-      for(int pos = 0; pos < listaDeAcessorio.size(); pos++){
-        Acessorio objAcessorio = listaDeAcessorio.get(pos);
-        String[] saida = new String[3];
-          saida[0] = objAcessorio.getIdAcessorio()+ "";
-          saida[1] = objAcessorio.getAno()+ "";
-          saida[2] = objAcessorio.getDescricao()+ "";
-        model.addRow(saida);
-      }  
-    } catch (Exception erro) {
-        JOptionPane.showMessageDialog(rootPane, erro.getMessage());
-      }    
+        try {
+            List<Acessorio> listaDeAcessorio = AcessorioBD.listar();
+            DefaultTableModel model = (DefaultTableModel) jTableServicos.getModel();
+            model.setNumRows(0);
+
+            if (listaDeAcessorio.isEmpty()) {
+                throw new Exception("Lista de Acessórios BD Vazia");
+            }
+
+            for (Acessorio objAcessorio : listaDeAcessorio) {
+                Calendar calendar = Calendar.getInstance();
+                calendar.setTime(objAcessorio.getAno());
+                int ano = calendar.get(Calendar.YEAR);
+
+                String[] saida = new String[3];
+                saida[0] = String.valueOf(objAcessorio.getIdAcessorio());
+                saida[1] = String.valueOf(ano); // Ano correto
+                saida[2] = objAcessorio.getDescricao();
+
+                model.addRow(saida);
+            }
+        } catch (Exception erro) {
+            JOptionPane.showMessageDialog(rootPane, erro.getMessage());
+        }
     }
     
     private void mostrarAcessorioNaGridBusca(Acessorio objAcessorio){
-      try {
+        try {
+            DefaultTableModel model =  (DefaultTableModel) jTableServicos.getModel();
+            model.setNumRows(0); 
+            if(objAcessorio == null) 
+              throw new Exception("Lista de Busca BD Vazia");
 
-        DefaultTableModel model =  (DefaultTableModel) jTableServicos.getModel();
-        model.setNumRows(0); 
-        if(objAcessorio == null) 
-          throw new Exception("Lista de Busca BD Vazia");
-        for(int j = 0; j<3;j++){
-            jTableServicos.getColumnModel().getColumn(j);
-             }
-          String[] saida = new String[3];
-            saida[0] = objAcessorio.getIdAcessorio()+ "";
-            saida[1] = objAcessorio.getAno()+ "";
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(objAcessorio.getAno());
+            int ano = calendar.get(Calendar.YEAR);
+            
+            String[] saida = new String[3];
+            saida[0] = String.valueOf(objAcessorio.getIdAcessorio());
+            saida[1] = String.valueOf(ano);
             saida[2] = objAcessorio.getDescricao()+ "";
-          model.addRow(saida);
-      } catch (Exception erro) {
+            model.addRow(saida);
+        } catch (Exception erro) {
           JOptionPane.showMessageDialog(rootPane, erro.getMessage());
         }    
     }
@@ -97,7 +97,7 @@ public class TelaAcessorio extends javax.swing.JInternalFrame {
         jLabel8 = new javax.swing.JLabel();
         jTextField1_descricao = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
-        jFormattedTextField1 = new javax.swing.JFormattedTextField();
+        jYearChooser1_ano = new com.toedter.calendar.JYearChooser();
 
         jLabel1.setFont(new java.awt.Font("Helvetica Neue", 3, 36)); // NOI18N
         jLabel1.setText("CADASTRO DE ACESSÓRIO");
@@ -194,12 +194,6 @@ public class TelaAcessorio extends javax.swing.JInternalFrame {
         jLabel9.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
         jLabel9.setText("ANO");
 
-        try {
-            jFormattedTextField1.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##/##/####")));
-        } catch (java.text.ParseException ex) {
-            ex.printStackTrace();
-        }
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -232,7 +226,7 @@ public class TelaAcessorio extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel9)
                         .addGap(18, 18, 18)
-                        .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(jYearChooser1_ano, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -244,21 +238,24 @@ public class TelaAcessorio extends javax.swing.JInternalFrame {
                     .addComponent(jLabel8)
                     .addComponent(jTextField1_ID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel9)
-                    .addComponent(jFormattedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel6)
-                    .addComponent(jTextField1_descricao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(74, 74, 74)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButtonIncluir)
-                    .addComponent(jButtonAlterar)
-                    .addComponent(jButton_buscar)
-                    .addComponent(jButtonListar))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 138, Short.MAX_VALUE))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel9)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel6)
+                            .addComponent(jTextField1_descricao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(74, 74, 74)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButtonIncluir)
+                            .addComponent(jButtonAlterar)
+                            .addComponent(jButton_buscar)
+                            .addComponent(jButtonListar))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jYearChooser1_ano, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
 
         pack();
@@ -266,20 +263,21 @@ public class TelaAcessorio extends javax.swing.JInternalFrame {
 
     private void jButtonIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonIncluirActionPerformed
         try {
-            String dataTexto = jFormattedTextField1.getText().trim();
-
-            // Verifica se o campo de data está vazio
-            if (dataTexto.isEmpty()) {
-                JOptionPane.showMessageDialog(rootPane, "O campo de data não pode estar vazio.");
-                return; // Sai do método para evitar execução adicional
+            // Obtém o ano do JYearChooser
+            int ano = jYearChooser1_ano.getYear();
+            // **Validação do Ano do Acessório**
+            int anoAtual = Calendar.getInstance().get(Calendar.YEAR);
+            if (ano < 1800 || ano > anoAtual + 1) {
+                JOptionPane.showMessageDialog(rootPane, "Ano do Acessório inválido! Deve ser entre 1800 e no máximo " + (anoAtual + 1) + ".");
+                return;
             }
 
-            // Define o formato esperado (dia/mês/ano)
-            SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-            formato.setLenient(false); // Garante validação estrita da data
-
-            // Converte o texto para um objeto Date
-            Date data = formato.parse(dataTexto);
+            // Inicializa a data como 1º de janeiro do ano selecionado
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(Calendar.YEAR, ano);
+            calendar.set(Calendar.MONTH, Calendar.JANUARY);
+            calendar.set(Calendar.DAY_OF_MONTH, 1);
+            Date data = calendar.getTime();
 
             // Verifica se a descrição está vazia
             String descricao = jTextField1_descricao.getText().trim();
@@ -297,8 +295,6 @@ public class TelaAcessorio extends javax.swing.JInternalFrame {
             // Atualiza a interface
             limparTela();
             mostrarAcessorioNaGrid();
-        } catch (ParseException e) {
-            JOptionPane.showMessageDialog(rootPane, "Data inválida! Use o formato dd/MM/yyyy.");
         } catch (Exception erro) {
             JOptionPane.showMessageDialog(rootPane, "Erro ao incluir: " + erro.getMessage());
         }
@@ -306,20 +302,15 @@ public class TelaAcessorio extends javax.swing.JInternalFrame {
 
     private void jButtonAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAlterarActionPerformed
         try {
-            String dataTexto = jFormattedTextField1.getText().trim();
+            // Obtém o ano do JYearChooser
+            int ano = jYearChooser1_ano.getYear();
 
-            // Verifica se o campo de data está vazio
-            if (dataTexto.isEmpty()) {
-                JOptionPane.showMessageDialog(rootPane, "O campo de data não pode estar vazio.");
-                return; // Sai do método para evitar execução adicional
-            }
-
-            // Define o formato esperado (dia/mês/ano)
-            SimpleDateFormat formato = new SimpleDateFormat("dd/MM/yyyy");
-            formato.setLenient(false); // Garante validação estrita da data
-
-            // Converte o texto para um objeto Date
-            Date data = formato.parse(dataTexto);
+            // Inicializa a data como 1º de janeiro do ano selecionado
+            Calendar calendar = Calendar.getInstance();
+            calendar.set(Calendar.YEAR, ano);
+            calendar.set(Calendar.MONTH, Calendar.JANUARY);
+            calendar.set(Calendar.DAY_OF_MONTH, 1);
+            Date data = calendar.getTime();
 
             // Verifica se a descrição está vazia
             String descricao = jTextField1_descricao.getText().trim();
@@ -333,8 +324,6 @@ public class TelaAcessorio extends javax.swing.JInternalFrame {
             AcessorioBD.alterar(objAcessorio);
             limparTela();
             mostrarAcessorioNaGrid();
-        } catch (ParseException e) {
-            JOptionPane.showMessageDialog(rootPane, "Data inválida! Use o formato dd/MM/yyyy.");
         } catch (Exception erro) {
             JOptionPane.showMessageDialog(rootPane, "Alterar Visao: "+erro.getMessage());
         }
@@ -378,7 +367,6 @@ public class TelaAcessorio extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButtonIncluir;
     private javax.swing.JButton jButtonListar;
     private javax.swing.JButton jButton_buscar;
-    private javax.swing.JFormattedTextField jFormattedTextField1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel8;
@@ -387,5 +375,6 @@ public class TelaAcessorio extends javax.swing.JInternalFrame {
     private javax.swing.JTable jTableServicos;
     private javax.swing.JTextField jTextField1_ID;
     private javax.swing.JTextField jTextField1_descricao;
+    private com.toedter.calendar.JYearChooser jYearChooser1_ano;
     // End of variables declaration//GEN-END:variables
 }

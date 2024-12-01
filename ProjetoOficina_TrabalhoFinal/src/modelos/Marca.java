@@ -43,7 +43,7 @@ public class Marca {
 
     @Override
     public String toString() {
-        return "Marca{" + "idMarca=" + idMarca + ", descricao=" + descricao + '}';
+        return idMarca + "-" + descricao;
     }
     
     

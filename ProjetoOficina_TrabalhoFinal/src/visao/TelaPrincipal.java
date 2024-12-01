@@ -112,11 +112,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jDesktopPane_InputDeTela.setLayout(jDesktopPane_InputDeTelaLayout);
         jDesktopPane_InputDeTelaLayout.setHorizontalGroup(
             jDesktopPane_InputDeTelaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1024, Short.MAX_VALUE)
+            .addGap(0, 1229, Short.MAX_VALUE)
         );
         jDesktopPane_InputDeTelaLayout.setVerticalGroup(
             jDesktopPane_InputDeTelaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 511, Short.MAX_VALUE)
+            .addGap(0, 639, Short.MAX_VALUE)
         );
 
         jMenu_Oficina.setText("Oficina");
@@ -224,11 +224,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenu_OpcoesServico.add(jMenuItem_Funcionario);
 
         jMenuItem_Servico.setText("Serviço");
-        jMenuItem_Servico.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jMenuItem_ServicoMouseClicked(evt);
-            }
-        });
         jMenuItem_Servico.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem_ServicoActionPerformed(evt);
@@ -263,16 +258,16 @@ public class TelaPrincipal extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(17, 17, 17)
-                .addComponent(jDesktopPane_InputDeTela, javax.swing.GroupLayout.PREFERRED_SIZE, 1024, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(21, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jDesktopPane_InputDeTela, javax.swing.GroupLayout.DEFAULT_SIZE, 1229, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addComponent(jDesktopPane_InputDeTela, javax.swing.GroupLayout.PREFERRED_SIZE, 511, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(18, Short.MAX_VALUE))
+                .addContainerGap()
+                .addComponent(jDesktopPane_InputDeTela, javax.swing.GroupLayout.DEFAULT_SIZE, 639, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -280,7 +275,17 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void jMenuItem_ClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_ClienteActionPerformed
         // Abrir a parte do cliente
-
+        jDesktopPane_InputDeTela.removeAll();
+        TelaCliente telaCliente = new TelaCliente();
+        jDesktopPane_InputDeTela.add(telaCliente);
+        try {
+            telaCliente.setVisible(true);
+            telaCliente.setSelected(true);
+            telaCliente.setMaximum(true);
+            telaCliente.setMaximizable(false);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jMenuItem_ClienteActionPerformed
 
     private void jMenuItem_ProprietarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_ProprietarioActionPerformed
@@ -305,7 +310,17 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void jMenuItem_ModeloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_ModeloActionPerformed
         // Abrir parte do Modelo
-        
+        jDesktopPane_InputDeTela.removeAll();
+        TelaModelo telaModelo = new TelaModelo();
+        jDesktopPane_InputDeTela.add(telaModelo);
+        try {
+            telaModelo.setVisible(true);
+            telaModelo.setSelected(true);
+            telaModelo.setMaximum(true);
+            telaModelo.setMaximizable(false);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        } 
     }//GEN-LAST:event_jMenuItem_ModeloActionPerformed
 
     private void jMenuItem_AcessorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_AcessorioActionPerformed
@@ -325,12 +340,32 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void jMenuItem_VeiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_VeiculoActionPerformed
         // Abrir parte do Veículo
-        
+        jDesktopPane_InputDeTela.removeAll();
+        TelaVeiculo telaVeiculo = new TelaVeiculo();
+        jDesktopPane_InputDeTela.add(telaVeiculo);
+        try {
+            telaVeiculo.setVisible(true);
+            telaVeiculo.setSelected(true);
+            telaVeiculo.setMaximum(true);
+            telaVeiculo.setMaximizable(false);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jMenuItem_VeiculoActionPerformed
 
     private void jMenuItem_VeiculoAcessorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_VeiculoAcessorioActionPerformed
         // Abrir parte dos Acessíos do Veículo(tabela VeiculoAcessorio)
-        
+        jDesktopPane_InputDeTela.removeAll();
+        TelaVeiculoAcessorio telaVeiculoAcessorio = new TelaVeiculoAcessorio();
+        jDesktopPane_InputDeTela.add(telaVeiculoAcessorio);
+        try {
+            telaVeiculoAcessorio.setVisible(true);
+            telaVeiculoAcessorio.setSelected(true);
+            telaVeiculoAcessorio.setMaximum(true);
+            telaVeiculoAcessorio.setMaximizable(false);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jMenuItem_VeiculoAcessorioActionPerformed
 
     private void jMenuItem_PecaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_PecaActionPerformed
@@ -346,7 +381,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
         } catch (PropertyVetoException ex) {
             Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
     }//GEN-LAST:event_jMenuItem_PecaActionPerformed
 
     private void jMenuItem_ItensDePecaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_ItensDePecaActionPerformed
@@ -367,7 +401,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
         } catch (PropertyVetoException ex) {
             Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
     }//GEN-LAST:event_jMenuItem_ServicoActionPerformed
 
     private void jMenuItem_FuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_FuncionarioActionPerformed
@@ -392,7 +425,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void jMenu_OficinaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu_OficinaMouseClicked
         // Abrir a parte da oficina
-        // Como inserir uma tela na tela principal
         jDesktopPane_InputDeTela.removeAll();
         TelaOficinas telaOficina = new TelaOficinas();
         jDesktopPane_InputDeTela.add(telaOficina);
@@ -409,10 +441,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private void jMenu_OrdemDeServicoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu_OrdemDeServicoMouseClicked
         // Abrir a parte da ordem de serviço
     }//GEN-LAST:event_jMenu_OrdemDeServicoMouseClicked
-
-    private void jMenuItem_ServicoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuItem_ServicoMouseClicked
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jMenuItem_ServicoMouseClicked
 
   /**
    * @param args the command line arguments
