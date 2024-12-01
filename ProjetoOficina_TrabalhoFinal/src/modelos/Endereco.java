@@ -16,7 +16,7 @@ public class Endereco {
         private String cidade = "";
         private String estado = "";
         private String bairro = "";
-	public Endereco(String logradouro, int numeroEndereco,String cep,String bairro, String complemento, String cidade, String estado) throws Exception{
+	public Endereco(String logradouro, int numeroEndereco, String cep, String bairro, String complemento, String cidade, String estado) throws Exception{
             if(logradouro.isEmpty())throw new Exception("o logradouro nao pode estar vazio");
             this.logradouro = logradouro;
             if(numeroEndereco<=0)throw new Exception("o numero nao pode ser menor ou igual a 0");
@@ -88,7 +88,7 @@ public class Endereco {
 
     @Override
     public String toString() {
-        return "logradouro=" + logradouro + "\n numeroEndereco=" + numeroEndereco + "\n complemento=" + complemento + "\n cep=" + cep + "\n cidade=" + cidade + "\n estado=" + estado + "\n bairro=" + bairro;
+        return logradouro + " " + numeroEndereco + ", " + complemento + ", " + bairro + ", "+cidade+ "-"+ estado + " " + cep;
     }
 
 

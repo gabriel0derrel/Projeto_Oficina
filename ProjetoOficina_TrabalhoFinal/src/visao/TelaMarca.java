@@ -239,7 +239,12 @@ public class TelaMarca extends javax.swing.JInternalFrame {
 
     private void jButtonIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonIncluirActionPerformed
         try {
-            Marca objMarca = new Marca(0 ,jTextField1_descricao.getText().toUpperCase());
+            String descricao = jTextField1_descricao.getText().toUpperCase();
+            if (descricao.isEmpty()) {
+                JOptionPane.showMessageDialog(rootPane, "O campo de descrição não pode estar vazio.");
+                return;
+            }
+            Marca objMarca = new Marca(0 , descricao);
             MarcaBD.incluir(objMarca);
             limparTela();
             mostrarMarcaNaGrid();
@@ -250,7 +255,12 @@ public class TelaMarca extends javax.swing.JInternalFrame {
 
     private void jButtonAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAlterarActionPerformed
         try {
-            Marca objMarca = new Marca(Integer.parseInt(jTextField1_ID.getText()), jTextField1_descricao.getText().toUpperCase());
+            String descricao = jTextField1_descricao.getText().toUpperCase();
+            if (descricao.isEmpty()) {
+                JOptionPane.showMessageDialog(rootPane, "O campo de descrição não pode estar vazio.");
+                return;
+            }
+            Marca objMarca = new Marca(Integer.parseInt(jTextField1_ID.getText()), descricao);
             MarcaBD.alterar(objMarca);
             limparTela();
             mostrarMarcaNaGrid();
