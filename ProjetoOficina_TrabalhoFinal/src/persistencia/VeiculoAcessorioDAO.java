@@ -74,16 +74,19 @@ public class VeiculoAcessorioDAO implements ICrud<VeiculoAcessorio>{
             preparedStatement.setString(1, objeto.getVeiculo().getPlaca());
             preparedStatement.setInt(2, objeto.getAcessorio().getIdAcessorio());
             ResultSet rs = preparedStatement.executeQuery();
+            if(!rs.isBeforeFirst()) throw new Exception("Acessorio ou veiculo nao encontrada");
             while(rs.next()) {
                 Veiculo veiculo = new Veiculo(rs.getString("placa"));
                 Acessorio acessorio = new Acessorio(rs.getInt("idAcessorio"));
                 objVeiculoAcessorioBusca = new VeiculoAcessorio(veiculo,acessorio);
             }
             return objVeiculoAcessorioBusca;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
+        } catch (SQLException erro) {
+            //Erro do comando SQL - chave, coluna, nome da tabela, ...
+            throw new Exception("SQL Erro: "+ erro.getMessage());
+        } catch(Exception erro){
+              throw new Exception("Comcultar Persistencia: " + erro);
+        } 
     }
 
     @Override
@@ -100,9 +103,11 @@ public class VeiculoAcessorioDAO implements ICrud<VeiculoAcessorio>{
                 listaDeVeiculoAcessorio.add(objVeiculoAcessorioBusca);
             }
             return listaDeVeiculoAcessorio;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
+        } catch (SQLException erro) {
+            //Erro do comando SQL - chave, coluna, nome da tabela, ...
+            throw new Exception("SQL Erro: "+ erro.getMessage());
+        } catch(Exception erro){
+              throw new Exception("Listar Persistencia: " + erro);
+        } 
     } 
 }

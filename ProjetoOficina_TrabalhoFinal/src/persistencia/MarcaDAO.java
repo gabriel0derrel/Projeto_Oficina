@@ -70,14 +70,17 @@ public class MarcaDAO implements ICrud<Marca> {
             PreparedStatement preparedStatement = conexao.prepareStatement(sql);
             preparedStatement.setInt(1, objeto.getIdMarca());
             ResultSet rs = preparedStatement.executeQuery();
+            if(!rs.isBeforeFirst()) throw new Exception("Marca nao encontrada");
             while(rs.next()) {
                 objMarcaBusca = new Marca(rs.getInt("idMarca"), rs.getString("descricao"));
             }
             return objMarcaBusca;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
+        } catch (SQLException erro) {
+            //Erro do comando SQL - chave, coluna, nome da tabela, ...
+            throw new Exception("SQL Erro: "+ erro.getMessage());
+        } catch(Exception erro){
+              throw new Exception("Consultar Persistencia: " + erro);
+        } 
     }
 
     @Override
@@ -92,9 +95,11 @@ public class MarcaDAO implements ICrud<Marca> {
                 listaDeMarca.add(objMarca);
             }
             return listaDeMarca;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
+        } catch (SQLException erro) {
+            //Erro do comando SQL - chave, coluna, nome da tabela, ...
+            throw new Exception("SQL Erro: "+ erro.getMessage());
+        } catch(Exception erro){
+              throw new Exception("Listar Persistencia: " + erro);
+        } 
     }
 }

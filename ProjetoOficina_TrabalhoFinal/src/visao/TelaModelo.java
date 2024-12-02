@@ -63,32 +63,12 @@ public class TelaModelo extends javax.swing.JInternalFrame {
         String[] saida = new String[3];
           saida[0] = objModelo.getIdModelo()+ "";
           saida[1] = objModelo.getDescricao()+ "";
-          saida[2] = objModelo.getMarca().getIdMarca()+ "";
+          saida[2] = MarcaBD.consultar(objModelo.getMarca()).toString();
         model.addRow(saida);
       }  
     } catch (Exception erro) {
         JOptionPane.showMessageDialog(rootPane, erro.getMessage());
       }    
-    }
-    
-    private void mostrarModeloNaGridBusca(Modelo objModelo){
-      try {
-
-        DefaultTableModel model =  (DefaultTableModel) jTable_Saida.getModel();
-        model.setNumRows(0); 
-        if(objModelo == null) 
-          throw new Exception("Lista de Busca BD Vazia");
-        for(int j = 0; j<3;j++){
-            jTable_Saida.getColumnModel().getColumn(j);
-             }
-          String[] saida = new String[3];
-            saida[0] = objModelo.getIdModelo()+ "";
-            saida[1] = objModelo.getDescricao()+ "";
-            saida[2] = objModelo.getMarca().getIdMarca()+ "";
-          model.addRow(saida);
-      } catch (Exception erro) {
-          JOptionPane.showMessageDialog(rootPane, erro.getMessage());
-        }  
     }
 
     /**
@@ -111,7 +91,6 @@ public class TelaModelo extends javax.swing.JInternalFrame {
         jButtonincluir = new javax.swing.JButton();
         jButton_alterar = new javax.swing.JButton();
         jButton_buscar = new javax.swing.JButton();
-        jButton_listar = new javax.swing.JButton();
 
         setPreferredSize(new java.awt.Dimension(1119, 466));
 
@@ -167,14 +146,6 @@ public class TelaModelo extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton_listar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jButton_listar.setText("LISTAR");
-        jButton_listar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_listarActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -205,9 +176,7 @@ public class TelaModelo extends javax.swing.JInternalFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButton_alterar)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton_buscar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton_listar)))
+                                .addComponent(jButton_buscar)))
                         .addGap(0, 530, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -230,8 +199,7 @@ public class TelaModelo extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonincluir)
                     .addComponent(jButton_alterar)
-                    .addComponent(jButton_buscar)
-                    .addComponent(jButton_listar))
+                    .addComponent(jButton_buscar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -288,25 +256,23 @@ public class TelaModelo extends javax.swing.JInternalFrame {
 
     private void jButton_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_buscarActionPerformed
         // TODO add your handling code here:
-                try {
-            Modelo buscarModelo = new Modelo(Integer.parseInt(jTextField_idModelo.getText()));
-            mostrarModeloNaGridBusca(ModeloBD.consultar(buscarModelo));
-            limparTela();
+        try {
+        if(jTextField_idModelo.getText().isEmpty()) throw new Exception("Id vazio");
+            Modelo objModelo = new Modelo(Integer.parseInt(jTextField_idModelo.getText()));
+            objModelo = (ModeloBD.consultar(objModelo));
+      
+            jTextField_idModelo.setText(objModelo.getIdModelo()+"");
+            jTextField_descricao.setText(objModelo.getDescricao());
+            jComboBox_Marca.setSelectedItem(MarcaBD.consultar(objModelo.getMarca()).toString());
         } catch (Exception erro) {
-            JOptionPane.showMessageDialog(rootPane, "Incluir Visao: "+erro.getMessage());
+            JOptionPane.showMessageDialog(rootPane, "Buscar Visao: "+erro.getMessage());
         }
     }//GEN-LAST:event_jButton_buscarActionPerformed
-
-    private void jButton_listarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_listarActionPerformed
-        // TODO add your handling code here:
-        mostrarModeloNaGrid();
-    }//GEN-LAST:event_jButton_listarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton_alterar;
     private javax.swing.JButton jButton_buscar;
-    private javax.swing.JButton jButton_listar;
     private javax.swing.JButton jButtonincluir;
     private javax.swing.JComboBox<String> jComboBox_Marca;
     private javax.swing.JLabel jLabel1;

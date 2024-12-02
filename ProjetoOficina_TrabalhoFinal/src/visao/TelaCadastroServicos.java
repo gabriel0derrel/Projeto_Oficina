@@ -59,23 +59,7 @@ public class TelaCadastroServicos extends javax.swing.JInternalFrame {
       JOptionPane.showMessageDialog(rootPane, erro.getMessage());
     }    
 }
- private void mostrarServicoNaGridBusca(Servicos objServico){
-  try {
 
-    DefaultTableModel model =  (DefaultTableModel) jTable_Servico.getModel();
-    model.setNumRows(0); 
-    if(objServico == null) 
-      throw new Exception("Lista de Busca BD Vazia");
-
-      String[] saida = new String[3];
-        saida[0] = objServico.getIdServico()+ "";
-        saida[1] = objServico.getDescricaoServico()+ "";
-        saida[2] = objServico.getPrecoServico()+ "";
-      model.addRow(saida);
-  } catch (Exception erro) {
-      JOptionPane.showMessageDialog(rootPane, erro.getMessage());
-    }    
-}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -95,7 +79,6 @@ public class TelaCadastroServicos extends javax.swing.JInternalFrame {
         jButton_Incluir = new javax.swing.JButton();
         jButton_Alterar = new javax.swing.JButton();
         jButton_Buscar = new javax.swing.JButton();
-        jButton_Listar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable_Servico = new javax.swing.JTable();
 
@@ -173,14 +156,6 @@ public class TelaCadastroServicos extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton_Listar.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
-        jButton_Listar.setText("LISTAR");
-        jButton_Listar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_ListarActionPerformed(evt);
-            }
-        });
-
         jTable_Servico.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
@@ -215,9 +190,7 @@ public class TelaCadastroServicos extends javax.swing.JInternalFrame {
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jButton_Alterar)
                                         .addGap(18, 18, 18)
-                                        .addComponent(jButton_Buscar)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jButton_Listar))
+                                        .addComponent(jButton_Buscar))
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jTextField1_IdServico, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addGap(18, 18, 18)
@@ -249,8 +222,7 @@ public class TelaCadastroServicos extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton_Incluir)
                     .addComponent(jButton_Alterar)
-                    .addComponent(jButton_Buscar)
-                    .addComponent(jButton_Listar))
+                    .addComponent(jButton_Buscar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -286,18 +258,20 @@ public class TelaCadastroServicos extends javax.swing.JInternalFrame {
     private void jButton_BuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_BuscarActionPerformed
         // TODO add your handling code here:
         try {
-            Servicos buscarServico = new Servicos(Integer.parseInt(jTextField1_IdServico.getText()));
-            mostrarServicoNaGridBusca(servicoBD.consultar(buscarServico));
-            limparTela();
+        if(jTextField1_IdServico.getText().isEmpty()) throw new Exception("Id vazio");
+            Servicos objServico = new Servicos(Integer.parseInt(jTextField1_IdServico.getText()));
+            objServico = (servicoBD.consultar(objServico));
+            String aux = objServico.getPrecoServico();
+            String[] vetServico = aux.split(" ");
+            String[] vetServico2 = vetServico[1].split(",");
+            
+            jTextField1_IdServico.setText(objServico.getIdServico()+"");
+            jTextField1_Descricao.setText(objServico.getDescricaoServico());
+            jTextField1_Preco.setText(vetServico2[0]);
         } catch (Exception erro) {
-            JOptionPane.showMessageDialog(rootPane, "Incluir Visao: "+erro.getMessage());
+            JOptionPane.showMessageDialog(rootPane, "Buscar Visao: "+erro.getMessage());
         }
     }//GEN-LAST:event_jButton_BuscarActionPerformed
-
-    private void jButton_ListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_ListarActionPerformed
-        // TODO add your handling code here
-        mostrarServicosNaGrid();
-    }//GEN-LAST:event_jButton_ListarActionPerformed
 
     private void jButton_IncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_IncluirActionPerformed
         // TODO add your handling code here:
@@ -362,7 +336,6 @@ public class TelaCadastroServicos extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButton_Alterar;
     private javax.swing.JButton jButton_Buscar;
     private javax.swing.JButton jButton_Incluir;
-    private javax.swing.JButton jButton_Listar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;

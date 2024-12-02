@@ -15,7 +15,6 @@ import modelos.Veiculo;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
-import modelos.Acessorio;
 import modelos.Modelo;
 
 
@@ -94,6 +93,7 @@ public class VeiculoDAO implements ICrud<Veiculo>{
             PreparedStatement preparedStatement = conexao.prepareStatement(sql);
             preparedStatement.setString(1, objeto.getPlaca());
             ResultSet rs = preparedStatement.executeQuery();
+            if(!rs.isBeforeFirst()) throw new Exception("Veiculo nao encontrado");
             while(rs.next()) {
                 Modelo modelo = new Modelo(rs.getInt("idModelo"));
                 Integer patrimonio = (Integer) rs.getInt("patrimonio");
@@ -103,10 +103,12 @@ public class VeiculoDAO implements ICrud<Veiculo>{
                 objAcessorioBusca = new Veiculo(rs.getString("placa"), rs.getDate("anoFabricacao"), rs.getDate("dataRegistro"),rs.getString("chassi"),patrimonio,rs.getInt("kilometragem"),rs.getDate("anoModelo"),modelo);
             }
             return objAcessorioBusca;
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException erro) {
+            //Erro do comando SQL - chave, coluna, nome da tabela, ...
+            throw new Exception("SQL Erro: "+ erro.getMessage());
+        } catch(Exception erro){
+              throw new Exception("Consultar Persistencia: " + erro);
         } 
-        return null;
     }
 
     @Override
@@ -126,9 +128,11 @@ public class VeiculoDAO implements ICrud<Veiculo>{
                 listaDeVeiculo.add(objVeiculo);
             }
             return listaDeVeiculo;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
+        } catch (SQLException erro) {
+            //Erro do comando SQL - chave, coluna, nome da tabela, ...
+            throw new Exception("SQL Erro: "+ erro.getMessage());
+        } catch(Exception erro){
+              throw new Exception("Listar Persistencia: " + erro);
+        } 
     }
 }

@@ -68,32 +68,13 @@ public class TelaVeiculoAcessorio extends javax.swing.JInternalFrame {
       for(int pos = 0; pos < listaDeVeiculoAcessorio.size(); pos++){
         VeiculoAcessorio objVeiculoAcessorio = listaDeVeiculoAcessorio.get(pos);
         String[] saida = new String[2];
-          saida[0] = objVeiculoAcessorio.getVeiculo().getPlaca()+ "";
-          saida[1] = objVeiculoAcessorio.getAcessorio().getIdAcessorio()+ "";
+          saida[0] = VeiculoBD.consultar(objVeiculoAcessorio.getVeiculo()).toString()+ "";
+          saida[1] = AcessorioBD.consultar(objVeiculoAcessorio.getAcessorio()).toString()+ "";
         model.addRow(saida);
       }  
     } catch (Exception erro) {
         JOptionPane.showMessageDialog(rootPane, erro.getMessage());
       }    
-    }
-    
-    private void mostrarVeiculoAcessorioNaGridBusca(VeiculoAcessorio objVeiculoAcessorio){
-      try {
-
-        DefaultTableModel model =  (DefaultTableModel) jTable_Saida.getModel();
-        model.setNumRows(0); 
-        if(objVeiculoAcessorio == null) 
-          throw new Exception("Lista de Busca BD Vazia");
-        for(int j = 0; j<2;j++){
-            jTable_Saida.getColumnModel().getColumn(j);
-             }
-            String[] saida = new String[2];
-          saida[0] = objVeiculoAcessorio.getVeiculo().getPlaca()+ "";
-          saida[1] = objVeiculoAcessorio.getAcessorio().getIdAcessorio()+ "";
-          model.addRow(saida);
-      } catch (Exception erro) {
-          JOptionPane.showMessageDialog(rootPane, erro.getMessage());
-        }  
     }
 
     /**
@@ -110,7 +91,6 @@ public class TelaVeiculoAcessorio extends javax.swing.JInternalFrame {
         jButtonincluir = new javax.swing.JButton();
         jButton_alterar = new javax.swing.JButton();
         jButton_buscar = new javax.swing.JButton();
-        jButton_listar = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         jComboBox_acessorio = new javax.swing.JComboBox<>();
         jComboBox_placa = new javax.swing.JComboBox<>();
@@ -126,7 +106,7 @@ public class TelaVeiculoAcessorio extends javax.swing.JInternalFrame {
                 {null, null}
             },
             new String [] {
-                "placa", "idAcessorio"
+                "veiculo", "Acessorio"
             }
         ));
         jScrollPane1.setViewportView(jTable_Saida);
@@ -155,14 +135,6 @@ public class TelaVeiculoAcessorio extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton_listar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jButton_listar.setText("LISTAR");
-        jButton_listar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_listarActionPerformed(evt);
-            }
-        });
-
         jLabel7.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
         jLabel7.setText("Acessorio");
 
@@ -188,9 +160,7 @@ public class TelaVeiculoAcessorio extends javax.swing.JInternalFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jButton_alterar)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(jButton_buscar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton_listar))
+                                .addComponent(jButton_buscar))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel7)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -217,8 +187,7 @@ public class TelaVeiculoAcessorio extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonincluir)
                     .addComponent(jButton_alterar)
-                    .addComponent(jButton_buscar)
-                    .addComponent(jButton_listar))
+                    .addComponent(jButton_buscar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -292,22 +261,18 @@ public class TelaVeiculoAcessorio extends javax.swing.JInternalFrame {
             Acessorio acessorio = new Acessorio(idAcessorio);
             
             VeiculoAcessorio objVeiculoAcesssorioBusca = new VeiculoAcessorio(veiculo,acessorio);
-            mostrarVeiculoAcessorioNaGridBusca(VeiculoAcessorioBD.consultar(objVeiculoAcesssorioBusca));
+            objVeiculoAcesssorioBusca = (VeiculoAcessorioBD.consultar(objVeiculoAcesssorioBusca));
+            jComboBox_acessorio.setSelectedItem(VeiculoBD.consultar(objVeiculoAcesssorioBusca.getVeiculo()).toString());
+            jComboBox_acessorio.setSelectedItem(AcessorioBD.consultar(objVeiculoAcesssorioBusca.getAcessorio()).toString());
         } catch (Exception erro) {
-            JOptionPane.showMessageDialog(rootPane, "Incluir Visao: "+erro.getMessage());
+            JOptionPane.showMessageDialog(rootPane, "Buscar: "+erro.getMessage());
         }
     }//GEN-LAST:event_jButton_buscarActionPerformed
-
-    private void jButton_listarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_listarActionPerformed
-        // TODO add your handling code here:
-        mostrarVeiculoAcessorioNaGrid();
-    }//GEN-LAST:event_jButton_listarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton_alterar;
     private javax.swing.JButton jButton_buscar;
-    private javax.swing.JButton jButton_listar;
     private javax.swing.JButton jButtonincluir;
     private javax.swing.JComboBox<String> jComboBox_acessorio;
     private javax.swing.JComboBox<String> jComboBox_placa;

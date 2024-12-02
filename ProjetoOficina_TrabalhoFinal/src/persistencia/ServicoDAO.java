@@ -74,14 +74,17 @@ public class ServicoDAO implements ICrud<Servicos>{
             PreparedStatement preparedStatement = conexao.prepareStatement(sql);
             preparedStatement.setInt(1, objServicos.getIdServico());
             ResultSet rs = preparedStatement.executeQuery();
+            if(!rs.isBeforeFirst()) throw new Exception("Servico nao encontrado");
             while(rs.next()) {
                servicoBusca = new Servicos(rs.getInt("idServico"), rs.getString("descricao"), rs.getString("preco"));
             }
             return servicoBusca;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
+          } catch (SQLException erro) {
+        //Erro do comando SQL - chave, coluna, nome da tabela, ...
+        throw new Exception("SQL Erro: "+ erro.getMessage());
+    } catch(Exception erro){
+          throw new Exception("Consultar Persistencia: " + erro);
+    }
     }
 
     @Override
@@ -96,9 +99,11 @@ public class ServicoDAO implements ICrud<Servicos>{
             listaDeServico.add(servicoLista);
         }
         return listaDeServico;
-    } catch (SQLException e) {
-        e.printStackTrace();
-    }     
-    return null;
+          } catch (SQLException erro) {
+        //Erro do comando SQL - chave, coluna, nome da tabela, ...
+        throw new Exception("SQL Erro: "+ erro.getMessage());
+    } catch(Exception erro){
+          throw new Exception("Listar Persistencia: " + erro);
+    }
     }
 }

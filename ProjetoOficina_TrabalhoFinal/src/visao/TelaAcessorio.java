@@ -31,6 +31,7 @@ public class TelaAcessorio extends javax.swing.JInternalFrame {
     private void limparTela(){
       jTextField1_ID.setText("");
       jTextField1_descricao.setText("");
+      jYearChooser1_ano.setYear(2024);
     }
     
     private void mostrarAcessorioNaGrid(){
@@ -59,27 +60,6 @@ public class TelaAcessorio extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(rootPane, erro.getMessage());
         }
     }
-    
-    private void mostrarAcessorioNaGridBusca(Acessorio objAcessorio){
-        try {
-            DefaultTableModel model =  (DefaultTableModel) jTableServicos.getModel();
-            model.setNumRows(0); 
-            if(objAcessorio == null) 
-              throw new Exception("Lista de Busca BD Vazia");
-
-            Calendar calendar = Calendar.getInstance();
-            calendar.setTime(objAcessorio.getAno());
-            int ano = calendar.get(Calendar.YEAR);
-            
-            String[] saida = new String[3];
-            saida[0] = String.valueOf(objAcessorio.getIdAcessorio());
-            saida[1] = String.valueOf(ano);
-            saida[2] = objAcessorio.getDescricao()+ "";
-            model.addRow(saida);
-        } catch (Exception erro) {
-          JOptionPane.showMessageDialog(rootPane, erro.getMessage());
-        }    
-    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -93,7 +73,6 @@ public class TelaAcessorio extends javax.swing.JInternalFrame {
         jTextField1_ID = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jButton_buscar = new javax.swing.JButton();
-        jButtonListar = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         jTextField1_descricao = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
@@ -168,14 +147,6 @@ public class TelaAcessorio extends javax.swing.JInternalFrame {
             }
         });
 
-        jButtonListar.setFont(new java.awt.Font("Helvetica Neue", 3, 18)); // NOI18N
-        jButtonListar.setText("LISTAR");
-        jButtonListar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonListarActionPerformed(evt);
-            }
-        });
-
         jLabel8.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
         jLabel8.setText("ID");
 
@@ -220,9 +191,7 @@ public class TelaAcessorio extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButtonAlterar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton_buscar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButtonListar))
+                        .addComponent(jButton_buscar))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel9)
                         .addGap(18, 18, 18)
@@ -249,8 +218,7 @@ public class TelaAcessorio extends javax.swing.JInternalFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButtonIncluir)
                             .addComponent(jButtonAlterar)
-                            .addComponent(jButton_buscar)
-                            .addComponent(jButtonListar))
+                            .addComponent(jButton_buscar))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
@@ -340,18 +308,20 @@ public class TelaAcessorio extends javax.swing.JInternalFrame {
     private void jButton_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_buscarActionPerformed
         // TODO add your handling code here:
         try {
-            Acessorio buscarAcessorio = new Acessorio(Integer.parseInt(jTextField1_ID.getText()));
-            mostrarAcessorioNaGridBusca(AcessorioBD.consultar(buscarAcessorio));
-            limparTela();
+        if(jTextField1_ID.getText().isEmpty()) throw new Exception("Id vazio");
+            Acessorio objAcessorio = new Acessorio(Integer.parseInt(jTextField1_ID.getText()));
+            objAcessorio = (AcessorioBD.consultar(objAcessorio));
+      
+            jTextField1_ID.setText(objAcessorio.getIdAcessorio()+"");
+            jTextField1_descricao.setText(objAcessorio.getDescricao());
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(objAcessorio.getAno());
+            int ano = calendar.get(Calendar.YEAR);
+            jYearChooser1_ano.setYear(ano);
         } catch (Exception erro) {
             JOptionPane.showMessageDialog(rootPane, "Buscar Visao: "+erro.getMessage());
         }
     }//GEN-LAST:event_jButton_buscarActionPerformed
-
-    private void jButtonListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonListarActionPerformed
-        // TODO add your handling code here:
-        mostrarAcessorioNaGrid();
-    }//GEN-LAST:event_jButtonListarActionPerformed
 
     private void jTextField1_descricaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1_descricaoActionPerformed
         // TODO add your handling code here:
@@ -365,7 +335,6 @@ public class TelaAcessorio extends javax.swing.JInternalFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAlterar;
     private javax.swing.JButton jButtonIncluir;
-    private javax.swing.JButton jButtonListar;
     private javax.swing.JButton jButton_buscar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel6;

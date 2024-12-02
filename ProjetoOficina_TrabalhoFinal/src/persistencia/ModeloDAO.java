@@ -73,15 +73,18 @@ public class ModeloDAO implements ICrud<Modelo>{
             PreparedStatement preparedStatement = conexao.prepareStatement(sql);
             preparedStatement.setInt(1, objeto.getIdModelo());
             ResultSet rs = preparedStatement.executeQuery();
+            if(!rs.isBeforeFirst()) throw new Exception("Modelo nao encontrada");
             while(rs.next()) {
                 Marca marca = new Marca(rs.getInt("idMarca"));
                 objModeloBusca = new Modelo(rs.getInt("idModelo"), rs.getString("descricao"),marca);
             }
             return objModeloBusca;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;   
+        } catch (SQLException erro) {
+            //Erro do comando SQL - chave, coluna, nome da tabela, ...
+            throw new Exception("SQL Erro: "+ erro.getMessage());
+        } catch(Exception erro){
+              throw new Exception("Concultar Persistencia: " + erro);
+        }   
 }
 
     @Override
@@ -97,9 +100,11 @@ public class ModeloDAO implements ICrud<Modelo>{
                 listaDeMarca.add(objModelo);
             }
             return listaDeMarca;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
+        } catch (SQLException erro) {
+            //Erro do comando SQL - chave, coluna, nome da tabela, ...
+            throw new Exception("SQL Erro: "+ erro.getMessage());
+        } catch(Exception erro){
+              throw new Exception("Listar Persistencia: " + erro);
+        } 
     }
 }

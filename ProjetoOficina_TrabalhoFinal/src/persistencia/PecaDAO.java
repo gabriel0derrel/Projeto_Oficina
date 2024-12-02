@@ -79,14 +79,17 @@ public class PecaDAO implements ICrud<Pecas>{
             PreparedStatement preparedStatement = conexao.prepareStatement(sql);
             preparedStatement.setInt(1, objPeca.getIdPeca());
             ResultSet rs = preparedStatement.executeQuery();
+            if(!rs.isBeforeFirst()) throw new Exception("Peca nao encontrada");
             while(rs.next()) {
                pecaBusca = new Pecas(rs.getInt("idPeca"), rs.getString("descricao"), rs.getInt("codigoFabricante"), rs.getString("valorUnitario"), rs.getInt("quantidade"));
             }
             return pecaBusca;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }   
-        return null;
+          } catch (SQLException erro) {
+        //Erro do comando SQL - chave, coluna, nome da tabela, ...
+        throw new Exception("SQL Erro: "+ erro.getMessage());
+    } catch(Exception erro){
+          throw new Exception("Consultar Persistencia: " + erro);
+    }
     }
 
     @Override

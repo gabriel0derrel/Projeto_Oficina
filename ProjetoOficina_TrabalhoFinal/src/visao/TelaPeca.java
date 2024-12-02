@@ -62,25 +62,6 @@ public class TelaPeca extends javax.swing.JInternalFrame {
       JOptionPane.showMessageDialog(rootPane, erro.getMessage());
     }    
 }
- private void mostrarServicoNaGridBusca(Pecas objPeca){
-  try {
-
-    DefaultTableModel model =  (DefaultTableModel) jTable_Peca.getModel();
-    model.setNumRows(0); 
-    if(objPeca == null) 
-      throw new Exception("Lista de Busca BD Vazia");
-
-      String[] saida = new String[5];
-        saida[0] = objPeca.getIdPeca()+ "";
-        saida[1] = objPeca.getDescricaoPeca()+ "";
-        saida[2] = objPeca.getCodigoFabricante()+ "";
-        saida[3] = objPeca.getValorUnitarioPeca()+ "";
-        saida[4] = objPeca.getQuantidadePeca()+ "";
-        model.addRow(saida);
-  } catch (Exception erro) {
-      JOptionPane.showMessageDialog(rootPane, erro.getMessage());
-    }    
-}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -104,7 +85,6 @@ public class TelaPeca extends javax.swing.JInternalFrame {
         jButton_Incluir = new javax.swing.JButton();
         jButton_Alterar = new javax.swing.JButton();
         jButton_Buscar = new javax.swing.JButton();
-        jButton_Listar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable_Peca = new javax.swing.JTable();
 
@@ -162,14 +142,6 @@ public class TelaPeca extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton_Listar.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
-        jButton_Listar.setText("LISTAR");
-        jButton_Listar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_ListarActionPerformed(evt);
-            }
-        });
-
         jTable_Peca.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
@@ -224,9 +196,7 @@ public class TelaPeca extends javax.swing.JInternalFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(jButton_Alterar)
                                 .addGap(18, 18, 18)
-                                .addComponent(jButton_Buscar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jButton_Listar)))
+                                .addComponent(jButton_Buscar)))
                         .addGap(0, 130, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -252,8 +222,7 @@ public class TelaPeca extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton_Incluir)
                     .addComponent(jButton_Alterar)
-                    .addComponent(jButton_Buscar)
-                    .addComponent(jButton_Listar))
+                    .addComponent(jButton_Buscar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
@@ -393,25 +362,25 @@ public class TelaPeca extends javax.swing.JInternalFrame {
     private void jButton_BuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_BuscarActionPerformed
         // TODO add your handling code here:
         try {
-            Pecas buscarPeca = new Pecas(Integer.parseInt(jTextField_IdPeca.getText()));
-            mostrarServicoNaGridBusca(PecaBD.consultar(buscarPeca));
-            limparTela();
+        if(jTextField_IdPeca.getText().isEmpty()) throw new Exception("Id vazio");
+            Pecas objPeca = new Pecas(Integer.parseInt(jTextField_IdPeca.getText()));
+            objPeca = (PecaBD.consultar(objPeca));
+      
+            jTextField_IdPeca.setText(objPeca.getIdPeca()+"");
+            jTextField_descricaoPeca.setText(objPeca.getDescricaoPeca());
+            jTextField_codigoFabricantePeca.setText(objPeca.getCodigoFabricante()+"");
+            jTextField_ValorUnitario.setText(objPeca.getValorUnitarioPeca());
+            jTextField_quantidade.setText(objPeca.getQuantidadePeca()+ "");
         } catch (Exception erro) {
-            JOptionPane.showMessageDialog(rootPane, "Incluir Visao: "+erro.getMessage());
+            JOptionPane.showMessageDialog(rootPane, "Buscar Visao: "+erro.getMessage());
         }
     }//GEN-LAST:event_jButton_BuscarActionPerformed
-
-    private void jButton_ListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_ListarActionPerformed
-        // TODO add your handling code here
-        mostrarServicosNaGrid();
-    }//GEN-LAST:event_jButton_ListarActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton_Alterar;
     private javax.swing.JButton jButton_Buscar;
     private javax.swing.JButton jButton_Incluir;
-    private javax.swing.JButton jButton_Listar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;

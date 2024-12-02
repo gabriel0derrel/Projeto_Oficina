@@ -75,29 +75,7 @@ public class TelaOficinas extends javax.swing.JInternalFrame {
       JOptionPane.showMessageDialog(rootPane, erro.getMessage());
     }    
 }
-private void mostrarOficinaNaGridBusca(Oficina objOficina){
-  try {
 
-    DefaultTableModel model =  (DefaultTableModel) jTableOficina.getModel();
-    model.setNumRows(0); 
-    if(objOficina == null) 
-      throw new Exception("Lista de Busca BD Vazia");
-    
-        jTableOficina.setRowHeight(150);
-    for(int j = 0; j<5;j++){
-        jTableOficina.getColumnModel().getColumn(j).setCellRenderer(new MultiLineTableCellRenderer());
-         }
-      String[] saida = new String[5];
-        saida[0] = objOficina.getIdentificador_Email()+ "";
-        saida[1] = objOficina.getNome() + "";
-        saida[2] = objOficina.getTelefone1().toString()+ "";
-        saida[3] = objOficina.getTelefone2().toString()+ "";
-        saida[4] = objOficina.getEndereco().toString()+ "";
-      model.addRow(saida);
-  } catch (Exception erro) {
-      JOptionPane.showMessageDialog(rootPane, erro.getMessage());
-    }    
-}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -123,7 +101,6 @@ private void mostrarOficinaNaGridBusca(Oficina objOficina){
         jTextField6_estado = new javax.swing.JTextField();
         jFormattedTextField1_telefone2 = new javax.swing.JFormattedTextField();
         jTextField5_cidade = new javax.swing.JTextField();
-        jButtonListar = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
         jTextField4_cep = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
@@ -203,14 +180,6 @@ private void mostrarOficinaNaGridBusca(Oficina objOficina){
             ex.printStackTrace();
         }
         jFormattedTextField1_telefone2.setFont(new java.awt.Font("Arial", 3, 14)); // NOI18N
-
-        jButtonListar.setFont(new java.awt.Font("Helvetica Neue", 3, 18)); // NOI18N
-        jButtonListar.setText("LISTAR");
-        jButtonListar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonListarActionPerformed(evt);
-            }
-        });
 
         jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel11.setText("CIDADE");
@@ -328,26 +297,23 @@ private void mostrarOficinaNaGridBusca(Oficina objOficina){
                                 .addComponent(jButtonAlterar)
                                 .addGap(18, 18, 18)
                                 .addComponent(jButton_buscar)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButtonListar)
                                 .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel16)
+                        .addGap(18, 18, 18)
+                        .addComponent(jFormattedTextField1_telefone2, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6)
                             .addComponent(jLabel5))
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField1_nome, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jFormattedTextField1_telefone, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel16)
-                        .addGap(18, 18, 18)
-                        .addComponent(jFormattedTextField1_telefone2, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(84, 84, 84)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jTextField1_nome, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
+                            .addComponent(jFormattedTextField1_telefone))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -430,10 +396,9 @@ private void mostrarOficinaNaGridBusca(Oficina objOficina){
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonIncluir)
                     .addComponent(jButtonAlterar)
-                    .addComponent(jButton_buscar)
-                    .addComponent(jButtonListar))
+                    .addComponent(jButton_buscar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 294, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -455,18 +420,30 @@ private void mostrarOficinaNaGridBusca(Oficina objOficina){
     private void jButton_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_buscarActionPerformed
         // TODO add your handling code here:
         try {
-            Oficina buscarOf = new Oficina(jTextField3_email.getText());
-            mostrarOficinaNaGridBusca(OficinaBD.consultar(buscarOf));
-            limparTela();
+            
+            if(jTextField3_email.getText().isEmpty()) throw new Exception("email vazio");
+            String email = jTextField3_email.getText();
+            Oficina objeto = new Oficina(email);
+            objeto = OficinaBD.consultar(objeto);
+            
+
+            jTextField1_nome.setText(objeto.getNome());
+            jTextField3_email.setText(objeto.getIdentificador_Email());
+            jTextField4_cep.setText(objeto.getEndereco().getCep());
+            jTextField1_logradouro.setText(objeto.getEndereco().getLogradouro());
+            jTextField2_numero.setText(objeto.getEndereco().getNumeroEndereco()+"");
+            jTextField3_BAIRO.setText(objeto.getEndereco().getBairro());
+            jTextField3_complemento.setText(objeto.getEndereco().getComplemento());
+            jTextField5_cidade.setText(objeto.getEndereco().getCidade());
+            jTextField6_estado.setText(objeto.getEndereco().getEstado()+"");
+            String valueTelefone1 = ""+objeto.getTelefone1().getDdi()+objeto.getTelefone1().getDdd()+objeto.getTelefone1().getNumero();
+            jFormattedTextField1_telefone.setText(valueTelefone1);
+            String valueTelefone2 = ""+objeto.getTelefone2().getDdi()+objeto.getTelefone2().getDdd()+objeto.getTelefone2().getNumero();
+            jFormattedTextField1_telefone2.setText(valueTelefone2);
         } catch (Exception erro) {
             JOptionPane.showMessageDialog(rootPane, "Incluir Visao: "+erro.getMessage());
         }
     }//GEN-LAST:event_jButton_buscarActionPerformed
-
-    private void jButtonListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonListarActionPerformed
-        // TODO add your handling code here:
-        mostrarOficinaNaGrid();
-    }//GEN-LAST:event_jButtonListarActionPerformed
 
     private void jButtonIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonIncluirActionPerformed
         try {
@@ -684,7 +661,6 @@ private void mostrarOficinaNaGridBusca(Oficina objOficina){
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAlterar;
     private javax.swing.JButton jButtonIncluir;
-    private javax.swing.JButton jButtonListar;
     private javax.swing.JButton jButton_buscar;
     private javax.swing.JFormattedTextField jFormattedTextField1_telefone;
     private javax.swing.JFormattedTextField jFormattedTextField1_telefone2;
