@@ -249,7 +249,12 @@ public class TelaModelo extends javax.swing.JInternalFrame {
             //System.out.println(vetMarca[0]);
             int idMarca = Integer.parseInt(vetMarca[0]);
             Marca marca = new Marca(idMarca);
-            Modelo objModelo = new Modelo(0,jTextField_descricao.getText().toUpperCase(),marca);
+            String descricao = jTextField_descricao.getText().toUpperCase();
+            if (descricao.isEmpty()) {
+                JOptionPane.showMessageDialog(rootPane, "O campo de descrição não pode estar vazio.");
+                return;
+            }
+            Modelo objModelo = new Modelo(0,descricao,marca);
             ModeloBD.incluir(objModelo);
             limparTela();
             mostrarModeloNaGrid();
@@ -267,7 +272,12 @@ public class TelaModelo extends javax.swing.JInternalFrame {
             //System.out.println(vetMarca[0]);
             int idMarca = Integer.parseInt(vetMarca[0]);
             Marca marca = new Marca(idMarca);
-            Modelo objModelo = new Modelo(Integer.parseInt(jTextField_idModelo.getText()),jTextField_descricao.getText().toUpperCase(),marca);
+            String descricao = jTextField_descricao.getText().toUpperCase();
+            if (descricao.isEmpty()) {
+                JOptionPane.showMessageDialog(rootPane, "O campo de descrição não pode estar vazio.");
+                return;
+            }
+            Modelo objModelo = new Modelo(Integer.parseInt(jTextField_idModelo.getText()),descricao,marca);
             ModeloBD.alterar(objModelo);
             limparTela();
             mostrarModeloNaGrid();

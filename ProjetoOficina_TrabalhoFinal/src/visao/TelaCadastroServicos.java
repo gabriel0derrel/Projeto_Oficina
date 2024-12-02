@@ -216,7 +216,7 @@ public class TelaCadastroServicos extends javax.swing.JInternalFrame {
                                         .addComponent(jButton_Alterar)
                                         .addGap(18, 18, 18)
                                         .addComponent(jButton_Buscar)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addGap(18, 18, 18)
                                         .addComponent(jButton_Listar))
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jTextField1_IdServico, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -302,7 +302,24 @@ public class TelaCadastroServicos extends javax.swing.JInternalFrame {
     private void jButton_IncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_IncluirActionPerformed
         // TODO add your handling code here:
         try {
-            Servicos objServico = new Servicos(Integer.parseInt(jTextField1_IdServico.getText()),jTextField1_Descricao.getText().toUpperCase(),(jTextField1_Preco.getText()));
+            String descricao = jTextField1_Descricao.getText().toUpperCase();
+            if (descricao.isEmpty()) {
+                JOptionPane.showMessageDialog(rootPane, "O campo de descrição não pode estar vazio.");
+                return;
+            }
+                    // Verifica se o preço está vazio
+            String precoTexto = jTextField1_Preco.getText().trim();
+            if (precoTexto.isEmpty()) {
+                JOptionPane.showMessageDialog(rootPane, "O campo de preço não pode estar vazio.");
+                return;
+            }
+
+            // Valida o preço com uma expressão regular
+            if (!precoTexto.matches("\\d+(\\.\\d{1,2})?")) {
+                JOptionPane.showMessageDialog(rootPane, "O preço deve ser um número inteiro ou decimal com até duas casas decimais (ex.: 123 ou 123.45).");
+                return;
+            }
+            Servicos objServico = new Servicos(0, descricao, precoTexto);
             servicoBD.incluir(objServico);
             limparTela();
             mostrarServicosNaGrid();
@@ -314,7 +331,24 @@ public class TelaCadastroServicos extends javax.swing.JInternalFrame {
     private void jButton_AlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_AlterarActionPerformed
         // TODO add your handling code here:
         try {
-            Servicos objServico = new Servicos(Integer.parseInt(jTextField1_IdServico.getText()),jTextField1_Descricao.getText().toUpperCase(),(jTextField1_Preco.getText()));
+            String descricao = jTextField1_Descricao.getText().toUpperCase();
+            if (descricao.isEmpty()) {
+                JOptionPane.showMessageDialog(rootPane, "O campo de descrição não pode estar vazio.");
+                return;
+            }
+                    // Verifica se o preço está vazio
+            String precoTexto = jTextField1_Preco.getText().trim();
+            if (precoTexto.isEmpty()) {
+                JOptionPane.showMessageDialog(rootPane, "O campo de preço não pode estar vazio.");
+                return;
+            }
+
+            // Valida o preço com uma expressão regular
+            if (!precoTexto.matches("\\d+(\\.\\d{1,2})?")) {
+                JOptionPane.showMessageDialog(rootPane, "O preço deve ser um número inteiro ou decimal com até duas casas decimais (ex.: 123 ou 123.45).");
+                return;
+            }
+            Servicos objServico = new Servicos(Integer.parseInt(jTextField1_IdServico.getText()), descricao, precoTexto);
             servicoBD.alterar(objServico);
             limparTela();
             mostrarServicosNaGrid();

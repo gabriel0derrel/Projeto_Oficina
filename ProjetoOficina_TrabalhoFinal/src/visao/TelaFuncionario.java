@@ -148,7 +148,7 @@ public class TelaFuncionario extends javax.swing.JInternalFrame {
         jLabel7.setText("Email");
 
         try {
-            jFormattedTextField1_telefone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("+##(##)#########")));
+            jFormattedTextField1_telefone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("+##(##)#####-####")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
@@ -281,30 +281,106 @@ public class TelaFuncionario extends javax.swing.JInternalFrame {
 
     private void jButtonIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonIncluirActionPerformed
         try {
+            // Validação do nome
+            String nome = jTextField1_nome.getText().trim().toUpperCase();
+            if (nome.isEmpty()) {
+                JOptionPane.showMessageDialog(rootPane, "O campo de nome não pode estar vazio.");
+                return;
+            }
+            if (!nome.matches("^[A-Za-zÀ-Üà-ü\\s]+$")) {
+                JOptionPane.showMessageDialog(rootPane, "O nome deve conter apenas letras e espaços.");
+                return;
+            }
+
+            // Validação do email
+            String email = jTextField3_email.getText().trim();
+            if (email.isEmpty()) {
+                JOptionPane.showMessageDialog(rootPane, "O campo de email não pode estar vazio.");
+                return;
+            }
+            if (!email.matches("^[\\w.%+-]+@[\\w.-]+\\.[A-Za-z]{2,}$")) {
+                JOptionPane.showMessageDialog(rootPane, "Insira um email válido no formato: exemplo@dominio.com.");
+                return;
+            }
+
+            // Validação do telefone
             String numeroTele = jFormattedTextField1_telefone.getText().trim();
-            String[] telefonePartes = numeroTele.split("[()]+");
-            int ddi = Integer.parseInt(telefonePartes[0].substring(1));
+            if (numeroTele.isEmpty()) {
+                JOptionPane.showMessageDialog(rootPane, "O campo de telefone não pode estar vazio.");
+                return;
+            }
+            // Verifica o formato do telefone: (XX)XXXX-XXXX ou (XX)XXXXX-XXXX
+            if (!numeroTele.matches("\\+\\d{2}\\(\\d{2}\\)\\d{4,5}-\\d{4}")) {
+                JOptionPane.showMessageDialog(rootPane, "Insira um telefone válido no formato: +XX(XX)XXXXX-XXXX.");
+                return;
+            }
+
+            // Extrai DDI, DDD e número do telefone
+            String[] telefonePartes = numeroTele.split("[() -]+");
+            int ddi = Integer.parseInt(telefonePartes[0]); // Assumindo DDI do Brasil por padrão
             int ddd = Integer.parseInt(telefonePartes[1]);
-            int numero = Integer.parseInt(telefonePartes[2]);
-            Telefone Telefone = new Telefone(ddi,ddd,numero);
-            Funcionario objFuncionario = new Funcionario(0 ,jTextField1_nome.getText().toUpperCase(), jTextField3_email.getText(), Telefone);
+            int numero = Integer.parseInt(telefonePartes[2] + telefonePartes[3]);
+
+            // Cria o objeto Telefone
+            Telefone telefone = new Telefone(ddi, ddd, numero);
+
+            // Cria o objeto Funcionario e inclui no banco de dados
+            Funcionario objFuncionario = new Funcionario(0, nome, email, telefone);
             FuncionarioBD.incluir(objFuncionario);
+
+            // Limpa a tela e atualiza a tabela
             limparTela();
             mostrarFuncionarioNaGrid();
         } catch (Exception erro) {
-            JOptionPane.showMessageDialog(rootPane, "Incluir Visao: "+erro.getMessage());
+            JOptionPane.showMessageDialog(rootPane, "Incluir Visão: " + erro.getMessage());
         }
     }//GEN-LAST:event_jButtonIncluirActionPerformed
 
     private void jButtonAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAlterarActionPerformed
         try {
+            // Validação do nome
+            String nome = jTextField1_nome.getText().trim().toUpperCase();
+            if (nome.isEmpty()) {
+                JOptionPane.showMessageDialog(rootPane, "O campo de nome não pode estar vazio.");
+                return;
+            }
+            if (!nome.matches("^[A-Za-zÀ-Üà-ü\\s]+$")) {
+                JOptionPane.showMessageDialog(rootPane, "O nome deve conter apenas letras e espaços.");
+                return;
+            }
+
+            // Validação do email
+            String email = jTextField3_email.getText().trim();
+            if (email.isEmpty()) {
+                JOptionPane.showMessageDialog(rootPane, "O campo de email não pode estar vazio.");
+                return;
+            }
+            if (!email.matches("^[\\w.%+-]+@[\\w.-]+\\.[A-Za-z]{2,}$")) {
+                JOptionPane.showMessageDialog(rootPane, "Insira um email válido no formato: exemplo@dominio.com.");
+                return;
+            }
+
+            // Validação do telefone
             String numeroTele = jFormattedTextField1_telefone.getText().trim();
-            String[] telefonePartes = numeroTele.split("[()]+");
-            int ddi = Integer.parseInt(telefonePartes[0].substring(1));
+            if (numeroTele.isEmpty()) {
+                JOptionPane.showMessageDialog(rootPane, "O campo de telefone não pode estar vazio.");
+                return;
+            }
+            // Verifica o formato do telefone: (XX)XXXX-XXXX ou (XX)XXXXX-XXXX
+            if (!numeroTele.matches("\\+\\d{2}\\(\\d{2}\\)\\d{4,5}-\\d{4}")) {
+                JOptionPane.showMessageDialog(rootPane, "Insira um telefone válido no formato: +XX(XX)XXXXX-XXXX.");
+                return;
+            }
+
+            // Extrai DDI, DDD e número do telefone
+            String[] telefonePartes = numeroTele.split("[() -]+");
+            int ddi = Integer.parseInt(telefonePartes[0]); // Assumindo DDI do Brasil por padrão
             int ddd = Integer.parseInt(telefonePartes[1]);
-            int numero = Integer.parseInt(telefonePartes[2]);
-            Telefone Telefone = new Telefone(ddi,ddd,numero);
-            Funcionario objFuncionario = new Funcionario(Integer.parseInt(jTextField1_ID.getText()), jTextField1_nome.getText().toUpperCase(), jTextField3_email.getText(), Telefone);
+            int numero = Integer.parseInt(telefonePartes[2] + telefonePartes[3]);
+
+            // Cria o objeto Telefone
+            Telefone telefone = new Telefone(ddi, ddd, numero);
+            Funcionario objFuncionario = new Funcionario(Integer.parseInt(jTextField1_ID.getText()), nome, email, telefone);
             FuncionarioBD.alterar(objFuncionario);
             limparTela();
             mostrarFuncionarioNaGrid();

@@ -164,7 +164,7 @@ public class TelaVeiculoAcessorio extends javax.swing.JInternalFrame {
         });
 
         jLabel7.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
-        jLabel7.setText("Acesssorio");
+        jLabel7.setText("Acessorio");
 
         jComboBox_acessorio.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
 
@@ -199,7 +199,7 @@ public class TelaVeiculoAcessorio extends javax.swing.JInternalFrame {
                                 .addComponent(jLabel8)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jComboBox_placa, javax.swing.GroupLayout.PREFERRED_SIZE, 539, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                        .addGap(0, 463, Short.MAX_VALUE)))
+                        .addGap(0, 471, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
