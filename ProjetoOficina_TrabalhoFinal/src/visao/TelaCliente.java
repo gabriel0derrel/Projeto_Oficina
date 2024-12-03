@@ -153,6 +153,11 @@ public class TelaCliente extends javax.swing.JInternalFrame {
                 "ID", "Nome", "Telefone 1", "Telefone 2", "Email", "Endereço", "CPF", "CNPJ", "Contato", "Ins. Estad"
             }
         ));
+        jTable_Saida.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable_SaidaMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable_Saida);
         if (jTable_Saida.getColumnModel().getColumnCount() > 0) {
             jTable_Saida.getColumnModel().getColumn(0).setPreferredWidth(30);
@@ -517,6 +522,40 @@ public class TelaCliente extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(this, "Erro ao Buscar: " + erro.getMessage());
         }
     }//GEN-LAST:event_jButton_BuscarActionPerformed
+
+    private void jTable_SaidaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable_SaidaMouseClicked
+        // TODO add your handling code here:
+        DefaultTableModel model = (DefaultTableModel)jTable_Saida.getModel();
+        int selectedRowIndex = jTable_Saida.getSelectedRow();
+        
+        jTextField_IdCliente.setText(model.getValueAt(selectedRowIndex, 0).toString());
+        jTextField_Nome.setText(model.getValueAt(selectedRowIndex, 1).toString());
+        jFormattedTextField_Telefone1.setText(model.getValueAt(selectedRowIndex, 2).toString());
+        jFormattedTextField_Telefone2.setText(model.getValueAt(selectedRowIndex, 3).toString());
+        jTextField_Email.setText(model.getValueAt(selectedRowIndex, 4).toString());
+        
+        String auxEnd = model.getValueAt(selectedRowIndex, 5).toString();
+        String vetEnd[] = auxEnd.split("[;-]");
+        jTextField_Logradouro.setText(vetEnd[0]);
+        jTextField_Numero.setText(vetEnd[1]);
+        jTextField_Complemento.setText(vetEnd[2]);
+        jTextField_Bairro.setText(vetEnd[3]);
+        jTextField_Cidade.setText(vetEnd[4]);
+        jTextField_Estado.setText(vetEnd[5]);
+        jTextField_CEP.setText(vetEnd[6]);
+        
+        if(model.getValueAt(selectedRowIndex, 6).toString().compareTo("") == 0){
+            jComboBox_Opcoes.setSelectedItem("Pessoa Jurídica");
+            escolherEntrePessoaFisicaOuJuridica();
+            jTextField_CNPJ.setText(model.getValueAt(selectedRowIndex, 7).toString());
+            jTextField_Contato.setText(model.getValueAt(selectedRowIndex, 8).toString());
+            jTextField_InscricaoEstadual.setText(model.getValueAt(selectedRowIndex, 9).toString());
+        } else {
+            jComboBox_Opcoes.setSelectedItem("Pessoa Física");
+            escolherEntrePessoaFisicaOuJuridica();
+            jTextField_CPF.setText(model.getValueAt(selectedRowIndex, 6).toString());
+        }
+    }//GEN-LAST:event_jTable_SaidaMouseClicked
     
     private void escolherEntrePessoaFisicaOuJuridica(){
         String selecionado = jComboBox_Opcoes.getSelectedItem().toString();
@@ -542,7 +581,7 @@ public class TelaCliente extends javax.swing.JInternalFrame {
             model.setNumRows(0); 
             if(listaDeClientes.isEmpty()) throw new Exception("Lista de Oficina BD Vazia");
 
-            jTable_Saida.setRowHeight(150);
+            jTable_Saida.setRowHeight(75);
             for(int j = 0; j<10;j++){
                 jTable_Saida.getColumnModel().getColumn(j).setCellRenderer(new MultiLineTableCellRenderer());
             }
@@ -562,6 +601,7 @@ public class TelaCliente extends javax.swing.JInternalFrame {
                     saida[5] = objCliente.getEndereco().toString();
                     saida[6] = objCliente.getCpf();
                     saida[7] = objCliente.getCnpj();
+                    saida[8] = objCliente.getContato();
                     saida[9] = objCliente.getContato();
                     saida[9] = objCliente.getInscricaoEstadual();
                 model.addRow(saida);

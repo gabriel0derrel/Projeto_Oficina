@@ -51,6 +51,7 @@ public class AcessorioDAO implements ICrud<Acessorio> {
         try {
             String sql = "update acessorio set anoFabricacao = ?,descricao = ? "
                      + "where (idAcessorio = ?)";
+            consultar(objeto);
             PreparedStatement preparedStatement = conexao.prepareStatement(sql);
             preparedStatement.setDate(1, new Date(objeto.getAno().getTime()));
             preparedStatement.setString(2, objeto.getDescricao());
@@ -72,14 +73,17 @@ public class AcessorioDAO implements ICrud<Acessorio> {
             PreparedStatement preparedStatement = conexao.prepareStatement(sql);
             preparedStatement.setInt(1, objeto.getIdAcessorio());
             ResultSet rs = preparedStatement.executeQuery();
+            if(!rs.isBeforeFirst()) throw new Exception("Acessorio nao encontrada");
             while(rs.next()) {
                 objAcessorioBusca = new Acessorio(rs.getInt("idAcessorio"), rs.getDate("anoFabricacao"), rs.getString("descricao"));
             }
             return objAcessorioBusca;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
+        } catch (SQLException erro) {
+            //Erro do comando SQL - chave, coluna, nome da tabela, ...
+            throw new Exception("SQL Erro: "+ erro.getMessage());
+        } catch(Exception erro){
+              throw new Exception("Consultar Persistencia: " + erro);
+        } 
     }
 
     @Override
@@ -94,9 +98,11 @@ public class AcessorioDAO implements ICrud<Acessorio> {
                 listaDeAcessorio.add(objAcessorio);
             }
             return listaDeAcessorio;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
+        } catch (SQLException erro) {
+            //Erro do comando SQL - chave, coluna, nome da tabela, ...
+            throw new Exception("SQL Erro: "+ erro.getMessage());
+        } catch(Exception erro){
+              throw new Exception("Listar Persistencia: " + erro);
+        } 
     }
 }

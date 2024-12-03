@@ -55,25 +55,6 @@ public class TelaMarca extends javax.swing.JInternalFrame {
         JOptionPane.showMessageDialog(rootPane, erro.getMessage());
       }    
     }
-    
-    private void mostrarMarcaNaGridBusca(Marca objMarca){
-      try {
-
-        DefaultTableModel model =  (DefaultTableModel) jTableServicos.getModel();
-        model.setNumRows(0); 
-        if(objMarca == null) 
-          throw new Exception("Lista de Busca BD Vazia");
-        for(int j = 0; j<2;j++){
-            jTableServicos.getColumnModel().getColumn(j);
-             }
-          String[] saida = new String[2];
-            saida[0] = objMarca.getIdMarca()+ "";
-            saida[1] = objMarca.getDescricao()+ "";
-          model.addRow(saida);
-      } catch (Exception erro) {
-          JOptionPane.showMessageDialog(rootPane, erro.getMessage());
-        }    
-    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -87,7 +68,6 @@ public class TelaMarca extends javax.swing.JInternalFrame {
         jTextField1_ID = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jButton_buscar = new javax.swing.JButton();
-        jButtonListar = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         jTextField1_descricao = new javax.swing.JTextField();
 
@@ -130,6 +110,11 @@ public class TelaMarca extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
+        jTableServicos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableServicosMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTableServicos);
         if (jTableServicos.getColumnModel().getColumnCount() > 0) {
             jTableServicos.getColumnModel().getColumn(0).setMaxWidth(50);
@@ -155,14 +140,6 @@ public class TelaMarca extends javax.swing.JInternalFrame {
         jButton_buscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_buscarActionPerformed(evt);
-            }
-        });
-
-        jButtonListar.setFont(new java.awt.Font("Helvetica Neue", 3, 18)); // NOI18N
-        jButtonListar.setText("LISTAR");
-        jButtonListar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonListarActionPerformed(evt);
             }
         });
 
@@ -198,9 +175,7 @@ public class TelaMarca extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButtonAlterar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton_buscar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButtonListar))
+                        .addComponent(jButton_buscar))
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
@@ -228,8 +203,7 @@ public class TelaMarca extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonIncluir)
                     .addComponent(jButtonAlterar)
-                    .addComponent(jButton_buscar)
-                    .addComponent(jButtonListar))
+                    .addComponent(jButton_buscar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE))
         );
@@ -280,18 +254,16 @@ public class TelaMarca extends javax.swing.JInternalFrame {
     private void jButton_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_buscarActionPerformed
         // TODO add your handling code here:
         try {
-            Marca buscarMarca = new Marca(Integer.parseInt(jTextField1_ID.getText()));
-            mostrarMarcaNaGridBusca(MarcaBD.consultar(buscarMarca));
-            limparTela();
+        if(jTextField1_ID.getText().isEmpty()) throw new Exception("Id vazio");
+            Marca objMarca = new Marca(Integer.parseInt(jTextField1_ID.getText()));
+            objMarca = (MarcaBD.consultar(objMarca));
+      
+            jTextField1_ID.setText(objMarca.getIdMarca()+"");
+            jTextField1_descricao.setText(objMarca.getDescricao());
         } catch (Exception erro) {
             JOptionPane.showMessageDialog(rootPane, "Buscar Visao: "+erro.getMessage());
         }
     }//GEN-LAST:event_jButton_buscarActionPerformed
-
-    private void jButtonListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonListarActionPerformed
-        // TODO add your handling code here:
-        mostrarMarcaNaGrid();
-    }//GEN-LAST:event_jButtonListarActionPerformed
 
     private void jTextField1_descricaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1_descricaoActionPerformed
         // TODO add your handling code here:
@@ -301,11 +273,19 @@ public class TelaMarca extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1_descricaoKeyReleased
 
+    private void jTableServicosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableServicosMouseClicked
+        // TODO add your handling code here:
+        DefaultTableModel model = (DefaultTableModel)jTableServicos.getModel();
+        int selectedRowIndex = jTableServicos.getSelectedRow();
+        
+        jTextField1_ID.setText(model.getValueAt(selectedRowIndex, 0).toString());
+        jTextField1_descricao.setText(model.getValueAt(selectedRowIndex, 1).toString());
+    }//GEN-LAST:event_jTableServicosMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAlterar;
     private javax.swing.JButton jButtonIncluir;
-    private javax.swing.JButton jButtonListar;
     private javax.swing.JButton jButton_buscar;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel6;

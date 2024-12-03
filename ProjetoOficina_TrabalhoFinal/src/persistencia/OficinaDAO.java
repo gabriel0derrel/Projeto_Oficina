@@ -63,6 +63,7 @@ public class OficinaDAO implements ICrud<Oficina>{
     try {
       String sql = "update oficina set nome = ?, ddi1 = ?,ddd1 = ?,numeroTelefone1 = ?,ddi2 = ?,ddd2 = ?,numeroTelefone2 = ?,logradouro = ?,numeroEndereco = ?,cep = ?,bairro = ?,complemento = ?,cidade = ?,estado = ? "
               + "where (email = ?)";
+      consultar(objOficina);
       PreparedStatement preparedStatement = conexao.prepareStatement(sql);
       preparedStatement.setString(1, objOficina.getNome());
       preparedStatement.setInt(2, objOficina.getTelefone1().getDdi());
@@ -95,6 +96,7 @@ public class OficinaDAO implements ICrud<Oficina>{
             PreparedStatement preparedStatement = conexao.prepareStatement(sql);
             preparedStatement.setString(1, objOficina.getIdentificador_Email());
             ResultSet rs = preparedStatement.executeQuery();
+            if(!rs.isBeforeFirst()) throw new Exception("Oficina nao encontrado");
             while(rs.next()) {
                 Telefone Telefone1 = new Telefone(rs.getInt("ddi1"),rs.getInt("ddd1"),rs.getInt("numeroTelefone1"));
                 Telefone Telefone2 = new Telefone(rs.getInt("ddi2"),rs.getInt("ddd2"),rs.getInt("numeroTelefone2"));
@@ -102,10 +104,12 @@ public class OficinaDAO implements ICrud<Oficina>{
                 objOficinaBusca = new Oficina(rs.getString("email"),rs.getString("nome"), Telefone1, Telefone2, endereco);
             }
             return objOficinaBusca;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
+    } catch (SQLException erro) {
+        //Erro do comando SQL - chave, coluna, nome da tabela, ...
+        throw new Exception("SQL Erro: "+ erro.getMessage());
+    } catch(Exception erro){
+          throw new Exception("Consultar Oficina Persistencia: " + erro);
+    }
     }
 
     @Override
@@ -123,10 +127,12 @@ public class OficinaDAO implements ICrud<Oficina>{
                 listaDeOficina.add(objOficina);
             }
             return listaDeOficina;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
+    } catch (SQLException erro) {
+        //Erro do comando SQL - chave, coluna, nome da tabela, ...
+        throw new Exception("SQL Erro: "+ erro.getMessage());
+    } catch(Exception erro){
+          throw new Exception("Listar Oficina Persistencia: " + erro);
+    }
     }
   
 }
