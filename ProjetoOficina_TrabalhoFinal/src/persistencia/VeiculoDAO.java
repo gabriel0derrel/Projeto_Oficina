@@ -15,7 +15,6 @@ import modelos.Veiculo;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.ArrayList;
-import modelos.Acessorio;
 import modelos.Modelo;
 
 
@@ -43,7 +42,11 @@ public class VeiculoDAO implements ICrud<Veiculo>{
             preparedStatement.setDate(2, new Date(objeto.getAnoFabricacao().getTime()));
             preparedStatement.setDate(3, new Date(objeto.getDataRegistro().getTime()));
             preparedStatement.setString(4, objeto.getChassi());
-            preparedStatement.setInt(5, objeto.getPatrimanio());
+            if(objeto.getPatrimonio() == -1)
+                preparedStatement.setNull(5, java.sql.Types.INTEGER);
+            else 
+                preparedStatement.setInt(5, objeto.getPatrimonio());
+            
             preparedStatement.setInt(6, objeto.getKilometragem());
             preparedStatement.setDate(7, new Date(objeto.getAnoModelo().getTime()));
             preparedStatement.setInt(8, objeto.getModelo().getIdModelo());
@@ -61,11 +64,16 @@ public class VeiculoDAO implements ICrud<Veiculo>{
         try{
             String sql = "update veiculo set anoFabricacao = ?,dataRegistro = ?,chassi = ?,patrimonio = ?,kilometragem = ?,anoModelo = ?,idModelo = ? "
                      + "where (placa = ?)";
+            consultar(objeto);
             PreparedStatement preparedStatement = conexao.prepareStatement(sql);
             preparedStatement.setDate(1, new Date(objeto.getAnoFabricacao().getTime()));
             preparedStatement.setDate(2, new Date(objeto.getDataRegistro().getTime()));
             preparedStatement.setString(3, objeto.getChassi());
-            preparedStatement.setInt(4, objeto.getPatrimanio());
+            if(objeto.getPatrimonio() == -1)
+                preparedStatement.setNull(4, java.sql.Types.INTEGER);
+            else 
+                preparedStatement.setInt(4, objeto.getPatrimonio());
+            
             preparedStatement.setInt(5, objeto.getKilometragem());
             preparedStatement.setDate(6, new Date(objeto.getAnoModelo().getTime()));
             preparedStatement.setInt(7, objeto.getModelo().getIdModelo());
@@ -86,15 +94,22 @@ public class VeiculoDAO implements ICrud<Veiculo>{
             PreparedStatement preparedStatement = conexao.prepareStatement(sql);
             preparedStatement.setString(1, objeto.getPlaca());
             ResultSet rs = preparedStatement.executeQuery();
+            if(!rs.isBeforeFirst()) throw new Exception("Veiculo nao encontrado");
             while(rs.next()) {
                 Modelo modelo = new Modelo(rs.getInt("idModelo"));
-                objAcessorioBusca = new Veiculo(rs.getString("placa"), rs.getDate("anoFabricacao"), rs.getDate("dataRegistro"),rs.getString("chassi"),rs.getInt("patrimonio"),rs.getInt("kilometragem"),rs.getDate("anoModelo"),modelo);
+                Integer patrimonio = (Integer) rs.getInt("patrimonio");
+                if(rs.wasNull()){
+                    patrimonio = null;
+                }
+                objAcessorioBusca = new Veiculo(rs.getString("placa"), rs.getDate("anoFabricacao"), rs.getDate("dataRegistro"),rs.getString("chassi"),patrimonio,rs.getInt("kilometragem"),rs.getDate("anoModelo"),modelo);
             }
             return objAcessorioBusca;
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch (SQLException erro) {
+            //Erro do comando SQL - chave, coluna, nome da tabela, ...
+            throw new Exception("SQL Erro: "+ erro.getMessage());
+        } catch(Exception erro){
+              throw new Exception("Consultar Persistencia: " + erro);
         } 
-        return null;
     }
 
     @Override
@@ -104,15 +119,21 @@ public class VeiculoDAO implements ICrud<Veiculo>{
         try {
             Statement statement = conexao.createStatement();
             ResultSet rs = statement.executeQuery(sql);
-            while(rs.next()) {
+            while(rs.next()) {   
                 Modelo modelo = new Modelo(rs.getInt("idModelo"));
-                Veiculo objVeiculo = new Veiculo(rs.getString("placa"), rs.getDate("anoFabricacao"), rs.getDate("dataRegistro"),rs.getString("chassi"),rs.getInt("patrimonio"),rs.getInt("kilometragem"),rs.getDate("anoModelo"),modelo);
+                Integer patrimonio = (Integer) rs.getInt("patrimonio");
+                if(rs.wasNull()){
+                    patrimonio = null;
+                }
+                Veiculo objVeiculo = new Veiculo(rs.getString("placa"), rs.getDate("anoFabricacao"), rs.getDate("dataRegistro"),rs.getString("chassi"),patrimonio,rs.getInt("kilometragem"),rs.getDate("anoModelo"),modelo);
                 listaDeVeiculo.add(objVeiculo);
             }
             return listaDeVeiculo;
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return null;
+        } catch (SQLException erro) {
+            //Erro do comando SQL - chave, coluna, nome da tabela, ...
+            throw new Exception("SQL Erro: "+ erro.getMessage());
+        } catch(Exception erro){
+              throw new Exception("Listar Persistencia: " + erro);
+        } 
     }
 }

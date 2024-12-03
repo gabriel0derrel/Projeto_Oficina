@@ -4,14 +4,14 @@
  */
 package visao;
 
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
-import modelos.Acessorio;
 import modelos.ICrud;
 import modelos.Modelo;
 import modelos.Veiculo;
@@ -51,6 +51,9 @@ public class TelaVeiculo extends javax.swing.JInternalFrame {
       jTextField_kilometragem.setText("");
       jTextField_patrimonio.setText("");
       jTextField_placa.setText("");
+      jComboBox_Modelo.setSelectedIndex(0);
+      jYearChooser1_anomodelo.setYear(2024);
+      jYearChooser2_anofabricacao.setYear(2024);
     }
     
     private void mostrarVeiculoNaGrid(){
@@ -72,50 +75,23 @@ public class TelaVeiculo extends javax.swing.JInternalFrame {
         int anoModelo = calendarAnoModelo.get(Calendar.YEAR);
         
         String[] saida = new String[8];
-          saida[0] = objVeiculo.getPlaca()+ "";
-          saida[1] = String.valueOf(anoFabricacao);
-          saida[2] = objVeiculo.getDataRegistro()+ "";
-          saida[3] = objVeiculo.getChassi()+ "";
-          saida[4] = objVeiculo.getPatrimanio()+ "";
-          saida[5] = objVeiculo.getKilometragem()+ "";
-          saida[6] = String.valueOf(anoModelo);
-          saida[7] = objVeiculo.getModelo().getIdModelo()+ "";
+            saida[0] = objVeiculo.getPlaca()+ "";
+            saida[1] = String.valueOf(anoFabricacao);
+            saida[2] = objVeiculo.getDataRegistro()+ "";
+            saida[3] = objVeiculo.getChassi()+ "";
+            if(objVeiculo.getPatrimonio() == null){
+                saida[4] = "null";
+            }else{
+                saida[4] = objVeiculo.getPatrimonio()+ "";
+            }
+            saida[5] = objVeiculo.getKilometragem()+ "";
+            saida[6] = String.valueOf(anoModelo);
+            saida[7] = ModeloBD.consultar(objVeiculo.getModelo()).toString()+ "";
         model.addRow(saida);
       }  
     } catch (Exception erro) {
         JOptionPane.showMessageDialog(rootPane, erro.getMessage());
       }    
-    }
-    
-    private void mostrarVeiculoNaGridBusca(Veiculo objVeiculo){
-      try {
-
-        DefaultTableModel model =  (DefaultTableModel) jTable_Saida.getModel();
-        model.setNumRows(0); 
-        if(objVeiculo == null) 
-          throw new Exception("Lista de Busca BD Vazia");
-        
-        Calendar calendarAnoFabricacao = Calendar.getInstance();
-        calendarAnoFabricacao.setTime(objVeiculo.getAnoFabricacao());
-        int anoFabricacao = calendarAnoFabricacao.get(Calendar.YEAR);
-        
-        Calendar calendarAnoModelo = Calendar.getInstance();
-        calendarAnoModelo.setTime(objVeiculo.getAnoFabricacao());
-        int anoModelo = calendarAnoModelo.get(Calendar.YEAR);
-        
-        String[] saida = new String[8];
-          saida[0] = objVeiculo.getPlaca()+ "";
-          saida[1] = String.valueOf(anoFabricacao);
-          saida[2] = objVeiculo.getDataRegistro()+ "";
-          saida[3] = objVeiculo.getChassi()+ "";
-          saida[4] = objVeiculo.getPatrimanio()+ "";
-          saida[5] = objVeiculo.getKilometragem()+ "";
-          saida[6] = String.valueOf(anoModelo);
-          saida[7] = objVeiculo.getModelo().getIdModelo()+ "";
-        model.addRow(saida);
-      } catch (Exception erro) {
-          JOptionPane.showMessageDialog(rootPane, erro.getMessage());
-        }  
     }
 
     /**
@@ -132,7 +108,6 @@ public class TelaVeiculo extends javax.swing.JInternalFrame {
         jButtonincluir = new javax.swing.JButton();
         jButton_alterar = new javax.swing.JButton();
         jButton_buscar = new javax.swing.JButton();
-        jButton_listar = new javax.swing.JButton();
         jTextField_patrimonio = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jTextField_kilometragem = new javax.swing.JTextField();
@@ -163,6 +138,11 @@ public class TelaVeiculo extends javax.swing.JInternalFrame {
                 "placa", "anoFabricacao", "dataRegistro", "chassi", "patrimonio", "kilometragem", "anoModelo", "idModelo"
             }
         ));
+        jTable_Saida.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable_SaidaMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable_Saida);
 
         jButtonincluir.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -186,14 +166,6 @@ public class TelaVeiculo extends javax.swing.JInternalFrame {
         jButton_buscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_buscarActionPerformed(evt);
-            }
-        });
-
-        jButton_listar.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        jButton_listar.setText("LISTAR");
-        jButton_listar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton_listarActionPerformed(evt);
             }
         });
 
@@ -283,9 +255,7 @@ public class TelaVeiculo extends javax.swing.JInternalFrame {
                                 .addGap(18, 18, 18)
                                 .addComponent(jButton_alterar)
                                 .addGap(18, 18, 18)
-                                .addComponent(jButton_buscar)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton_listar)))
+                                .addComponent(jButton_buscar)))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
@@ -341,8 +311,7 @@ public class TelaVeiculo extends javax.swing.JInternalFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jButtonincluir)
                             .addComponent(jButton_alterar)
-                            .addComponent(jButton_buscar)
-                            .addComponent(jButton_listar))
+                            .addComponent(jButton_buscar))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -353,64 +322,53 @@ public class TelaVeiculo extends javax.swing.JInternalFrame {
 
     private void jButtonincluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonincluirActionPerformed
         try {
-            // **Validação da Placa**
+// **Validação da Placa**
             String placa = jTextField_placa.getText().trim().toUpperCase();
-            if (placa.isEmpty() || !placa.matches("^[A-Z]{3}[0-9][0-9A-Z][0-9]{2}$")) {
+            if (placa.isEmpty() || !placa.matches("^[A-Z]{3}[0-9][0-9A-Z][0-9]{2}$"))
                 JOptionPane.showMessageDialog(rootPane, "Placa inválida! Use o formato ABC-1234 ou ABC1D23.");
-                return;
-            }
 
             // **Validação do Ano de Fabricação**
             int anoFabricacao = jYearChooser2_anofabricacao.getYear();
             int anoAtual = Calendar.getInstance().get(Calendar.YEAR);
-            if (anoFabricacao < 1800 || anoFabricacao > anoAtual) {
-                JOptionPane.showMessageDialog(rootPane, "Ano de fabricação inválido! Deve estar entre 1800 e " + anoAtual + ".");
-                return;
-            }
+            if (anoFabricacao < 1900 || anoFabricacao > anoAtual)
+                JOptionPane.showMessageDialog(rootPane, "Ano de fabricação inválido! Deve estar entre 1900 e " + anoAtual + ".");
 
             // **Validação do Ano do Modelo**
             int anoModelo = jYearChooser1_anomodelo.getYear();
-            if (anoModelo < 1800 || anoModelo > anoAtual + 1) {
-                JOptionPane.showMessageDialog(rootPane, "Ano do modelo inválido! Deve ser entre 1800 e no máximo " + (anoAtual + 1) + ".");
-                return;
-            }
+            if (anoModelo > anoAtual + 1)
+                JOptionPane.showMessageDialog(rootPane, "Ano do modelo inválido! Deve ser no máximo " + (anoAtual + 1) + ".");
 
             // **Validação da Data de Registro**
             Date dataRegistro = jCalendar1_dataregistro.getDate();
-            if (dataRegistro == null) {
+            if (dataRegistro == null)
                 JOptionPane.showMessageDialog(rootPane, "Data de registro inválida! Selecione uma data válida.");
-                return;
-            }
 
             // **Validação do Chassi**
             String chassi = jTextField_chassi.getText().trim().toUpperCase();
-            if (chassi.isEmpty() || chassi.length() != 17 || !chassi.matches("[A-Z0-9]+")) {
+            if (chassi.isEmpty())
+                chassi = null; 
+            else if (chassi.length() != 17 || !chassi.matches("[A-Z0-9]+"))
                 JOptionPane.showMessageDialog(rootPane, "Chassi inválido! Deve conter exatamente 17 caracteres alfanuméricos.");
-                return;
-            }
 
             // **Validação do Patrimônio**
             String patrimonioTexto = jTextField_patrimonio.getText().trim();
-            if (!patrimonioTexto.matches("\\d+")) {
+            if (patrimonioTexto.isEmpty())
+                patrimonioTexto = "-1";
+            else if (!patrimonioTexto.matches("\\d+"))
                 JOptionPane.showMessageDialog(rootPane, "Patrimônio inválido! Deve ser um número inteiro positivo.");
-                return;
-            }
-            int patrimonio = Integer.parseInt(patrimonioTexto);
-
+            Integer patrimonio = Integer.valueOf(patrimonioTexto);
             // **Validação da Quilometragem**
             String kilometragemTexto = jTextField_kilometragem.getText().trim();
-            if (!kilometragemTexto.matches("\\d+")) {
+            if (!kilometragemTexto.matches("\\d+"))
                 JOptionPane.showMessageDialog(rootPane, "Quilometragem inválida! Deve ser um número inteiro não negativo.");
-                return;
-            }
+
             int kilometragem = Integer.parseInt(kilometragemTexto);
 
             // **Validação do Modelo**
             String aux = (String) jComboBox_Modelo.getSelectedItem();
-            if (aux == null || !aux.contains("-")) {
+            if (aux == null || !aux.contains("-")) 
                 JOptionPane.showMessageDialog(rootPane, "Selecione um modelo válido no campo de modelo.");
-                return;
-            }
+                
             String[] vetModelo = aux.split("-");
             int idModelo = Integer.parseInt(vetModelo[0]);
             Modelo modelo = new Modelo(idModelo);
@@ -439,7 +397,6 @@ public class TelaVeiculo extends javax.swing.JInternalFrame {
                 dataAnoModelo, 
                 modelo
             );
-
             // **Persistência no banco**
             VeiculoBD.incluir(objVeiculo);
             limparTela();
@@ -452,64 +409,53 @@ public class TelaVeiculo extends javax.swing.JInternalFrame {
     private void jButton_alterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_alterarActionPerformed
         // TODO add your handling code here:
         try {
-            // **Validação da Placa**
+// **Validação da Placa**
             String placa = jTextField_placa.getText().trim().toUpperCase();
-            if (placa.isEmpty() || !placa.matches("^[A-Z]{3}[0-9][0-9A-Z][0-9]{2}$")) {
+            if (placa.isEmpty() || !placa.matches("^[A-Z]{3}[0-9][0-9A-Z][0-9]{2}$"))
                 JOptionPane.showMessageDialog(rootPane, "Placa inválida! Use o formato ABC-1234 ou ABC1D23.");
-                return;
-            }
 
             // **Validação do Ano de Fabricação**
             int anoFabricacao = jYearChooser2_anofabricacao.getYear();
             int anoAtual = Calendar.getInstance().get(Calendar.YEAR);
-            if (anoFabricacao < 1900 || anoFabricacao > anoAtual) {
+            if (anoFabricacao < 1900 || anoFabricacao > anoAtual)
                 JOptionPane.showMessageDialog(rootPane, "Ano de fabricação inválido! Deve estar entre 1900 e " + anoAtual + ".");
-                return;
-            }
 
             // **Validação do Ano do Modelo**
             int anoModelo = jYearChooser1_anomodelo.getYear();
-            if (anoModelo > anoAtual + 1) {
+            if (anoModelo > anoAtual + 1)
                 JOptionPane.showMessageDialog(rootPane, "Ano do modelo inválido! Deve ser no máximo " + (anoAtual + 1) + ".");
-                return;
-            }
 
             // **Validação da Data de Registro**
             Date dataRegistro = jCalendar1_dataregistro.getDate();
-            if (dataRegistro == null) {
+            if (dataRegistro == null)
                 JOptionPane.showMessageDialog(rootPane, "Data de registro inválida! Selecione uma data válida.");
-                return;
-            }
 
             // **Validação do Chassi**
             String chassi = jTextField_chassi.getText().trim().toUpperCase();
-            if (chassi.isEmpty() || chassi.length() != 17 || !chassi.matches("[A-Z0-9]+")) {
+            if (chassi.isEmpty())
+                chassi = null; 
+            else if (chassi.length() != 17 || !chassi.matches("[A-Z0-9]+"))
                 JOptionPane.showMessageDialog(rootPane, "Chassi inválido! Deve conter exatamente 17 caracteres alfanuméricos.");
-                return;
-            }
 
             // **Validação do Patrimônio**
             String patrimonioTexto = jTextField_patrimonio.getText().trim();
-            if (!patrimonioTexto.matches("\\d+")) {
+            if (patrimonioTexto.isEmpty())
+                patrimonioTexto = "-1";
+            else if (!patrimonioTexto.matches("\\d+"))
                 JOptionPane.showMessageDialog(rootPane, "Patrimônio inválido! Deve ser um número inteiro positivo.");
-                return;
-            }
-            int patrimonio = Integer.parseInt(patrimonioTexto);
-
+            Integer patrimonio = Integer.valueOf(patrimonioTexto);
             // **Validação da Quilometragem**
             String kilometragemTexto = jTextField_kilometragem.getText().trim();
-            if (!kilometragemTexto.matches("\\d+")) {
+            if (!kilometragemTexto.matches("\\d+"))
                 JOptionPane.showMessageDialog(rootPane, "Quilometragem inválida! Deve ser um número inteiro não negativo.");
-                return;
-            }
+
             int kilometragem = Integer.parseInt(kilometragemTexto);
 
             // **Validação do Modelo**
             String aux = (String) jComboBox_Modelo.getSelectedItem();
-            if (aux == null || !aux.contains("-")) {
+            if (aux == null || !aux.contains("-")) 
                 JOptionPane.showMessageDialog(rootPane, "Selecione um modelo válido no campo de modelo.");
-                return;
-            }
+                
             String[] vetModelo = aux.split("-");
             int idModelo = Integer.parseInt(vetModelo[0]);
             Modelo modelo = new Modelo(idModelo);
@@ -549,28 +495,74 @@ public class TelaVeiculo extends javax.swing.JInternalFrame {
     private void jButton_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_buscarActionPerformed
         // TODO add your handling code here:
         try {
-            Veiculo buscarVeiculo = new Veiculo(jTextField_placa.getText());
-            mostrarVeiculoNaGridBusca(VeiculoBD.consultar(buscarVeiculo));
-            limparTela();
+        if(jTextField_placa.getText().isEmpty()) throw new Exception("placa vazio");
+            Veiculo objVeiculo = new Veiculo(jTextField_placa.getText().toUpperCase());
+            objVeiculo = (VeiculoBD.consultar(objVeiculo));
+      
+            jTextField_placa.setText(objVeiculo.getPlaca());
+            jTextField_chassi.setText(objVeiculo.getChassi());
+            jTextField_kilometragem.setText(objVeiculo.getKilometragem()+"");
+            jTextField_patrimonio.setText(objVeiculo.getPatrimonio()+"");
+            jComboBox_Modelo.setSelectedItem(ModeloBD.consultar(objVeiculo.getModelo()).toString());
+            
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(objVeiculo.getAnoFabricacao());
+            int anoFabri = calendar.get(Calendar.YEAR);
+            jYearChooser2_anofabricacao.setYear(anoFabri);
+            
+            Calendar calendar2 = Calendar.getInstance();
+            calendar2.setTime(objVeiculo.getAnoModelo());
+            int anoModelo = calendar2.get(Calendar.YEAR);
+            jYearChooser1_anomodelo.setYear(anoModelo);
+            
+            jCalendar1_dataregistro.setDate(objVeiculo.getDataRegistro());
         } catch (Exception erro) {
-            JOptionPane.showMessageDialog(rootPane, "Incluir Visao: "+erro.getMessage());
+            JOptionPane.showMessageDialog(rootPane, "Buscar Visao: "+erro.getMessage());
         }
     }//GEN-LAST:event_jButton_buscarActionPerformed
-
-    private void jButton_listarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_listarActionPerformed
-        // TODO add your handling code here:
-        mostrarVeiculoNaGrid();
-    }//GEN-LAST:event_jButton_listarActionPerformed
 
     private void jTextField_patrimonioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_patrimonioActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField_patrimonioActionPerformed
 
+    private void jTable_SaidaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable_SaidaMouseClicked
+        DefaultTableModel model = (DefaultTableModel)jTable_Saida.getModel();
+        int selectedRowIndex = jTable_Saida.getSelectedRow();
+        
+        jTextField_placa.setText(model.getValueAt(selectedRowIndex, 0).toString());
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR, Integer.parseInt((String) model.getValueAt(selectedRowIndex, 1)));
+        jYearChooser2_anofabricacao.setYear(calendar.get(Calendar.YEAR));
+        
+        String aux = (String) model.getValueAt(selectedRowIndex, 2);
+        String vetDate[] = aux.split("-");
+        Calendar calendarDate = Calendar.getInstance();
+        calendarDate.set(Calendar.YEAR, Integer.parseInt(vetDate[0]));
+        calendarDate.set(Calendar.MONTH, Integer.parseInt(vetDate[1]) - 1);
+        calendarDate.set(Calendar.DAY_OF_MONTH, Integer.parseInt(vetDate[2]));
+        jCalendar1_dataregistro.setDate(calendarDate.getTime());
+        
+        jTextField_chassi.setText(model.getValueAt(selectedRowIndex, 3).toString());
+        jTextField_patrimonio.setText(model.getValueAt(selectedRowIndex, 4).toString());
+        jTextField_kilometragem.setText(model.getValueAt(selectedRowIndex, 5).toString());
+        
+        Calendar calendar2 = Calendar.getInstance();
+        calendar2.set(Calendar.YEAR, Integer.parseInt((String) model.getValueAt(selectedRowIndex, 6)));
+        jYearChooser1_anomodelo.setYear(calendar2.get(Calendar.YEAR));
+        try {
+            String auxModelo = (String) model.getValueAt(selectedRowIndex, 7);
+            String vetModelo[] = auxModelo.split("-");
+            Modelo modelo = new Modelo(Integer.parseInt(vetModelo[0]));
+            jComboBox_Modelo.setSelectedItem(ModeloBD.consultar(modelo).toString());
+        } catch (Exception ex) {
+            Logger.getLogger(TelaVeiculo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jTable_SaidaMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton_alterar;
     private javax.swing.JButton jButton_buscar;
-    private javax.swing.JButton jButton_listar;
     private javax.swing.JButton jButtonincluir;
     private com.toedter.calendar.JCalendar jCalendar1_dataregistro;
     private javax.swing.JComboBox<String> jComboBox_Modelo;

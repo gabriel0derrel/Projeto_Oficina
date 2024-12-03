@@ -75,29 +75,7 @@ public class TelaOficinas extends javax.swing.JInternalFrame {
       JOptionPane.showMessageDialog(rootPane, erro.getMessage());
     }    
 }
-private void mostrarOficinaNaGridBusca(Oficina objOficina){
-  try {
 
-    DefaultTableModel model =  (DefaultTableModel) jTableOficina.getModel();
-    model.setNumRows(0); 
-    if(objOficina == null) 
-      throw new Exception("Lista de Busca BD Vazia");
-    
-        jTableOficina.setRowHeight(150);
-    for(int j = 0; j<5;j++){
-        jTableOficina.getColumnModel().getColumn(j).setCellRenderer(new MultiLineTableCellRenderer());
-         }
-      String[] saida = new String[5];
-        saida[0] = objOficina.getIdentificador_Email()+ "";
-        saida[1] = objOficina.getNome() + "";
-        saida[2] = objOficina.getTelefone1().toString()+ "";
-        saida[3] = objOficina.getTelefone2().toString()+ "";
-        saida[4] = objOficina.getEndereco().toString()+ "";
-      model.addRow(saida);
-  } catch (Exception erro) {
-      JOptionPane.showMessageDialog(rootPane, erro.getMessage());
-    }    
-}
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -123,7 +101,6 @@ private void mostrarOficinaNaGridBusca(Oficina objOficina){
         jTextField6_estado = new javax.swing.JTextField();
         jFormattedTextField1_telefone2 = new javax.swing.JFormattedTextField();
         jTextField5_cidade = new javax.swing.JTextField();
-        jButtonListar = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
         jTextField4_cep = new javax.swing.JTextField();
         jLabel13 = new javax.swing.JLabel();
@@ -159,7 +136,7 @@ private void mostrarOficinaNaGridBusca(Oficina objOficina){
         jLabel7.setText("Email");
 
         try {
-            jFormattedTextField1_telefone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("+##(##)#####-####")));
+            jFormattedTextField1_telefone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("+##(##)#########")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
@@ -198,19 +175,11 @@ private void mostrarOficinaNaGridBusca(Oficina objOficina){
         jLabel16.setText("Telefone2");
 
         try {
-            jFormattedTextField1_telefone2.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("+##(##)#####-####")));
+            jFormattedTextField1_telefone2.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("+##(##)#########")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
         jFormattedTextField1_telefone2.setFont(new java.awt.Font("Arial", 3, 14)); // NOI18N
-
-        jButtonListar.setFont(new java.awt.Font("Helvetica Neue", 3, 18)); // NOI18N
-        jButtonListar.setText("LISTAR");
-        jButtonListar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonListarActionPerformed(evt);
-            }
-        });
 
         jLabel11.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel11.setText("CIDADE");
@@ -258,6 +227,11 @@ private void mostrarOficinaNaGridBusca(Oficina objOficina){
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        jTableOficina.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableOficinaMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(jTableOficina);
@@ -328,26 +302,23 @@ private void mostrarOficinaNaGridBusca(Oficina objOficina){
                                 .addComponent(jButtonAlterar)
                                 .addGap(18, 18, 18)
                                 .addComponent(jButton_buscar)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButtonListar)
                                 .addGap(0, 0, Short.MAX_VALUE)))))
                 .addContainerGap())
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel16)
+                        .addGap(18, 18, 18)
+                        .addComponent(jFormattedTextField1_telefone2, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel6)
                             .addComponent(jLabel5))
                         .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jTextField1_nome, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jFormattedTextField1_telefone, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel16)
-                        .addGap(18, 18, 18)
-                        .addComponent(jFormattedTextField1_telefone2, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(84, 84, 84)))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(jTextField1_nome, javax.swing.GroupLayout.DEFAULT_SIZE, 210, Short.MAX_VALUE)
+                            .addComponent(jFormattedTextField1_telefone))))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -430,10 +401,9 @@ private void mostrarOficinaNaGridBusca(Oficina objOficina){
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonIncluir)
                     .addComponent(jButtonAlterar)
-                    .addComponent(jButton_buscar)
-                    .addComponent(jButtonListar))
+                    .addComponent(jButton_buscar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 294, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 157, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
@@ -455,18 +425,30 @@ private void mostrarOficinaNaGridBusca(Oficina objOficina){
     private void jButton_buscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_buscarActionPerformed
         // TODO add your handling code here:
         try {
-            Oficina buscarOf = new Oficina(jTextField3_email.getText());
-            mostrarOficinaNaGridBusca(OficinaBD.consultar(buscarOf));
-            limparTela();
+            
+            if(jTextField3_email.getText().isEmpty()) throw new Exception("email vazio");
+            String email = jTextField3_email.getText();
+            Oficina objeto = new Oficina(email);
+            objeto = OficinaBD.consultar(objeto);
+            
+
+            jTextField1_nome.setText(objeto.getNome());
+            jTextField3_email.setText(objeto.getIdentificador_Email());
+            jTextField4_cep.setText(objeto.getEndereco().getCep());
+            jTextField1_logradouro.setText(objeto.getEndereco().getLogradouro());
+            jTextField2_numero.setText(objeto.getEndereco().getNumeroEndereco()+"");
+            jTextField3_BAIRO.setText(objeto.getEndereco().getBairro());
+            jTextField3_complemento.setText(objeto.getEndereco().getComplemento());
+            jTextField5_cidade.setText(objeto.getEndereco().getCidade());
+            jTextField6_estado.setText(objeto.getEndereco().getEstado()+"");
+            String valueTelefone1 = ""+objeto.getTelefone1().getDdi()+objeto.getTelefone1().getDdd()+objeto.getTelefone1().getNumero();
+            jFormattedTextField1_telefone.setText(valueTelefone1);
+            String valueTelefone2 = ""+objeto.getTelefone2().getDdi()+objeto.getTelefone2().getDdd()+objeto.getTelefone2().getNumero();
+            jFormattedTextField1_telefone2.setText(valueTelefone2);
         } catch (Exception erro) {
             JOptionPane.showMessageDialog(rootPane, "Incluir Visao: "+erro.getMessage());
         }
     }//GEN-LAST:event_jButton_buscarActionPerformed
-
-    private void jButtonListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonListarActionPerformed
-        // TODO add your handling code here:
-        mostrarOficinaNaGrid();
-    }//GEN-LAST:event_jButtonListarActionPerformed
 
     private void jButtonIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonIncluirActionPerformed
         try {
@@ -474,73 +456,64 @@ private void mostrarOficinaNaGridBusca(Oficina objOficina){
             String nome = jTextField1_nome.getText().trim().toUpperCase();
             if (nome.isEmpty()) {
                 JOptionPane.showMessageDialog(rootPane, "O campo de nome não pode estar vazio.");
-                return;
             }
 
             // Validação do email
             String email = jTextField3_email.getText().trim();
             if (email.isEmpty()) {
                 JOptionPane.showMessageDialog(rootPane, "O campo de email não pode estar vazio.");
-                return;
             }
             if (!email.matches("^[\\w.%+-]+@[\\w.-]+\\.[A-Za-z]{2,}$")) {
                 JOptionPane.showMessageDialog(rootPane, "Insira um email válido no formato: exemplo@dominio.com.");
-                return;
             }
 
             // Validação do telefone principal
             String numeroTele = jFormattedTextField1_telefone.getText().trim();
             if (numeroTele.isEmpty()) {
                 JOptionPane.showMessageDialog(rootPane, "O telefone principal não pode estar vazio.");
-                return;
             }
-            if (!numeroTele.matches("\\+\\d{2}\\(\\d{2}\\)\\d{4,5}-\\d{4}")) {
-                JOptionPane.showMessageDialog(rootPane, "Insira um telefone principal válido no formato: +XX(XX)XXXXX-XXXX.");
-                return;
+            if (!numeroTele.matches("\\+\\d{2}\\(\\d{2}\\)\\d{8,9}")) {
+                JOptionPane.showMessageDialog(rootPane, "Insira um telefone principal válido no formato: +XX(XX)XXXXXXXXX.");
             }
 
             // Extrai partes do telefone principal
             String[] telefonePartes = numeroTele.split("[() -]+");
-            int ddi = 55; // DDI padrão para Brasil
-            int ddd = Integer.parseInt(telefonePartes[0]);
-            int numero = Integer.parseInt(telefonePartes[1] + telefonePartes[2]);
+            int ddi = Integer.parseInt(telefonePartes[0]);
+            int ddd = Integer.parseInt(telefonePartes[1]);
+            int numero = Integer.parseInt(telefonePartes[2]);
 
             // Validação do telefone secundário (opcional)
             String numeroTele2 = jFormattedTextField1_telefone2.getText().trim();
             int ddi2 = 55, ddd2 = 0, numero2 = 0;
             if (!numeroTele2.isEmpty()) {
-                if (!numeroTele2.matches("\\+\\d{2}\\(\\d{2}\\)\\d{4,5}-\\d{4}")) {
-                    JOptionPane.showMessageDialog(rootPane, "Insira um telefone secundário válido no formato: +XX(XX)XXXXX-XXXX.");
-                    return;
+                if (!numeroTele2.matches("\\+\\d{2}\\(\\d{2}\\)\\d{8,9}")) {
+                    JOptionPane.showMessageDialog(rootPane, "Insira um telefone secundário válido no formato: +XX(XX)XXXXXXXXX.");
                 }
                 String[] telefonePartes2 = numeroTele2.split("[() -]+");
-                ddd2 = Integer.parseInt(telefonePartes2[0]);
-                numero2 = Integer.parseInt(telefonePartes2[1] + telefonePartes2[2]);
+                ddi2 = Integer.parseInt(telefonePartes2[0]);
+                ddd2 = Integer.parseInt(telefonePartes2[1]);
+                numero2 = Integer.parseInt(telefonePartes2[2]);
             }
 
             // Validação do endereço
             String logradouro = jTextField1_logradouro.getText().trim().toUpperCase();
             if (logradouro.isEmpty()) {
                 JOptionPane.showMessageDialog(rootPane, "O campo de logradouro não pode estar vazio.");
-                return;
             }
 
             String numeroEndereco = jTextField2_numero.getText().trim();
             if (numeroEndereco.isEmpty() || !numeroEndereco.matches("\\d+")) {
                 JOptionPane.showMessageDialog(rootPane, "O número do endereço deve ser um número válido.");
-                return;
             }
 
             String cep = jTextField4_cep.getText().trim();
             if (cep.isEmpty() || !cep.matches("\\d{8}")) {
                 JOptionPane.showMessageDialog(rootPane, "Insira um CEP válido no formato: XXXXXXXX.");
-                return;
             }
 
             String bairro = jTextField3_BAIRO.getText().trim().toUpperCase();
             if (bairro.isEmpty()) {
                 JOptionPane.showMessageDialog(rootPane, "O campo de bairro não pode estar vazio.");
-                return;
             }
 
             String complemento = jTextField3_complemento.getText().trim().toUpperCase();
@@ -548,13 +521,11 @@ private void mostrarOficinaNaGridBusca(Oficina objOficina){
             String cidade = jTextField5_cidade.getText().trim().toUpperCase();
             if (cidade.isEmpty()) {
                 JOptionPane.showMessageDialog(rootPane, "O campo de cidade não pode estar vazio.");
-                return;
             }
 
             String estado = jTextField6_estado.getText().trim().toUpperCase();
             if (estado.isEmpty() || estado.length() != 2 || !estado.matches("[A-Z]{2}")) {
                 JOptionPane.showMessageDialog(rootPane, "O campo de estado deve conter 2 letras (ex: SP, RJ).");
-                return;
             }
 
             // Criação dos objetos
@@ -600,28 +571,29 @@ private void mostrarOficinaNaGridBusca(Oficina objOficina){
                 JOptionPane.showMessageDialog(rootPane, "O telefone principal não pode estar vazio.");
                 return;
             }
-            if (!numeroTele.matches("\\+\\d{2}\\(\\d{2}\\)\\d{4,5}-\\d{4}")) {
-                JOptionPane.showMessageDialog(rootPane, "Insira um telefone principal válido no formato: +XX(XX)XXXXX-XXXX.");
+            if (!numeroTele.matches("\\+\\d{2}\\(\\d{2}\\)\\d{8,9}")) {
+                JOptionPane.showMessageDialog(rootPane, "Insira um telefone principal válido no formato: +XX(XX)XXXXXXXXX.");
                 return;
             }
 
             // Extrai partes do telefone principal
             String[] telefonePartes = numeroTele.split("[() -]+");
-            int ddi = 55; // DDI padrão para Brasil
-            int ddd = Integer.parseInt(telefonePartes[0]);
-            int numero = Integer.parseInt(telefonePartes[1] + telefonePartes[2]);
+            int ddi = Integer.parseInt(telefonePartes[0]);
+            int ddd = Integer.parseInt(telefonePartes[1]);
+            int numero = Integer.parseInt(telefonePartes[2]);
 
             // Validação do telefone secundário (opcional)
             String numeroTele2 = jFormattedTextField1_telefone2.getText().trim();
-            int ddi2 = 55, ddd2 = 0, numero2 = 0;
+            int ddi2 = 0, ddd2 = 0, numero2 = 0;
             if (!numeroTele2.isEmpty()) {
-                if (!numeroTele2.matches("\\+\\d{2}\\(\\d{2}\\)\\d{4,5}-\\d{4}")) {
-                    JOptionPane.showMessageDialog(rootPane, "Insira um telefone secundário válido no formato: +XX(XX)XXXXX-XXXX.");
+                if (!numeroTele2.matches("\\+\\d{2}\\(\\d{2}\\)\\d{8,9}")) {
+                    JOptionPane.showMessageDialog(rootPane, "Insira um telefone secundário válido no formato: +XX(XX)XXXXXXXXX.");
                     return;
                 }
                 String[] telefonePartes2 = numeroTele2.split("[() -]+");
-                ddd2 = Integer.parseInt(telefonePartes2[0]);
-                numero2 = Integer.parseInt(telefonePartes2[1] + telefonePartes2[2]);
+                ddi2 = Integer.parseInt(telefonePartes2[0]);
+                ddd2 = Integer.parseInt(telefonePartes2[1]);
+                numero2 = Integer.parseInt(telefonePartes2[2]);
             }
 
             // Validação do endereço
@@ -680,11 +652,34 @@ private void mostrarOficinaNaGridBusca(Oficina objOficina){
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField2_numeroActionPerformed
 
+    private void jTableOficinaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableOficinaMouseClicked
+        // TODO add your handling code here:
+        DefaultTableModel model = (DefaultTableModel)jTableOficina.getModel();
+        int selectedRowIndex = jTableOficina.getSelectedRow();
+        
+        jTextField3_email.setText(model.getValueAt(selectedRowIndex, 0).toString());
+        jTextField1_nome.setText(model.getValueAt(selectedRowIndex, 1).toString());
+        jFormattedTextField1_telefone.setText(model.getValueAt(selectedRowIndex, 2).toString());
+        jFormattedTextField1_telefone2.setText(model.getValueAt(selectedRowIndex, 3).toString());
+        
+        String auxEnd = model.getValueAt(selectedRowIndex, 4).toString();
+        String vetEnd[] = auxEnd.split("[;-]");
+        jTextField1_logradouro.setText(vetEnd[0]);
+        jTextField2_numero.setText(vetEnd[1]);
+        jTextField3_complemento.setText(vetEnd[2]);
+        jTextField3_BAIRO.setText(vetEnd[3]);
+        jTextField5_cidade.setText(vetEnd[4]);
+        jTextField6_estado.setText(vetEnd[5]);
+        jTextField4_cep.setText(vetEnd[6]);
+        
+        //aux
+        //String vetTelefone1[] = model.getValueAt
+    }//GEN-LAST:event_jTableOficinaMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAlterar;
     private javax.swing.JButton jButtonIncluir;
-    private javax.swing.JButton jButtonListar;
     private javax.swing.JButton jButton_buscar;
     private javax.swing.JFormattedTextField jFormattedTextField1_telefone;
     private javax.swing.JFormattedTextField jFormattedTextField1_telefone2;

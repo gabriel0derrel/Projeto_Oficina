@@ -91,6 +91,7 @@ public class ClienteDAO implements ICrud<Cliente>{
                     + "ddi2 = ?,ddd2 = ?,numeroTelefone2 = ?,email = ?,logradouro = ?,numeroEndereco = ?,"
                     + "cep = ?,bairro = ?,complemento = ?,cidade = ?,estado = ?,tipoCliente = ?::tipoclienteenum ,cpf = ?,cnpj = ?,"
                     + "contato = ?,inscricaoEstadual = ? where (idCliente = ?)";
+            consultar(objeto);
             PreparedStatement preparedStatement = conexao.prepareStatement(sql);
             preparedStatement.setString(1, objeto.getNome());
             preparedStatement.setInt(2, objeto.getTelefone1().getDdi());

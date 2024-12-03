@@ -15,7 +15,7 @@ public class Veiculo {
     private Date anoFabricacao = null;
     private Date dataRegistro = null;
     private String chassi = "";
-    private int patrimanio = 0;
+    private Integer patrimonio = null;
     private int kilometragem = 0;
     private Date anoModelo = null;
     private Modelo modelo = null;
@@ -24,12 +24,12 @@ public class Veiculo {
         this.placa = placa;
     }
 
-    public Veiculo(String placa,Date anoFabricacao,Date dataRegistro,String chassi,int patrimanio,int kilometragem,Date anoModelo,Modelo modelo) {
+    public Veiculo(String placa,Date anoFabricacao,Date dataRegistro,String chassi,Integer patrimanio,int kilometragem,Date anoModelo,Modelo modelo) {
     this.placa = placa;
     this.anoFabricacao = anoFabricacao;
     this.dataRegistro = dataRegistro;
     this.chassi = chassi;
-    this.patrimanio = patrimanio;
+    this.patrimonio = patrimanio;
     this.kilometragem = kilometragem;
     this.anoModelo = anoModelo;
     this.modelo = modelo;
@@ -70,12 +70,12 @@ public class Veiculo {
         this.chassi = chassi;
     }
 
-    public int getPatrimanio() {
-        return patrimanio;
+    public Integer getPatrimonio() {
+        return patrimonio;
     }
 
-    public void setPatrimanio(int patrimanio) {
-        this.patrimanio = patrimanio;
+    public void setPatrimonio(Integer patrimonio) {
+        this.patrimonio = patrimonio;
     }
 
     public int getKilometragem() {
@@ -104,7 +104,7 @@ public class Veiculo {
 
     @Override
     public String toString() {
-        return placa + "-" + anoFabricacao + "=>" + dataRegistro + "=>" + chassi + "=>" + patrimanio + "=>" + kilometragem + "=>" + anoModelo + "=>" + modelo.getIdModelo();
+        return placa + "-" + anoFabricacao + "=>" + dataRegistro + "=>" + chassi + "=>" + patrimonio + "=>" + kilometragem + "=>" + anoModelo + "=>" + modelo.getIdModelo();
     }
     
     
