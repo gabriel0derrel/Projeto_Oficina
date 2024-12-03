@@ -51,6 +51,7 @@ public class AcessorioDAO implements ICrud<Acessorio> {
         try {
             String sql = "update acessorio set anoFabricacao = ?,descricao = ? "
                      + "where (idAcessorio = ?)";
+            consultar(objeto);
             PreparedStatement preparedStatement = conexao.prepareStatement(sql);
             preparedStatement.setDate(1, new Date(objeto.getAno().getTime()));
             preparedStatement.setString(2, objeto.getDescricao());

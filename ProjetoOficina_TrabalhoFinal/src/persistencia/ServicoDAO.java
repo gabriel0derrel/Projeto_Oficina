@@ -52,6 +52,7 @@ public class ServicoDAO implements ICrud<Servicos>{
     try {
       String sql = "update servico set descricao = ?, preco = ?::money "
               + "where (idServico = ?)";
+      consultar(objServicos);
       String money = String.format("%.2f", Float.valueOf(objServicos.getPrecoServico()));
       PreparedStatement preparedStatement = conexao.prepareStatement(sql);
       preparedStatement.setString(1, objServicos.getDescricaoServico());

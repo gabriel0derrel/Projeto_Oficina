@@ -52,6 +52,7 @@ public class FuncionarioDAO implements ICrud<Funcionario>{
         try {
             String sql = "update funcionario set nome = ?,email = ?,ddi = ?,ddd = ?,numero = ? "
                      + "where (idFuncionario = ?)";
+            consultar(objeto);
             PreparedStatement preparedStatement = conexao.prepareStatement(sql);
             preparedStatement.setString(1, objeto.getNome());
             preparedStatement.setString(2, objeto.getEmail());

@@ -110,6 +110,11 @@ public class TelaMarca extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
+        jTableServicos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableServicosMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTableServicos);
         if (jTableServicos.getColumnModel().getColumnCount() > 0) {
             jTableServicos.getColumnModel().getColumn(0).setMaxWidth(50);
@@ -267,6 +272,15 @@ public class TelaMarca extends javax.swing.JInternalFrame {
     private void jTextField1_descricaoKeyReleased(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_jTextField1_descricaoKeyReleased
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1_descricaoKeyReleased
+
+    private void jTableServicosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableServicosMouseClicked
+        // TODO add your handling code here:
+        DefaultTableModel model = (DefaultTableModel)jTableServicos.getModel();
+        int selectedRowIndex = jTableServicos.getSelectedRow();
+        
+        jTextField1_ID.setText(model.getValueAt(selectedRowIndex, 0).toString());
+        jTextField1_descricao.setText(model.getValueAt(selectedRowIndex, 1).toString());
+    }//GEN-LAST:event_jTableServicosMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

@@ -6,6 +6,8 @@ package visao;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelos.Acessorio;
@@ -109,6 +111,11 @@ public class TelaVeiculoAcessorio extends javax.swing.JInternalFrame {
                 "veiculo", "Acessorio"
             }
         ));
+        jTable_Saida.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable_SaidaMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable_Saida);
 
         jButtonincluir.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -268,6 +275,26 @@ public class TelaVeiculoAcessorio extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(rootPane, "Buscar: "+erro.getMessage());
         }
     }//GEN-LAST:event_jButton_buscarActionPerformed
+
+    private void jTable_SaidaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable_SaidaMouseClicked
+        // TODO add your handling code here:
+        try {
+            DefaultTableModel model = (DefaultTableModel)jTable_Saida.getModel();
+            int selectedRowIndex = jTable_Saida.getSelectedRow();
+
+            String auxVeiculo = (String) model.getValueAt(selectedRowIndex, 0);
+            String vetVeiculo[] = auxVeiculo.split("-");
+            Veiculo veiculo = new Veiculo(vetVeiculo[0]);
+            jComboBox_placa.setSelectedItem(VeiculoBD.consultar(veiculo).toString());
+            
+            String auxAcessorio = (String) model.getValueAt(selectedRowIndex, 1);
+            String vetAcessorio[] = auxAcessorio.split("-");
+            Acessorio acessorio = new Acessorio(Integer.parseInt(vetAcessorio[0]));
+            jComboBox_acessorio.setSelectedItem(AcessorioBD.consultar(acessorio).toString());
+        } catch (Exception ex) {
+            Logger.getLogger(TelaVeiculoAcessorio.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jTable_SaidaMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

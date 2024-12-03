@@ -136,7 +136,7 @@ public class TelaOficinas extends javax.swing.JInternalFrame {
         jLabel7.setText("Email");
 
         try {
-            jFormattedTextField1_telefone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("+##(##)#####-####")));
+            jFormattedTextField1_telefone.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("+##(##)#########")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
@@ -175,7 +175,7 @@ public class TelaOficinas extends javax.swing.JInternalFrame {
         jLabel16.setText("Telefone2");
 
         try {
-            jFormattedTextField1_telefone2.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("+##(##)#####-####")));
+            jFormattedTextField1_telefone2.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("+##(##)#########")));
         } catch (java.text.ParseException ex) {
             ex.printStackTrace();
         }
@@ -227,6 +227,11 @@ public class TelaOficinas extends javax.swing.JInternalFrame {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        jTableOficina.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableOficinaMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(jTableOficina);
@@ -451,73 +456,64 @@ public class TelaOficinas extends javax.swing.JInternalFrame {
             String nome = jTextField1_nome.getText().trim().toUpperCase();
             if (nome.isEmpty()) {
                 JOptionPane.showMessageDialog(rootPane, "O campo de nome não pode estar vazio.");
-                return;
             }
 
             // Validação do email
             String email = jTextField3_email.getText().trim();
             if (email.isEmpty()) {
                 JOptionPane.showMessageDialog(rootPane, "O campo de email não pode estar vazio.");
-                return;
             }
             if (!email.matches("^[\\w.%+-]+@[\\w.-]+\\.[A-Za-z]{2,}$")) {
                 JOptionPane.showMessageDialog(rootPane, "Insira um email válido no formato: exemplo@dominio.com.");
-                return;
             }
 
             // Validação do telefone principal
             String numeroTele = jFormattedTextField1_telefone.getText().trim();
             if (numeroTele.isEmpty()) {
                 JOptionPane.showMessageDialog(rootPane, "O telefone principal não pode estar vazio.");
-                return;
             }
-            if (!numeroTele.matches("\\+\\d{2}\\(\\d{2}\\)\\d{4,5}-\\d{4}")) {
-                JOptionPane.showMessageDialog(rootPane, "Insira um telefone principal válido no formato: +XX(XX)XXXXX-XXXX.");
-                return;
+            if (!numeroTele.matches("\\+\\d{2}\\(\\d{2}\\)\\d{8,9}")) {
+                JOptionPane.showMessageDialog(rootPane, "Insira um telefone principal válido no formato: +XX(XX)XXXXXXXXX.");
             }
 
             // Extrai partes do telefone principal
             String[] telefonePartes = numeroTele.split("[() -]+");
-            int ddi = 55; // DDI padrão para Brasil
-            int ddd = Integer.parseInt(telefonePartes[0]);
-            int numero = Integer.parseInt(telefonePartes[1] + telefonePartes[2]);
+            int ddi = Integer.parseInt(telefonePartes[0]);
+            int ddd = Integer.parseInt(telefonePartes[1]);
+            int numero = Integer.parseInt(telefonePartes[2]);
 
             // Validação do telefone secundário (opcional)
             String numeroTele2 = jFormattedTextField1_telefone2.getText().trim();
             int ddi2 = 55, ddd2 = 0, numero2 = 0;
             if (!numeroTele2.isEmpty()) {
-                if (!numeroTele2.matches("\\+\\d{2}\\(\\d{2}\\)\\d{4,5}-\\d{4}")) {
-                    JOptionPane.showMessageDialog(rootPane, "Insira um telefone secundário válido no formato: +XX(XX)XXXXX-XXXX.");
-                    return;
+                if (!numeroTele2.matches("\\+\\d{2}\\(\\d{2}\\)\\d{8,9}")) {
+                    JOptionPane.showMessageDialog(rootPane, "Insira um telefone secundário válido no formato: +XX(XX)XXXXXXXXX.");
                 }
                 String[] telefonePartes2 = numeroTele2.split("[() -]+");
-                ddd2 = Integer.parseInt(telefonePartes2[0]);
-                numero2 = Integer.parseInt(telefonePartes2[1] + telefonePartes2[2]);
+                ddi2 = Integer.parseInt(telefonePartes2[0]);
+                ddd2 = Integer.parseInt(telefonePartes2[1]);
+                numero2 = Integer.parseInt(telefonePartes2[2]);
             }
 
             // Validação do endereço
             String logradouro = jTextField1_logradouro.getText().trim().toUpperCase();
             if (logradouro.isEmpty()) {
                 JOptionPane.showMessageDialog(rootPane, "O campo de logradouro não pode estar vazio.");
-                return;
             }
 
             String numeroEndereco = jTextField2_numero.getText().trim();
             if (numeroEndereco.isEmpty() || !numeroEndereco.matches("\\d+")) {
                 JOptionPane.showMessageDialog(rootPane, "O número do endereço deve ser um número válido.");
-                return;
             }
 
             String cep = jTextField4_cep.getText().trim();
             if (cep.isEmpty() || !cep.matches("\\d{8}")) {
                 JOptionPane.showMessageDialog(rootPane, "Insira um CEP válido no formato: XXXXXXXX.");
-                return;
             }
 
             String bairro = jTextField3_BAIRO.getText().trim().toUpperCase();
             if (bairro.isEmpty()) {
                 JOptionPane.showMessageDialog(rootPane, "O campo de bairro não pode estar vazio.");
-                return;
             }
 
             String complemento = jTextField3_complemento.getText().trim().toUpperCase();
@@ -525,13 +521,11 @@ public class TelaOficinas extends javax.swing.JInternalFrame {
             String cidade = jTextField5_cidade.getText().trim().toUpperCase();
             if (cidade.isEmpty()) {
                 JOptionPane.showMessageDialog(rootPane, "O campo de cidade não pode estar vazio.");
-                return;
             }
 
             String estado = jTextField6_estado.getText().trim().toUpperCase();
             if (estado.isEmpty() || estado.length() != 2 || !estado.matches("[A-Z]{2}")) {
                 JOptionPane.showMessageDialog(rootPane, "O campo de estado deve conter 2 letras (ex: SP, RJ).");
-                return;
             }
 
             // Criação dos objetos
@@ -577,28 +571,29 @@ public class TelaOficinas extends javax.swing.JInternalFrame {
                 JOptionPane.showMessageDialog(rootPane, "O telefone principal não pode estar vazio.");
                 return;
             }
-            if (!numeroTele.matches("\\+\\d{2}\\(\\d{2}\\)\\d{4,5}-\\d{4}")) {
-                JOptionPane.showMessageDialog(rootPane, "Insira um telefone principal válido no formato: +XX(XX)XXXXX-XXXX.");
+            if (!numeroTele.matches("\\+\\d{2}\\(\\d{2}\\)\\d{8,9}")) {
+                JOptionPane.showMessageDialog(rootPane, "Insira um telefone principal válido no formato: +XX(XX)XXXXXXXXX.");
                 return;
             }
 
             // Extrai partes do telefone principal
             String[] telefonePartes = numeroTele.split("[() -]+");
-            int ddi = 55; // DDI padrão para Brasil
-            int ddd = Integer.parseInt(telefonePartes[0]);
-            int numero = Integer.parseInt(telefonePartes[1] + telefonePartes[2]);
+            int ddi = Integer.parseInt(telefonePartes[0]);
+            int ddd = Integer.parseInt(telefonePartes[1]);
+            int numero = Integer.parseInt(telefonePartes[2]);
 
             // Validação do telefone secundário (opcional)
             String numeroTele2 = jFormattedTextField1_telefone2.getText().trim();
-            int ddi2 = 55, ddd2 = 0, numero2 = 0;
+            int ddi2 = 0, ddd2 = 0, numero2 = 0;
             if (!numeroTele2.isEmpty()) {
-                if (!numeroTele2.matches("\\+\\d{2}\\(\\d{2}\\)\\d{4,5}-\\d{4}")) {
-                    JOptionPane.showMessageDialog(rootPane, "Insira um telefone secundário válido no formato: +XX(XX)XXXXX-XXXX.");
+                if (!numeroTele2.matches("\\+\\d{2}\\(\\d{2}\\)\\d{8,9}")) {
+                    JOptionPane.showMessageDialog(rootPane, "Insira um telefone secundário válido no formato: +XX(XX)XXXXXXXXX.");
                     return;
                 }
                 String[] telefonePartes2 = numeroTele2.split("[() -]+");
-                ddd2 = Integer.parseInt(telefonePartes2[0]);
-                numero2 = Integer.parseInt(telefonePartes2[1] + telefonePartes2[2]);
+                ddi2 = Integer.parseInt(telefonePartes2[0]);
+                ddd2 = Integer.parseInt(telefonePartes2[1]);
+                numero2 = Integer.parseInt(telefonePartes2[2]);
             }
 
             // Validação do endereço
@@ -656,6 +651,30 @@ public class TelaOficinas extends javax.swing.JInternalFrame {
     private void jTextField2_numeroActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2_numeroActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField2_numeroActionPerformed
+
+    private void jTableOficinaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableOficinaMouseClicked
+        // TODO add your handling code here:
+        DefaultTableModel model = (DefaultTableModel)jTableOficina.getModel();
+        int selectedRowIndex = jTableOficina.getSelectedRow();
+        
+        jTextField3_email.setText(model.getValueAt(selectedRowIndex, 0).toString());
+        jTextField1_nome.setText(model.getValueAt(selectedRowIndex, 1).toString());
+        jFormattedTextField1_telefone.setText(model.getValueAt(selectedRowIndex, 2).toString());
+        jFormattedTextField1_telefone2.setText(model.getValueAt(selectedRowIndex, 3).toString());
+        
+        String auxEnd = model.getValueAt(selectedRowIndex, 4).toString();
+        String vetEnd[] = auxEnd.split("[\u200B,-]");
+        jTextField1_logradouro.setText(vetEnd[0].trim());
+        jTextField2_numero.setText(vetEnd[1].trim());
+        jTextField3_complemento.setText(vetEnd[2].trim());
+        jTextField3_BAIRO.setText(vetEnd[3].trim());
+        jTextField5_cidade.setText(vetEnd[4].trim());
+        jTextField6_estado.setText(vetEnd[5].trim());
+        jTextField4_cep.setText(vetEnd[6].trim());
+        
+        //aux
+        //String vetTelefone1[] = model.getValueAt
+    }//GEN-LAST:event_jTableOficinaMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

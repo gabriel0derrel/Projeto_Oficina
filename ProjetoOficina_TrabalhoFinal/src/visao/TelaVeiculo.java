@@ -8,6 +8,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelos.ICrud;
@@ -136,6 +138,11 @@ public class TelaVeiculo extends javax.swing.JInternalFrame {
                 "placa", "anoFabricacao", "dataRegistro", "chassi", "patrimonio", "kilometragem", "anoModelo", "idModelo"
             }
         ));
+        jTable_Saida.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable_SaidaMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable_Saida);
 
         jButtonincluir.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -489,7 +496,7 @@ public class TelaVeiculo extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         try {
         if(jTextField_placa.getText().isEmpty()) throw new Exception("placa vazio");
-            Veiculo objVeiculo = new Veiculo(jTextField_placa.getText());
+            Veiculo objVeiculo = new Veiculo(jTextField_placa.getText().toUpperCase());
             objVeiculo = (VeiculoBD.consultar(objVeiculo));
       
             jTextField_placa.setText(objVeiculo.getPlaca());
@@ -517,6 +524,40 @@ public class TelaVeiculo extends javax.swing.JInternalFrame {
     private void jTextField_patrimonioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField_patrimonioActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField_patrimonioActionPerformed
+
+    private void jTable_SaidaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable_SaidaMouseClicked
+        DefaultTableModel model = (DefaultTableModel)jTable_Saida.getModel();
+        int selectedRowIndex = jTable_Saida.getSelectedRow();
+        
+        jTextField_placa.setText(model.getValueAt(selectedRowIndex, 0).toString());
+        Calendar calendar = Calendar.getInstance();
+        calendar.set(Calendar.YEAR, Integer.parseInt((String) model.getValueAt(selectedRowIndex, 1)));
+        jYearChooser2_anofabricacao.setYear(calendar.get(Calendar.YEAR));
+        
+        String aux = (String) model.getValueAt(selectedRowIndex, 2);
+        String vetDate[] = aux.split("-");
+        Calendar calendarDate = Calendar.getInstance();
+        calendarDate.set(Calendar.YEAR, Integer.parseInt(vetDate[0]));
+        calendarDate.set(Calendar.MONTH, Integer.parseInt(vetDate[1]) - 1);
+        calendarDate.set(Calendar.DAY_OF_MONTH, Integer.parseInt(vetDate[2]));
+        jCalendar1_dataregistro.setDate(calendarDate.getTime());
+        
+        jTextField_chassi.setText(model.getValueAt(selectedRowIndex, 3).toString());
+        jTextField_patrimonio.setText(model.getValueAt(selectedRowIndex, 4).toString());
+        jTextField_kilometragem.setText(model.getValueAt(selectedRowIndex, 5).toString());
+        
+        Calendar calendar2 = Calendar.getInstance();
+        calendar2.set(Calendar.YEAR, Integer.parseInt((String) model.getValueAt(selectedRowIndex, 6)));
+        jYearChooser1_anomodelo.setYear(calendar2.get(Calendar.YEAR));
+        try {
+            String auxModelo = (String) model.getValueAt(selectedRowIndex, 7);
+            String vetModelo[] = auxModelo.split("-");
+            Modelo modelo = new Modelo(Integer.parseInt(vetModelo[0]));
+            jComboBox_Modelo.setSelectedItem(ModeloBD.consultar(modelo).toString());
+        } catch (Exception ex) {
+            Logger.getLogger(TelaVeiculo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jTable_SaidaMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

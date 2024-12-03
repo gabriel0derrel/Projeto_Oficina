@@ -153,6 +153,11 @@ public class TelaPeca extends javax.swing.JInternalFrame {
                 "IDPeca", "Descricao", "CodigoFabricante", "ValorUnitario", "Quantidade"
             }
         ));
+        jTable_Peca.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable_PecaMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable_Peca);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -274,6 +279,7 @@ public class TelaPeca extends javax.swing.JInternalFrame {
             }
             
             String valorUnitario = jTextField_ValorUnitario.getText().trim();
+            valorUnitario = valorUnitario.replace(",", ".");
             // Valida se o valor está vazio
             if (valorUnitario.isEmpty()) {
                 JOptionPane.showMessageDialog(rootPane, "O Valor Unitário não pode estar vazio.");
@@ -338,6 +344,7 @@ public class TelaPeca extends javax.swing.JInternalFrame {
             }
             
             String valorUnitario = jTextField_ValorUnitario.getText().trim();
+            valorUnitario = valorUnitario.replace(",", ".");
             // Valida se o valor está vazio
             if (valorUnitario.isEmpty()) {
                 JOptionPane.showMessageDialog(rootPane, "O Valor Unitário não pode estar vazio.");
@@ -365,16 +372,33 @@ public class TelaPeca extends javax.swing.JInternalFrame {
         if(jTextField_IdPeca.getText().isEmpty()) throw new Exception("Id vazio");
             Pecas objPeca = new Pecas(Integer.parseInt(jTextField_IdPeca.getText()));
             objPeca = (PecaBD.consultar(objPeca));
+           String aux = objPeca.getValorUnitarioPeca();
+            aux = aux.replace("R$", "").trim();
       
             jTextField_IdPeca.setText(objPeca.getIdPeca()+"");
             jTextField_descricaoPeca.setText(objPeca.getDescricaoPeca());
             jTextField_codigoFabricantePeca.setText(objPeca.getCodigoFabricante()+"");
-            jTextField_ValorUnitario.setText(objPeca.getValorUnitarioPeca());
+            jTextField_ValorUnitario.setText(aux);
             jTextField_quantidade.setText(objPeca.getQuantidadePeca()+ "");
         } catch (Exception erro) {
             JOptionPane.showMessageDialog(rootPane, "Buscar Visao: "+erro.getMessage());
         }
     }//GEN-LAST:event_jButton_BuscarActionPerformed
+
+    private void jTable_PecaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable_PecaMouseClicked
+        // TODO add your handling code here:
+        DefaultTableModel model = (DefaultTableModel)jTable_Peca.getModel();
+        int selectedRowIndex = jTable_Peca.getSelectedRow();
+        
+        jTextField_IdPeca.setText(model.getValueAt(selectedRowIndex, 0).toString());
+        jTextField_descricaoPeca.setText(model.getValueAt(selectedRowIndex, 1).toString());
+        jTextField_codigoFabricantePeca.setText(model.getValueAt(selectedRowIndex, 2).toString());
+        
+        String aux = model.getValueAt(selectedRowIndex, 3).toString();
+        aux = aux.replace("R$", "").trim();
+        jTextField_ValorUnitario.setText(aux);
+        jTextField_quantidade.setText(model.getValueAt(selectedRowIndex, 4).toString());
+    }//GEN-LAST:event_jTable_PecaMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

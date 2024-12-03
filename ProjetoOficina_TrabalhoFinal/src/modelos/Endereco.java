@@ -88,10 +88,7 @@ public class Endereco {
 
     @Override
     public String toString() {
-        return logradouro + " " + numeroEndereco + ", " + complemento + ", " + bairro + ", "+cidade+ "-"+ estado + " " + cep;
+        return logradouro + " \u200B" + numeroEndereco + ", " + complemento + ", " + bairro + ", "+cidade+ "-"+ estado + " \u200B" + cep;
     }
 
-
-        
- 
 }

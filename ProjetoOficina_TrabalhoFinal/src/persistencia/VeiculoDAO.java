@@ -64,6 +64,7 @@ public class VeiculoDAO implements ICrud<Veiculo>{
         try{
             String sql = "update veiculo set anoFabricacao = ?,dataRegistro = ?,chassi = ?,patrimonio = ?,kilometragem = ?,anoModelo = ?,idModelo = ? "
                      + "where (placa = ?)";
+            consultar(objeto);
             PreparedStatement preparedStatement = conexao.prepareStatement(sql);
             preparedStatement.setDate(1, new Date(objeto.getAnoFabricacao().getTime()));
             preparedStatement.setDate(2, new Date(objeto.getDataRegistro().getTime()));

@@ -52,6 +52,7 @@ public class ModeloDAO implements ICrud<Modelo>{
         try {
             String sql = "update modelo set descricao = ?,idMarca = ? "
                      + "where (idModelo = ?)";
+            consultar(objeto);
             PreparedStatement preparedStatement = conexao.prepareStatement(sql);
             preparedStatement.setString(1, objeto.getDescricao());
             preparedStatement.setInt(2, objeto.getMarca().getIdMarca());

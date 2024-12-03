@@ -63,6 +63,7 @@ public class OficinaDAO implements ICrud<Oficina>{
     try {
       String sql = "update oficina set nome = ?, ddi1 = ?,ddd1 = ?,numeroTelefone1 = ?,ddi2 = ?,ddd2 = ?,numeroTelefone2 = ?,logradouro = ?,numeroEndereco = ?,cep = ?,bairro = ?,complemento = ?,cidade = ?,estado = ? "
               + "where (email = ?)";
+      consultar(objOficina);
       PreparedStatement preparedStatement = conexao.prepareStatement(sql);
       preparedStatement.setString(1, objOficina.getNome());
       preparedStatement.setInt(2, objOficina.getTelefone1().getDdi());

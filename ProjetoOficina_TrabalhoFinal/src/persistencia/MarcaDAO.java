@@ -50,6 +50,7 @@ public class MarcaDAO implements ICrud<Marca> {
         try {
             String sql = "update marca set descricao = ? "
                      + "where (idMarca = ?)";
+            consultar(objeto);
             PreparedStatement preparedStatement = conexao.prepareStatement(sql);
             preparedStatement.setString(1, objeto.getDescricao());
             preparedStatement.setInt(2, objeto.getIdMarca());

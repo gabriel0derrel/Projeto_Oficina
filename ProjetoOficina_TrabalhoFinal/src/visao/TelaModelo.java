@@ -6,6 +6,8 @@ package visao;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import modelos.ICrud;
@@ -120,6 +122,11 @@ public class TelaModelo extends javax.swing.JInternalFrame {
                 "idModelo", "Descricao", "idMarca"
             }
         ));
+        jTable_Saida.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable_SaidaMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable_Saida);
 
         jButtonincluir.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -268,6 +275,24 @@ public class TelaModelo extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(rootPane, "Buscar Visao: "+erro.getMessage());
         }
     }//GEN-LAST:event_jButton_buscarActionPerformed
+
+    private void jTable_SaidaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable_SaidaMouseClicked
+        // TODO add your handling code here:
+        DefaultTableModel model = (DefaultTableModel)jTable_Saida.getModel();
+        int selectedRowIndex = jTable_Saida.getSelectedRow();
+        
+        jTextField_idModelo.setText(model.getValueAt(selectedRowIndex, 0).toString());
+        jTextField_descricao.setText(model.getValueAt(selectedRowIndex, 1).toString());
+        
+        try {
+            String auxMarca = (String) model.getValueAt(selectedRowIndex, 2);
+            String vetMarca[] = auxMarca.split("-");
+            Marca marca = new Marca(Integer.parseInt(vetMarca[0]));
+            jComboBox_Marca.setSelectedItem(MarcaBD.consultar(marca).toString());
+        } catch (Exception ex) {
+            Logger.getLogger(TelaVeiculo.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jTable_SaidaMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

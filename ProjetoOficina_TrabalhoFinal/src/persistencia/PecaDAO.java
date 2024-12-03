@@ -55,6 +55,7 @@ public class PecaDAO implements ICrud<Pecas>{
     try {
       String sql = "update peca set descricao = ?,codigoFabricante = ?, valorUnitario = ?::money,quantidade = ? "
               + "where (idPeca = ?)";
+      consultar(objPeca);
       String money = String.format("%.2f", Float.valueOf(objPeca.getValorUnitarioPeca()));
       PreparedStatement preparedStatement = conexao.prepareStatement(sql);
       preparedStatement.setString(1, objPeca.getDescricaoPeca());

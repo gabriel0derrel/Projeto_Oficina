@@ -59,27 +59,6 @@ public class TelaFuncionario extends javax.swing.JInternalFrame {
         JOptionPane.showMessageDialog(rootPane, erro.getMessage());
       }    
     }
-    
-    private void mostrarFuncionarioNaGridBusca(Funcionario objFuncionario){
-      try {
-
-        DefaultTableModel model =  (DefaultTableModel) jTableServicos.getModel();
-        model.setNumRows(0); 
-        if(objFuncionario == null) 
-          throw new Exception("Lista de Busca BD Vazia");
-        for(int j = 0; j<4;j++){
-            jTableServicos.getColumnModel().getColumn(j);
-             }
-          String[] saida = new String[4];
-            saida[0] = objFuncionario.getIdFuncionario()+ "";
-            saida[1] = objFuncionario.getNome() + "";
-            saida[2] = objFuncionario.getEmail().toString()+ "";
-            saida[3] = objFuncionario.getTelefone().toString()+ "";
-          model.addRow(saida);
-      } catch (Exception erro) {
-          JOptionPane.showMessageDialog(rootPane, erro.getMessage());
-        }    
-    }
 
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
@@ -97,7 +76,6 @@ public class TelaFuncionario extends javax.swing.JInternalFrame {
         jTextField1_ID = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
         jButton_buscar = new javax.swing.JButton();
-        jButtonListar = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         jTextField1_nome = new javax.swing.JTextField();
 
@@ -140,6 +118,11 @@ public class TelaFuncionario extends javax.swing.JInternalFrame {
 
             public boolean isCellEditable(int rowIndex, int columnIndex) {
                 return canEdit [columnIndex];
+            }
+        });
+        jTableServicos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableServicosMouseClicked(evt);
             }
         });
         jScrollPane1.setViewportView(jTableServicos);
@@ -185,14 +168,6 @@ public class TelaFuncionario extends javax.swing.JInternalFrame {
             }
         });
 
-        jButtonListar.setFont(new java.awt.Font("Helvetica Neue", 3, 18)); // NOI18N
-        jButtonListar.setText("LISTAR");
-        jButtonListar.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButtonListarActionPerformed(evt);
-            }
-        });
-
         jLabel8.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
         jLabel8.setText("ID");
 
@@ -223,15 +198,13 @@ public class TelaFuncionario extends javax.swing.JInternalFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel5)
                         .addGap(18, 18, 18)
-                        .addComponent(jFormattedTextField1_telefone, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(jFormattedTextField1_telefone, javax.swing.GroupLayout.PREFERRED_SIZE, 150, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jButtonIncluir)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jButtonAlterar)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton_buscar)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jButtonListar))
+                        .addComponent(jButton_buscar))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(57, 57, 57)
                         .addComponent(jTextField3_email, javax.swing.GroupLayout.PREFERRED_SIZE, 263, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -244,7 +217,7 @@ public class TelaFuncionario extends javax.swing.JInternalFrame {
                         .addComponent(jLabel6)
                         .addGap(18, 18, 18)
                         .addComponent(jTextField1_nome, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(763, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -270,8 +243,7 @@ public class TelaFuncionario extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButtonIncluir)
                     .addComponent(jButtonAlterar)
-                    .addComponent(jButton_buscar)
-                    .addComponent(jButtonListar))
+                    .addComponent(jButton_buscar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 137, Short.MAX_VALUE))
         );
@@ -401,17 +373,16 @@ public class TelaFuncionario extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         try {
             Funcionario buscarFunc = new Funcionario(Integer.parseInt(jTextField1_ID.getText()));
-            mostrarFuncionarioNaGridBusca(FuncionarioBD.consultar(buscarFunc));
-            limparTela();
+            buscarFunc = FuncionarioBD.consultar(buscarFunc);
+            
+            jTextField1_nome.setText(buscarFunc.getNome());
+            String valueTelefone = "" + buscarFunc.getTelefone().getDdi() + buscarFunc.getTelefone().getDdd() + buscarFunc.getTelefone().getNumero();
+            jFormattedTextField1_telefone.setText(valueTelefone);
+            jTextField3_email.setText(buscarFunc.getEmail());
         } catch (Exception erro) {
             JOptionPane.showMessageDialog(rootPane, "Buscar Visao: "+erro.getMessage());
         }
     }//GEN-LAST:event_jButton_buscarActionPerformed
-
-    private void jButtonListarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonListarActionPerformed
-        // TODO add your handling code here:
-        mostrarFuncionarioNaGrid();
-    }//GEN-LAST:event_jButtonListarActionPerformed
 
     private void jTextField1_nomeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1_nomeActionPerformed
         // TODO add your handling code here:
@@ -425,11 +396,21 @@ public class TelaFuncionario extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jFormattedTextField1_telefoneActionPerformed
 
+    private void jTableServicosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableServicosMouseClicked
+        // TODO add your handling code here:
+        DefaultTableModel model = (DefaultTableModel)jTableServicos.getModel();
+        int selectedRowIndex = jTableServicos.getSelectedRow();
+        
+        jTextField1_ID.setText(model.getValueAt(selectedRowIndex, 0).toString());
+        jTextField1_nome.setText(model.getValueAt(selectedRowIndex, 1).toString());
+        jTextField3_email.setText(model.getValueAt(selectedRowIndex, 2).toString());
+        jFormattedTextField1_telefone.setText(model.getValueAt(selectedRowIndex, 3).toString());
+    }//GEN-LAST:event_jTableServicosMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButtonAlterar;
     private javax.swing.JButton jButtonIncluir;
-    private javax.swing.JButton jButtonListar;
     private javax.swing.JButton jButton_buscar;
     private javax.swing.JFormattedTextField jFormattedTextField1_telefone;
     private javax.swing.JLabel jLabel1;

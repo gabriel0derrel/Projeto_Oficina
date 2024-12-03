@@ -51,6 +51,7 @@ public class VeiculoAcessorioDAO implements ICrud<VeiculoAcessorio>{
         try {
             String sql = "update veiculoAcessorio set placa = ?,idAcessorio = ? "
                      + "where (placa = ? AND idAcessorio = ?)";
+            consultar(objeto);
             PreparedStatement preparedStatement = conexao.prepareStatement(sql);
             preparedStatement.setString(1, objeto.getVeiculo().getPlaca());
             preparedStatement.setInt(2, objeto.getAcessorio().getIdAcessorio());

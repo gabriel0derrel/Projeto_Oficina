@@ -167,6 +167,11 @@ public class TelaCadastroServicos extends javax.swing.JInternalFrame {
                 "IDServico", "Descricao", "Preco"
             }
         ));
+        jTable_Servico.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTable_ServicoMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTable_Servico);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -262,12 +267,11 @@ public class TelaCadastroServicos extends javax.swing.JInternalFrame {
             Servicos objServico = new Servicos(Integer.parseInt(jTextField1_IdServico.getText()));
             objServico = (servicoBD.consultar(objServico));
             String aux = objServico.getPrecoServico();
-            String[] vetServico = aux.split(" ");
-            String[] vetServico2 = vetServico[1].split(",");
+            aux = aux.replace("R$", "").trim();
             
             jTextField1_IdServico.setText(objServico.getIdServico()+"");
             jTextField1_Descricao.setText(objServico.getDescricaoServico());
-            jTextField1_Preco.setText(vetServico2[0]);
+            jTextField1_Preco.setText(aux);
         } catch (Exception erro) {
             JOptionPane.showMessageDialog(rootPane, "Buscar Visao: "+erro.getMessage());
         }
@@ -283,6 +287,7 @@ public class TelaCadastroServicos extends javax.swing.JInternalFrame {
             }
                     // Verifica se o preço está vazio
             String precoTexto = jTextField1_Preco.getText().trim();
+            precoTexto = precoTexto.replace(",", ".");
             if (precoTexto.isEmpty()) {
                 JOptionPane.showMessageDialog(rootPane, "O campo de preço não pode estar vazio.");
                 return;
@@ -293,6 +298,7 @@ public class TelaCadastroServicos extends javax.swing.JInternalFrame {
                 JOptionPane.showMessageDialog(rootPane, "O preço deve ser um número inteiro ou decimal com até duas casas decimais (ex.: 123 ou 123.45).");
                 return;
             }
+            System.out.println(precoTexto);
             Servicos objServico = new Servicos(0, descricao, precoTexto);
             servicoBD.incluir(objServico);
             limparTela();
@@ -312,6 +318,7 @@ public class TelaCadastroServicos extends javax.swing.JInternalFrame {
             }
                     // Verifica se o preço está vazio
             String precoTexto = jTextField1_Preco.getText().trim();
+            precoTexto = precoTexto.replace(",", ".");
             if (precoTexto.isEmpty()) {
                 JOptionPane.showMessageDialog(rootPane, "O campo de preço não pode estar vazio.");
                 return;
@@ -330,6 +337,19 @@ public class TelaCadastroServicos extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(rootPane, "Alterar Visao: "+erro.getMessage());
         }
     }//GEN-LAST:event_jButton_AlterarActionPerformed
+
+    private void jTable_ServicoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable_ServicoMouseClicked
+        // TODO add your handling code here:
+        DefaultTableModel model = (DefaultTableModel)jTable_Servico.getModel();
+        int selectedRowIndex = jTable_Servico.getSelectedRow();
+        
+        jTextField1_IdServico.setText((String) model.getValueAt(selectedRowIndex, 0));
+        jTextField1_Descricao.setText((String) model.getValueAt(selectedRowIndex, 1));
+        
+        String aux = (String) model.getValueAt(selectedRowIndex, 2);
+        aux = aux.replace("R$", "").trim();
+        jTextField1_Preco.setText(aux);
+    }//GEN-LAST:event_jTable_ServicoMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
