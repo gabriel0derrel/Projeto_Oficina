@@ -269,9 +269,10 @@ public class TelaProprietario extends javax.swing.JInternalFrame {
     private void jButton_IncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_IncluirActionPerformed
         try {
             Proprietario objeto = new Proprietario();
-            objeto.setIdProprietario(Integer.parseInt(jTextField_ID.getText()));
+            objeto.setIdProprietario(0);
             objeto.setDataInicio(jCalendar_DataInicio.getDate());
             if(jCheckBox_DataFimConfirmação.isSelected()){
+                if(jCalendar_DataInicio.getDate().after(jCalendar_DataFim.getDate())) throw new Exception("A data inicial não pode ser maior que a final");
                 objeto.setDataFim(jCalendar_DataFim.getDate());
             }else{
                 objeto.setDataFim(null);
@@ -289,6 +290,7 @@ public class TelaProprietario extends javax.swing.JInternalFrame {
     private void jButton_AlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_AlterarActionPerformed
         try {
             Proprietario objeto = new Proprietario();
+            if(jTextField_ID.getText().isEmpty()) throw new Exception("ID Vazio");
             objeto.setIdProprietario(Integer.parseInt(jTextField_ID.getText()));
             objeto.setDataInicio(jCalendar_DataInicio.getDate());
             if(jCheckBox_DataFimConfirmação.isSelected()){

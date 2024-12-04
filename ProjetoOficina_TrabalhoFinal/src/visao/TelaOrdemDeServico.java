@@ -302,14 +302,18 @@ public class TelaOrdemDeServico extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         try {
             OrdemDeServico objeto = new OrdemDeServico();
-            objeto.setIdOrdem(Integer.parseInt(jTextField_ID.getText()));
+            objeto.setIdOrdem(0);
+            
+            if(jCalendar_DataInicio.getDate().after(jCalendar_DataFim.getDate())) throw new Exception("A data inicial não pode ser maior que a final");
             objeto.setDataInicio(jCalendar_DataInicio.getDate());
             objeto.setDataFim(jCalendar_DataFim.getDate());
             
             objeto.setVeiculo(new Veiculo(jComboBox_Veiculo.getSelectedItem().toString().split("-")[0]));
             
+            if(!jTextField_ValorTotal.getText().replace(",", ".").matches("\\d+(\\.\\d{1,2})?")) throw new Exception("O Valor Total deve ser um número inteiro ou decimal com até duas casas decimais (ex.: 123 ou 123.45)");
             objeto.setValorTotal(jTextField_ValorTotal.getText().replace(",", "."));
             float valorTotal = Float.parseFloat(jTextField_ValorTotal.getText().replace(",", "."));
+            if(!jTextField_ValorPago.getText().replace(",", ".").matches("\\d+(\\.\\d{1,2})?")) throw new Exception("O Valor Pago deve ser um número inteiro ou decimal com até duas casas decimais (ex.: 123 ou 123.45)");
             objeto.setValorPago(jTextField_ValorPago.getText().replace(",", "."));
             float valorPago = Float.parseFloat(jTextField_ValorPago.getText().replace(",", "."));
             float diferenca = valorTotal - valorPago;
@@ -330,19 +334,24 @@ public class TelaOrdemDeServico extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         try {
             OrdemDeServico objeto = new OrdemDeServico();
+            if(jTextField_ID.getText().isEmpty()) throw new Exception("ID vazio");
             objeto.setIdOrdem(Integer.parseInt(jTextField_ID.getText()));
+            if(jCalendar_DataInicio.getDate().after(jCalendar_DataFim.getDate())) throw new Exception("A data inicial não pode ser maior que a final");
             objeto.setDataInicio(jCalendar_DataInicio.getDate());
             objeto.setDataFim(jCalendar_DataFim.getDate());
             
             objeto.setVeiculo(new Veiculo(jComboBox_Veiculo.getSelectedItem().toString().split("-")[0]));
             
+            if(!jTextField_ValorTotal.getText().replace(",", ".").matches("\\d+(\\.\\d{1,2})?")) throw new Exception("O Valor Total deve ser um número inteiro ou decimal com até duas casas decimais (ex.: 123 ou 123.45)");
             objeto.setValorTotal(jTextField_ValorTotal.getText().replace(",", "."));
             float valorTotal = Float.parseFloat(jTextField_ValorTotal.getText().replace(",", "."));
+            if(!jTextField_ValorPago.getText().replace(",", ".").matches("\\d+(\\.\\d{1,2})?")) throw new Exception("O Valor Pago deve ser um número inteiro ou decimal com até duas casas decimais (ex.: 123 ou 123.45)");
             objeto.setValorPago(jTextField_ValorPago.getText().replace(",", "."));
             float valorPago = Float.parseFloat(jTextField_ValorPago.getText().replace(",", "."));
             float diferenca = valorTotal - valorPago;
             if(diferenca < 0.0) throw new Exception("O Valor Pago não pode ser maior que o valor total");
             objeto.setDiferenca(diferenca+"");
+            
             objeto.setStatus(jComboBox_Status.getSelectedItem().toString());
             ordemDB.alterar(objeto);
             limparTela();

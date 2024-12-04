@@ -47,7 +47,7 @@ public class TelaVeiculo extends javax.swing.JInternalFrame {
         }
     }
         private void limparTela(){
-      jTextField_chassi.setText("");
+      jFormattedTextField1_chassi.setValue(null);
       jTextField_kilometragem.setText("");
       jTextField_patrimonio.setText("");
       jTextField_placa.setText("");
@@ -120,7 +120,6 @@ public class TelaVeiculo extends javax.swing.JInternalFrame {
         jTextField_placa = new javax.swing.JTextField();
         jLabel9 = new javax.swing.JLabel();
         jLabel4 = new javax.swing.JLabel();
-        jTextField_chassi = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
         jLabel5 = new javax.swing.JLabel();
         jLabel11 = new javax.swing.JLabel();
@@ -128,6 +127,7 @@ public class TelaVeiculo extends javax.swing.JInternalFrame {
         jYearChooser1_anomodelo = new com.toedter.calendar.JYearChooser();
         jYearChooser2_anofabricacao = new com.toedter.calendar.JYearChooser();
         jCalendar1_dataregistro = new com.toedter.calendar.JCalendar();
+        jFormattedTextField1_chassi = new javax.swing.JFormattedTextField();
 
         setPreferredSize(new java.awt.Dimension(1119, 466));
 
@@ -199,8 +199,6 @@ public class TelaVeiculo extends javax.swing.JInternalFrame {
         jLabel4.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
         jLabel4.setText("chassi");
 
-        jTextField_chassi.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-
         jLabel10.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
         jLabel10.setText("dataRegistro");
 
@@ -211,6 +209,12 @@ public class TelaVeiculo extends javax.swing.JInternalFrame {
         jLabel11.setText("anoModelo");
 
         jComboBox_Modelo.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+
+        try {
+            jFormattedTextField1_chassi.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("#################")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -241,9 +245,9 @@ public class TelaVeiculo extends javax.swing.JInternalFrame {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel4)
+                                        .addGap(18, 18, 18)
+                                        .addComponent(jFormattedTextField1_chassi, javax.swing.GroupLayout.PREFERRED_SIZE, 189, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jTextField_chassi, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(37, 37, 37)
                                         .addComponent(jLabel7))
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel6)
@@ -279,9 +283,11 @@ public class TelaVeiculo extends javax.swing.JInternalFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel1)
                             .addComponent(jTextField_placa, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4)
-                            .addComponent(jTextField_chassi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGroup(layout.createSequentialGroup()
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel4)
+                                .addComponent(jFormattedTextField1_chassi, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGap(1, 1, 1)))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel7)
@@ -348,7 +354,7 @@ public class TelaVeiculo extends javax.swing.JInternalFrame {
                 JOptionPane.showMessageDialog(rootPane, "Data de registro inválida! Selecione uma data válida.");
 
             // **Validação do Chassi**
-            String chassi = jTextField_chassi.getText().trim().toUpperCase();
+            String chassi = jFormattedTextField1_chassi.getText().trim().toUpperCase();
             if (chassi.isEmpty())
                 chassi = null; 
             else if (chassi.length() != 17 || !chassi.matches("[A-Z0-9]+"))
@@ -436,7 +442,7 @@ public class TelaVeiculo extends javax.swing.JInternalFrame {
                 JOptionPane.showMessageDialog(rootPane, "Data de registro inválida! Selecione uma data válida.");
 
             // **Validação do Chassi**
-            String chassi = jTextField_chassi.getText().trim().toUpperCase();
+            String chassi = jFormattedTextField1_chassi.getText().trim().toUpperCase();
             if (chassi.isEmpty())
                 chassi = null; 
             else if (chassi.length() != 17 || !chassi.matches("[A-Z0-9]+"))
@@ -505,7 +511,7 @@ public class TelaVeiculo extends javax.swing.JInternalFrame {
             objVeiculo = (veiculoBD.consultar(objVeiculo));
       
             jTextField_placa.setText(objVeiculo.getPlaca());
-            jTextField_chassi.setText(objVeiculo.getChassi());
+            jFormattedTextField1_chassi.setText(objVeiculo.getChassi());
             jTextField_kilometragem.setText(objVeiculo.getKilometragem()+"");
             if(objVeiculo.getPatrimonio() != null){
                 jTextField_patrimonio.setText(objVeiculo.getPatrimonio()+"");
@@ -552,7 +558,7 @@ public class TelaVeiculo extends javax.swing.JInternalFrame {
         calendarDate.set(Calendar.DAY_OF_MONTH, Integer.parseInt(vetDate[2]));
         jCalendar1_dataregistro.setDate(calendarDate.getTime());
         
-        jTextField_chassi.setText(model.getValueAt(selectedRowIndex, 3).toString());
+        jFormattedTextField1_chassi.setText(model.getValueAt(selectedRowIndex, 3).toString());
         jTextField_patrimonio.setText(model.getValueAt(selectedRowIndex, 4).toString());
         jTextField_kilometragem.setText(model.getValueAt(selectedRowIndex, 5).toString());
         
@@ -576,6 +582,7 @@ public class TelaVeiculo extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButtonincluir;
     private com.toedter.calendar.JCalendar jCalendar1_dataregistro;
     private javax.swing.JComboBox<String> jComboBox_Modelo;
+    private javax.swing.JFormattedTextField jFormattedTextField1_chassi;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -586,7 +593,6 @@ public class TelaVeiculo extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable_Saida;
-    private javax.swing.JTextField jTextField_chassi;
     private javax.swing.JTextField jTextField_kilometragem;
     private javax.swing.JTextField jTextField_patrimonio;
     private javax.swing.JTextField jTextField_placa;

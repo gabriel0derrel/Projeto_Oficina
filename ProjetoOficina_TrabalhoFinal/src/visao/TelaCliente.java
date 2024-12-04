@@ -70,7 +70,6 @@ public class TelaCliente extends javax.swing.JInternalFrame {
         jLabel9 = new javax.swing.JLabel();
         jTextField_Bairro = new javax.swing.JTextField();
         jLabel10 = new javax.swing.JLabel();
-        jTextField_CEP = new javax.swing.JTextField();
         jLabel11 = new javax.swing.JLabel();
         jTextField_Cidade = new javax.swing.JTextField();
         jLabel12 = new javax.swing.JLabel();
@@ -83,13 +82,14 @@ public class TelaCliente extends javax.swing.JInternalFrame {
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
-        jTextField_CPF = new javax.swing.JTextField();
-        jTextField_CNPJ = new javax.swing.JTextField();
         jTextField_Contato = new javax.swing.JTextField();
         jTextField_InscricaoEstadual = new javax.swing.JTextField();
         jButton_Incluir = new javax.swing.JButton();
         jButton_Alterar = new javax.swing.JButton();
         jButton_Buscar = new javax.swing.JButton();
+        jFormattedTextField1_cpf = new javax.swing.JFormattedTextField();
+        jFormattedTextField1_cnpj = new javax.swing.JFormattedTextField();
+        jFormattedTextField1_cep = new javax.swing.JFormattedTextField();
 
         jLabel1.setFont(new java.awt.Font("sansserif", 1, 18)); // NOI18N
         jLabel1.setText("Tipo de Pessoa");
@@ -213,6 +213,24 @@ public class TelaCliente extends javax.swing.JInternalFrame {
             }
         });
 
+        try {
+            jFormattedTextField1_cpf.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("###.###.###-##")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
+        try {
+            jFormattedTextField1_cnpj.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("##.###.###/####-##")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
+        try {
+            jFormattedTextField1_cep.setFormatterFactory(new javax.swing.text.DefaultFormatterFactory(new javax.swing.text.MaskFormatter("#####-###")));
+        } catch (java.text.ParseException ex) {
+            ex.printStackTrace();
+        }
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -237,7 +255,18 @@ public class TelaCliente extends javax.swing.JInternalFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(javax.swing.GroupLayout.Alignment.LEADING, layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jLabel8)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jTextField_Logradouro))
+                                            .addGroup(layout.createSequentialGroup()
+                                                .addComponent(jLabel6)
+                                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                                .addComponent(jTextField_Email, javax.swing.GroupLayout.PREFERRED_SIZE, 407, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel9)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -245,16 +274,8 @@ public class TelaCliente extends javax.swing.JInternalFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jLabel10)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jTextField_CEP, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel8)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jTextField_Logradouro))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jLabel6)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jTextField_Email, javax.swing.GroupLayout.PREFERRED_SIZE, 407, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jFormattedTextField1_cep, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(4, 4, 4)))
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel5)
@@ -276,15 +297,15 @@ public class TelaCliente extends javax.swing.JInternalFrame {
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel16)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jTextField_Contato))
+                                        .addComponent(jTextField_Contato, javax.swing.GroupLayout.DEFAULT_SIZE, 168, Short.MAX_VALUE))
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel14)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jTextField_CPF))
+                                        .addComponent(jFormattedTextField1_cpf))
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel15)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jTextField_CNPJ, javax.swing.GroupLayout.DEFAULT_SIZE, 188, Short.MAX_VALUE)))
+                                        .addComponent(jFormattedTextField1_cnpj)))
                                 .addGap(18, 18, 18)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                                     .addComponent(jButton_Buscar)
@@ -330,8 +351,8 @@ public class TelaCliente extends javax.swing.JInternalFrame {
                     .addComponent(jLabel6)
                     .addComponent(jTextField_Email, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel14)
-                    .addComponent(jTextField_CPF, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton_Alterar))
+                    .addComponent(jButton_Alterar)
+                    .addComponent(jFormattedTextField1_cpf, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -341,18 +362,18 @@ public class TelaCliente extends javax.swing.JInternalFrame {
                         .addComponent(jLabel7)
                         .addComponent(jTextField_Numero, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel15)
-                        .addComponent(jTextField_CNPJ, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jButton_Buscar)))
+                        .addComponent(jButton_Buscar)
+                        .addComponent(jFormattedTextField1_cnpj, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
                     .addComponent(jTextField_Bairro, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel10)
-                    .addComponent(jTextField_CEP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel11)
                     .addComponent(jTextField_Cidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel16)
-                    .addComponent(jTextField_Contato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextField_Contato, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jFormattedTextField1_cep, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12)
@@ -379,8 +400,10 @@ public class TelaCliente extends javax.swing.JInternalFrame {
         try {
             String nome = jTextField_Nome.getText();
             if(nome.isEmpty()) throw new Exception("Nome Vazio");
+            if (!nome.matches("^[A-Za-zÀ-Üà-ü\\s]+$")) throw new Exception("O nome deve conter apenas letras e espaços.");
             String email = jTextField_Email.getText();
             if(email.isEmpty()) throw new Exception("Email Vazio");
+            if (!email.matches("^[\\w.%+-]+@[\\w.-]+\\.[A-Za-z]{2,}$")) throw  new Exception("Insira um email válido no formato: exemplo@dominio.com");
             
             String numeroTele1 = jFormattedTextField_Telefone1.getText();
             if(numeroTele1.equals("+  (  )         ")) throw new Exception("Telefone 1 Vazio");
@@ -402,21 +425,33 @@ public class TelaCliente extends javax.swing.JInternalFrame {
             }
             
             if(jTextField_Logradouro.getText().isEmpty()) throw new Exception("Logradouro vazio");
-            if(jTextField_Numero.getText().isEmpty()) throw new Exception("Nomero vazio");
-            if(jTextField_CEP.getText().isEmpty()) throw new Exception("CEP vazio");
+            if(jTextField_Numero.getText().isEmpty()) throw new Exception("Número vazio");
+            if(!jTextField_Numero.getText().matches("\\d+")) throw new Exception("Número precisa ser um inteiro positivo");
+            if(jFormattedTextField1_cep.getText().isEmpty()) throw new Exception("CEP vazio");
+            if(!jFormattedTextField1_cep.getText().matches("\\d{5}\\-\\d{3}")) throw new Exception("Insira um CEP válido no formato: XXXXXXXX");
             if(jTextField_Bairro.getText().isEmpty()) throw new Exception("Bairro vazio");
             if(jTextField_Complemento.getText().isEmpty()) throw new Exception("Complemento vazio");
             if(jTextField_Cidade.getText().isEmpty()) throw new Exception("Cidade Vazia");
             if(jTextField_Estado.getText().isEmpty()) throw new Exception("Estado vazio");
+            if(jTextField_Estado.getText().length() != 2 || !jTextField_Estado.getText().matches("[A-Z]{2}")) throw new Exception("O campo de estado deve conter 2 letras (ex: SP, RJ)");
             
             Endereco endereco = new Endereco(jTextField_Logradouro.getText().toUpperCase(), 
-                    Integer.parseInt(jTextField_Numero.getText()), jTextField_CEP.getText(), 
+                    Integer.parseInt(jTextField_Numero.getText()), jFormattedTextField1_cep.getText(), 
                     jTextField_Bairro.getText().toUpperCase(),jTextField_Complemento.getText().toUpperCase(), 
                     jTextField_Cidade.getText().toUpperCase(),jTextField_Estado.getText().toUpperCase());
             
+            if(jComboBox_Opcoes.getSelectedItem().toString().compareTo("Pessoa Jurídica") == 0){
+                if(jFormattedTextField1_cnpj.getText().isEmpty()) throw new Exception("CNPJ vazio");
+                if(jTextField_InscricaoEstadual.getText().isEmpty()) throw new Exception("Inscrição Estadual vazia");
+                if(!jFormattedTextField1_cnpj.getText().matches("\\d{2}\\.\\d{3}\\.\\d{3}\\/\\d{4}\\-\\d{2}")) throw new Exception("Insira um CNPJ válido no formato: XX.XXX.XXX/XXXX-XX");
+                if(!jTextField_InscricaoEstadual.getText().matches("\\d+")) throw new Exception("Inscrição Estadual precisa conter apenas numerais");
+            } else {
+                if(jFormattedTextField1_cpf.getText().isEmpty()) throw new Exception("CPF vazio");
+                if(!jFormattedTextField1_cpf.getText().matches("\\d{3}\\.\\d{3}\\.\\d{3}\\-\\d{2}")) throw new Exception("Insira um CPF válido no formato: XXX.XXX.XXX-XX");
+            }
             Cliente objeto = new Cliente(0, nome, telefone1, telefone2, email, endereco, 
-                    jComboBox_Opcoes.getSelectedItem().toString(), jTextField_CPF.getText(), 
-                    jTextField_CNPJ.getText(), jTextField_Contato.getText(), 
+                    jComboBox_Opcoes.getSelectedItem().toString(), jFormattedTextField1_cpf.getText(), 
+                    jFormattedTextField1_cnpj.getText(), jTextField_Contato.getText(), 
                     jTextField_InscricaoEstadual.getText());
             
             clienteDB.incluir(objeto);
@@ -431,12 +466,15 @@ public class TelaCliente extends javax.swing.JInternalFrame {
     private void jButton_AlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_AlterarActionPerformed
         // TODO add your handling code here:
         try {
-            if(jTextField_IdCliente.getText().isEmpty()) throw new Exception("Id vazio");
-            int idCliente = Integer.parseInt(jTextField_IdCliente.getText());
+            String validacaoID = jTextField_IdCliente.getText();
+            if(validacaoID.isEmpty()) throw new Exception("ID Vazio");
+            int idCliente = Integer.parseInt(validacaoID);
             String nome = jTextField_Nome.getText();
             if(nome.isEmpty()) throw new Exception("Nome Vazio");
+            if (!nome.matches("^[A-Za-zÀ-Üà-ü\\s]+$")) throw new Exception("O nome deve conter apenas letras e espaços.");
             String email = jTextField_Email.getText();
             if(email.isEmpty()) throw new Exception("Email Vazio");
+            if (!email.matches("^[\\w.%+-]+@[\\w.-]+\\.[A-Za-z]{2,}$")) throw  new Exception("Insira um email válido no formato: exemplo@dominio.com");
             
             String numeroTele1 = jFormattedTextField_Telefone1.getText();
             if(numeroTele1.equals("+  (  )         ")) throw new Exception("Telefone 1 Vazio");
@@ -458,20 +496,34 @@ public class TelaCliente extends javax.swing.JInternalFrame {
             }
             
             if(jTextField_Logradouro.getText().isEmpty()) throw new Exception("Logradouro vazio");
-            if(jTextField_Numero.getText().isEmpty()) throw new Exception("Nomero vazio");
-            if(jTextField_CEP.getText().isEmpty()) throw new Exception("CEP vazio");
+            if(jTextField_Numero.getText().isEmpty()) throw new Exception("Número vazio");
+            if(!jTextField_Numero.getText().matches("\\d+")) throw new Exception("Número precisa ser um inteiro positivo");
+            if(jFormattedTextField1_cep.getText().isEmpty()) throw new Exception("CEP vazio");
+            if(!jFormattedTextField1_cep.getText().matches("\\d{5}\\-\\d{3}")) throw new Exception("Insira um CEP válido no formato: XXXXXXXX");
             if(jTextField_Bairro.getText().isEmpty()) throw new Exception("Bairro vazio");
             if(jTextField_Complemento.getText().isEmpty()) throw new Exception("Complemento vazio");
             if(jTextField_Cidade.getText().isEmpty()) throw new Exception("Cidade Vazia");
             if(jTextField_Estado.getText().isEmpty()) throw new Exception("Estado vazio");
+            if(jTextField_Estado.getText().length() != 2 || !jTextField_Estado.getText().matches("[A-Z]{2}")) throw new Exception("O campo de estado deve conter 2 letras (ex: SP, RJ)");
             
             Endereco endereco = new Endereco(jTextField_Logradouro.getText().toUpperCase(), 
-                    Integer.parseInt(jTextField_Numero.getText()), jTextField_CEP.getText(), 
+                    Integer.parseInt(jTextField_Numero.getText()), jFormattedTextField1_cep.getText(), 
                     jTextField_Bairro.getText().toUpperCase(),jTextField_Complemento.getText().toUpperCase(), 
                     jTextField_Cidade.getText().toUpperCase(),jTextField_Estado.getText().toUpperCase());
+            
+            if(jComboBox_Opcoes.getSelectedItem().toString().compareTo("Pessoa Jurídica") == 0){
+                if(jFormattedTextField1_cnpj.getText().isEmpty()) throw new Exception("CNPJ vazio");
+                if(jTextField_InscricaoEstadual.getText().isEmpty()) throw new Exception("Inscrição Estadual vazia");
+                if(!jFormattedTextField1_cnpj.getText().matches("\\d{2}\\.\\d{3}\\.\\d{3}\\/\\d{4}\\-\\d{2}")) throw new Exception("Insira um CNPJ válido no formato: XX.XXX.XXX/XXXX-XX");
+                if(!jTextField_InscricaoEstadual.getText().matches("\\d+")) throw new Exception("Inscrição Estadual precisa conter apenas numerais");
+            } else {
+                if(jFormattedTextField1_cpf.getText().isEmpty()) throw new Exception("CPF vazio");
+                if(!jFormattedTextField1_cpf.getText().matches("\\d{3}\\.\\d{3}\\.\\d{3}\\-\\d{2}")) throw new Exception("Insira um CPF válido no formato: XXX.XXX.XXX-XX");
+            }
+            
             Cliente objeto = new Cliente(idCliente, nome, telefone1, telefone2, email, endereco, 
-                    jComboBox_Opcoes.getSelectedItem().toString(), jTextField_CPF.getText(), 
-                    jTextField_CNPJ.getText(), jTextField_Contato.getText(), 
+                    jComboBox_Opcoes.getSelectedItem().toString(), jFormattedTextField1_cpf.getText(), 
+                    jFormattedTextField1_cnpj.getText(), jTextField_Contato.getText(), 
                     jTextField_InscricaoEstadual.getText());
             
             clienteDB.alterar(objeto);
@@ -496,11 +548,11 @@ public class TelaCliente extends javax.swing.JInternalFrame {
             escolherEntrePessoaFisicaOuJuridica();
             jTextField_Nome.setText(objeto.getNome());
             jTextField_Email.setText(objeto.getEmail());
-            jTextField_CEP.setText(objeto.getEndereco().getCep());
-            jTextField_CNPJ.setText(objeto.getCnpj());
+            jFormattedTextField1_cep.setText(objeto.getEndereco().getCep());
+            jFormattedTextField1_cnpj.setText(objeto.getCnpj());
             jTextField_Contato.setText(objeto.getContato());
             jTextField_InscricaoEstadual.setText(objeto.getInscricaoEstadual());
-            jTextField_CPF.setText(objeto.getCpf());
+            jFormattedTextField1_cpf.setText(objeto.getCpf());
             jTextField_Logradouro.setText(objeto.getEndereco().getLogradouro());
             jTextField_Numero.setText(objeto.getEndereco().getNumeroEndereco()+"");
             jTextField_Bairro.setText(objeto.getEndereco().getBairro());
@@ -541,32 +593,32 @@ public class TelaCliente extends javax.swing.JInternalFrame {
         jTextField_Bairro.setText(vetEnd[3].trim());
         jTextField_Cidade.setText(vetEnd[4].trim());
         jTextField_Estado.setText(vetEnd[5].trim());
-        jTextField_CEP.setText(vetEnd[6].trim());
+        jFormattedTextField1_cep.setText(vetEnd[6].trim());
         
         if(model.getValueAt(selectedRowIndex, 6).toString().compareTo("") == 0){
             jComboBox_Opcoes.setSelectedItem("Pessoa Jurídica");
             escolherEntrePessoaFisicaOuJuridica();
-            jTextField_CNPJ.setText(model.getValueAt(selectedRowIndex, 7).toString());
+            jFormattedTextField1_cnpj.setText(model.getValueAt(selectedRowIndex, 7).toString());
             jTextField_Contato.setText(model.getValueAt(selectedRowIndex, 8).toString());
             jTextField_InscricaoEstadual.setText(model.getValueAt(selectedRowIndex, 9).toString());
         } else {
             jComboBox_Opcoes.setSelectedItem("Pessoa Física");
             escolherEntrePessoaFisicaOuJuridica();
-            jTextField_CPF.setText(model.getValueAt(selectedRowIndex, 6).toString());
+            jFormattedTextField1_cpf.setText(model.getValueAt(selectedRowIndex, 6).toString());
         }
     }//GEN-LAST:event_jTable_SaidaMouseClicked
     
     private void escolherEntrePessoaFisicaOuJuridica(){
         String selecionado = jComboBox_Opcoes.getSelectedItem().toString();
         if(selecionado.equals("Pessoa Física")){
-            jTextField_CPF.setEnabled(true);
-            jTextField_CNPJ.setEnabled(false);
+            jFormattedTextField1_cpf.setEnabled(true);
+            jFormattedTextField1_cnpj.setEnabled(false);
             jTextField_Contato.setEnabled(false);
             jTextField_InscricaoEstadual.setEnabled(false);
         }
         else if(selecionado.equals("Pessoa Jurídica")){
-            jTextField_CPF.setEnabled(false);
-            jTextField_CNPJ.setEnabled(true);
+            jFormattedTextField1_cpf.setEnabled(false);
+            jFormattedTextField1_cnpj.setEnabled(true);
             jTextField_Contato.setEnabled(true);
             jTextField_InscricaoEstadual.setEnabled(true);
         }
@@ -613,11 +665,11 @@ public class TelaCliente extends javax.swing.JInternalFrame {
         jTextField_IdCliente.setText("");
         jTextField_Nome.setText("");
         jTextField_Email.setText("");
-        jTextField_CEP.setText("");
-        jTextField_CNPJ.setText("");
+        jFormattedTextField1_cep.setValue(null);
+        jFormattedTextField1_cnpj.setValue(null);
         jTextField_Contato.setText("");
         jTextField_InscricaoEstadual.setText("");
-        jTextField_CPF.setText("");
+        jFormattedTextField1_cpf.setValue(null);
         jTextField_Logradouro.setText("");
         jTextField_Numero.setText("");
         jTextField_Bairro.setText("");
@@ -633,6 +685,9 @@ public class TelaCliente extends javax.swing.JInternalFrame {
     private javax.swing.JButton jButton_Buscar;
     private javax.swing.JButton jButton_Incluir;
     private javax.swing.JComboBox<String> jComboBox_Opcoes;
+    private javax.swing.JFormattedTextField jFormattedTextField1_cep;
+    private javax.swing.JFormattedTextField jFormattedTextField1_cnpj;
+    private javax.swing.JFormattedTextField jFormattedTextField1_cpf;
     private javax.swing.JFormattedTextField jFormattedTextField_Telefone1;
     private javax.swing.JFormattedTextField jFormattedTextField_Telefone2;
     private javax.swing.JLabel jLabel1;
@@ -655,9 +710,6 @@ public class TelaCliente extends javax.swing.JInternalFrame {
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable_Saida;
     private javax.swing.JTextField jTextField_Bairro;
-    private javax.swing.JTextField jTextField_CEP;
-    private javax.swing.JTextField jTextField_CNPJ;
-    private javax.swing.JTextField jTextField_CPF;
     private javax.swing.JTextField jTextField_Cidade;
     private javax.swing.JTextField jTextField_Complemento;
     private javax.swing.JTextField jTextField_Contato;

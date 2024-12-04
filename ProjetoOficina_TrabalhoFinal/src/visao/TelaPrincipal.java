@@ -25,6 +25,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
    */
     
     private Connection conexao = null;
+    private boolean usuarioValidado = false;
     
     public TelaPrincipal() {
         initComponents();
@@ -83,6 +84,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jDesktopPane_InputDeTela = new javax.swing.JDesktopPane();
         jMenuBar_Opcoes = new javax.swing.JMenuBar();
+        jMenu_Login = new javax.swing.JMenu();
         jMenu_Oficina = new javax.swing.JMenu();
         jMenu_ClientesVeiculos = new javax.swing.JMenu();
         jMenuItem_Cliente = new javax.swing.JMenuItem();
@@ -118,6 +120,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
             jDesktopPane_InputDeTelaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 639, Short.MAX_VALUE)
         );
+
+        jMenu_Login.setText("LOGIN");
+        jMenu_Login.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenu_LoginMouseClicked(evt);
+            }
+        });
+        jMenuBar_Opcoes.add(jMenu_Login);
 
         jMenu_Oficina.setText("Oficina");
         jMenu_Oficina.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -275,214 +285,289 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void jMenuItem_ClienteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_ClienteActionPerformed
         // Abrir a parte do cliente
-        jDesktopPane_InputDeTela.removeAll();
-        TelaCliente telaCliente = new TelaCliente();
-        jDesktopPane_InputDeTela.add(telaCliente);
-        try {
-            telaCliente.setVisible(true);
-            telaCliente.setSelected(true);
-            telaCliente.setMaximum(true);
-            telaCliente.setMaximizable(false);
-        } catch (PropertyVetoException ex) {
-            Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        if(usuarioValidado){
+            jDesktopPane_InputDeTela.removeAll();
+            TelaCliente telaCliente = new TelaCliente();
+            jDesktopPane_InputDeTela.add(telaCliente);
+            try {
+                telaCliente.setVisible(true);
+                telaCliente.setSelected(true);
+                telaCliente.setMaximum(true);
+                telaCliente.setMaximizable(false);
+            } catch (PropertyVetoException ex) {
+                Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }else{
+            JOptionPane.showMessageDialog(rootPane, "Login Necessário");
         }
     }//GEN-LAST:event_jMenuItem_ClienteActionPerformed
 
     private void jMenuItem_ProprietarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_ProprietarioActionPerformed
         // Abrir parte do Proprietário
-        jDesktopPane_InputDeTela.removeAll();
-        TelaProprietario telaProprietario = new TelaProprietario();
-        jDesktopPane_InputDeTela.add(telaProprietario);
-        try {
-            telaProprietario.setVisible(true);
-            telaProprietario.setSelected(true);
-            telaProprietario.setMaximum(true);
-            telaProprietario.setMaximizable(false);
-        } catch (PropertyVetoException ex) {
-            Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        if(usuarioValidado){
+            jDesktopPane_InputDeTela.removeAll();
+            TelaProprietario telaProprietario = new TelaProprietario();
+            jDesktopPane_InputDeTela.add(telaProprietario);
+            try {
+                telaProprietario.setVisible(true);
+                telaProprietario.setSelected(true);
+                telaProprietario.setMaximum(true);
+                telaProprietario.setMaximizable(false);
+            } catch (PropertyVetoException ex) {
+                Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }else{
+            JOptionPane.showMessageDialog(rootPane, "Login Necessário");
         }
     }//GEN-LAST:event_jMenuItem_ProprietarioActionPerformed
 
     private void jMenuItem_MarcaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_MarcaActionPerformed
         // Abrir parte da Marca
-        jDesktopPane_InputDeTela.removeAll();
-        TelaMarca telaMarca = new TelaMarca();
-        jDesktopPane_InputDeTela.add(telaMarca);
-        try {
-            telaMarca.setVisible(true);
-            telaMarca.setSelected(true);
-            telaMarca.setMaximum(true);
-            telaMarca.setMaximizable(false);
-        } catch (PropertyVetoException ex) {
-            Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        if(usuarioValidado){
+            jDesktopPane_InputDeTela.removeAll();
+            TelaMarca telaMarca = new TelaMarca();
+            jDesktopPane_InputDeTela.add(telaMarca);
+            try {
+                telaMarca.setVisible(true);
+                telaMarca.setSelected(true);
+                telaMarca.setMaximum(true);
+                telaMarca.setMaximizable(false);
+            } catch (PropertyVetoException ex) {
+                Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }else{
+            JOptionPane.showMessageDialog(rootPane, "Login Necessário");
         }
     }//GEN-LAST:event_jMenuItem_MarcaActionPerformed
 
     private void jMenuItem_ModeloActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_ModeloActionPerformed
         // Abrir parte do Modelo
-        jDesktopPane_InputDeTela.removeAll();
-        TelaModelo telaModelo = new TelaModelo();
-        jDesktopPane_InputDeTela.add(telaModelo);
-        try {
-            telaModelo.setVisible(true);
-            telaModelo.setSelected(true);
-            telaModelo.setMaximum(true);
-            telaModelo.setMaximizable(false);
-        } catch (PropertyVetoException ex) {
-            Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-        } 
+        if(usuarioValidado){
+            jDesktopPane_InputDeTela.removeAll();
+            TelaModelo telaModelo = new TelaModelo();
+            jDesktopPane_InputDeTela.add(telaModelo);
+            try {
+                telaModelo.setVisible(true);
+                telaModelo.setSelected(true);
+                telaModelo.setMaximum(true);
+                telaModelo.setMaximizable(false);
+            } catch (PropertyVetoException ex) {
+                Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }else{
+            JOptionPane.showMessageDialog(rootPane, "Login Necessário");
+        }
     }//GEN-LAST:event_jMenuItem_ModeloActionPerformed
 
     private void jMenuItem_AcessorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_AcessorioActionPerformed
         // Abrir parte do Acessório
-        jDesktopPane_InputDeTela.removeAll();
-        TelaAcessorio telaAcessorio = new TelaAcessorio();
-        jDesktopPane_InputDeTela.add(telaAcessorio);
-        try {
-            telaAcessorio.setVisible(true);
-            telaAcessorio.setSelected(true);
-            telaAcessorio.setMaximum(true);
-            telaAcessorio.setMaximizable(false);
-        } catch (PropertyVetoException ex) {
-            Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        if(usuarioValidado){
+            jDesktopPane_InputDeTela.removeAll();
+            TelaAcessorio telaAcessorio = new TelaAcessorio();
+            jDesktopPane_InputDeTela.add(telaAcessorio);
+            try {
+                telaAcessorio.setVisible(true);
+                telaAcessorio.setSelected(true);
+                telaAcessorio.setMaximum(true);
+                telaAcessorio.setMaximizable(false);
+            } catch (PropertyVetoException ex) {
+                Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }else{
+            JOptionPane.showMessageDialog(rootPane, "Login Necessário");
         }
     }//GEN-LAST:event_jMenuItem_AcessorioActionPerformed
 
     private void jMenuItem_VeiculoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_VeiculoActionPerformed
         // Abrir parte do Veículo
-        jDesktopPane_InputDeTela.removeAll();
-        TelaVeiculo telaVeiculo = new TelaVeiculo();
-        jDesktopPane_InputDeTela.add(telaVeiculo);
-        try {
-            telaVeiculo.setVisible(true);
-            telaVeiculo.setSelected(true);
-            telaVeiculo.setMaximum(true);
-            telaVeiculo.setMaximizable(false);
-        } catch (PropertyVetoException ex) {
-            Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        if(usuarioValidado){
+            jDesktopPane_InputDeTela.removeAll();
+            TelaVeiculo telaVeiculo = new TelaVeiculo();
+            jDesktopPane_InputDeTela.add(telaVeiculo);
+            try {
+                telaVeiculo.setVisible(true);
+                telaVeiculo.setSelected(true);
+                telaVeiculo.setMaximum(true);
+                telaVeiculo.setMaximizable(false);
+            } catch (PropertyVetoException ex) {
+                Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }else{
+            JOptionPane.showMessageDialog(rootPane, "Login Necessário");
         }
     }//GEN-LAST:event_jMenuItem_VeiculoActionPerformed
 
     private void jMenuItem_VeiculoAcessorioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_VeiculoAcessorioActionPerformed
         // Abrir parte dos Acessíos do Veículo(tabela VeiculoAcessorio)
-        jDesktopPane_InputDeTela.removeAll();
-        TelaVeiculoAcessorio telaVeiculoAcessorio = new TelaVeiculoAcessorio();
-        jDesktopPane_InputDeTela.add(telaVeiculoAcessorio);
-        try {
-            telaVeiculoAcessorio.setVisible(true);
-            telaVeiculoAcessorio.setSelected(true);
-            telaVeiculoAcessorio.setMaximum(true);
-            telaVeiculoAcessorio.setMaximizable(false);
-        } catch (PropertyVetoException ex) {
-            Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        if(usuarioValidado){
+            jDesktopPane_InputDeTela.removeAll();
+            TelaVeiculoAcessorio telaVeiculoAcessorio = new TelaVeiculoAcessorio();
+            jDesktopPane_InputDeTela.add(telaVeiculoAcessorio);
+            try {
+                telaVeiculoAcessorio.setVisible(true);
+                telaVeiculoAcessorio.setSelected(true);
+                telaVeiculoAcessorio.setMaximum(true);
+                telaVeiculoAcessorio.setMaximizable(false);
+            } catch (PropertyVetoException ex) {
+                Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }else{
+            JOptionPane.showMessageDialog(rootPane, "Login Necessário");
         }
     }//GEN-LAST:event_jMenuItem_VeiculoAcessorioActionPerformed
 
     private void jMenuItem_PecaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_PecaActionPerformed
         // Abrir parte da Peça
-        jDesktopPane_InputDeTela.removeAll();
-        TelaPeca telaPeca = new TelaPeca();
-        jDesktopPane_InputDeTela.add(telaPeca);
-        try {
-            telaPeca.setVisible(true);
-            telaPeca.setSelected(true);
-            telaPeca.setMaximum(true);
-            telaPeca.setMaximizable(false);
-        } catch (PropertyVetoException ex) {
-            Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        if(usuarioValidado){
+            jDesktopPane_InputDeTela.removeAll();
+            TelaPeca telaPeca = new TelaPeca();
+            jDesktopPane_InputDeTela.add(telaPeca);
+            try {
+                telaPeca.setVisible(true);
+                telaPeca.setSelected(true);
+                telaPeca.setMaximum(true);
+                telaPeca.setMaximizable(false);
+            } catch (PropertyVetoException ex) {
+                Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }else{
+            JOptionPane.showMessageDialog(rootPane, "Login Necessário");
         }
     }//GEN-LAST:event_jMenuItem_PecaActionPerformed
 
     private void jMenuItem_ItensDePecaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_ItensDePecaActionPerformed
         // Abrir parte dos Itens de Peça
-        jDesktopPane_InputDeTela.removeAll();
-        TelaItensPeca telaItensPeca = new TelaItensPeca();
-        jDesktopPane_InputDeTela.add(telaItensPeca);
-        try {
-            telaItensPeca.setVisible(true);
-            telaItensPeca.setSelected(true);
-            telaItensPeca.setMaximum(true);
-            telaItensPeca.setMaximizable(false);
-        } catch (PropertyVetoException ex) {
-            Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        if(usuarioValidado){
+            jDesktopPane_InputDeTela.removeAll();
+            TelaItensPeca telaItensPeca = new TelaItensPeca();
+            jDesktopPane_InputDeTela.add(telaItensPeca);
+            try {
+                telaItensPeca.setVisible(true);
+                telaItensPeca.setSelected(true);
+                telaItensPeca.setMaximum(true);
+                telaItensPeca.setMaximizable(false);
+            } catch (PropertyVetoException ex) {
+                Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }else{
+            JOptionPane.showMessageDialog(rootPane, "Login Necessário");
         }
     }//GEN-LAST:event_jMenuItem_ItensDePecaActionPerformed
 
     private void jMenuItem_ServicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_ServicoActionPerformed
         // Abrir parte do Serviço
-        jDesktopPane_InputDeTela.removeAll();
-        TelaCadastroServicos telaServico = new TelaCadastroServicos();
-        jDesktopPane_InputDeTela.add(telaServico);
-        try {
-            telaServico.setVisible(true);
-            telaServico.setSelected(true);
-            telaServico.setMaximum(true);
-            telaServico.setMaximizable(false);
-        } catch (PropertyVetoException ex) {
-            Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        if(usuarioValidado){
+            jDesktopPane_InputDeTela.removeAll();
+            TelaCadastroServicos telaServico = new TelaCadastroServicos();
+            jDesktopPane_InputDeTela.add(telaServico);
+            try {
+                telaServico.setVisible(true);
+                telaServico.setSelected(true);
+                telaServico.setMaximum(true);
+                telaServico.setMaximizable(false);
+            } catch (PropertyVetoException ex) {
+                Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }else{
+            JOptionPane.showMessageDialog(rootPane, "Login Necessário");
         }
     }//GEN-LAST:event_jMenuItem_ServicoActionPerformed
 
     private void jMenuItem_FuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_FuncionarioActionPerformed
         // Abrir parte do Funcionário
-        jDesktopPane_InputDeTela.removeAll();
-        TelaFuncionario telaFuncionario = new TelaFuncionario();
-        jDesktopPane_InputDeTela.add(telaFuncionario);
-        try {
-            telaFuncionario.setVisible(true);
-            telaFuncionario.setSelected(true);
-            telaFuncionario.setMaximum(true);
-            telaFuncionario.setMaximizable(false);
-        } catch (PropertyVetoException ex) {
-            Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        if(usuarioValidado){
+            jDesktopPane_InputDeTela.removeAll();
+            TelaFuncionario telaFuncionario = new TelaFuncionario();
+            jDesktopPane_InputDeTela.add(telaFuncionario);
+            try {
+                telaFuncionario.setVisible(true);
+                telaFuncionario.setSelected(true);
+                telaFuncionario.setMaximum(true);
+                telaFuncionario.setMaximizable(false);
+            } catch (PropertyVetoException ex) {
+                Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }else{
+            JOptionPane.showMessageDialog(rootPane, "Login Necessário");
         }
     }//GEN-LAST:event_jMenuItem_FuncionarioActionPerformed
 
     private void jMenuItem_ItensDeServicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_ItensDeServicoActionPerformed
         // Abrir parte dos Itens de Serviço
-        jDesktopPane_InputDeTela.removeAll();
-        TelaItensServicos telaItensServicos = new TelaItensServicos();
-        jDesktopPane_InputDeTela.add(telaItensServicos);
-        try {
-            telaItensServicos.setVisible(true);
-            telaItensServicos.setSelected(true);
-            telaItensServicos.setMaximum(true);
-            telaItensServicos.setMaximizable(false);
-        } catch (PropertyVetoException ex) {
-            Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        if(usuarioValidado){
+            jDesktopPane_InputDeTela.removeAll();
+            TelaItensServicos telaItensServicos = new TelaItensServicos();
+            jDesktopPane_InputDeTela.add(telaItensServicos);
+            try {
+                telaItensServicos.setVisible(true);
+                telaItensServicos.setSelected(true);
+                telaItensServicos.setMaximum(true);
+                telaItensServicos.setMaximizable(false);
+            } catch (PropertyVetoException ex) {
+                Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }else{
+            JOptionPane.showMessageDialog(rootPane, "Login Necessário");
         }
     }//GEN-LAST:event_jMenuItem_ItensDeServicoActionPerformed
 
     private void jMenu_OficinaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu_OficinaMouseClicked
         // Abrir a parte da oficina
-        jDesktopPane_InputDeTela.removeAll();
-        TelaOficinas telaOficina = new TelaOficinas();
-        jDesktopPane_InputDeTela.add(telaOficina);
-        try {
-            telaOficina.setVisible(true);
-            telaOficina.setSelected(true);
-            telaOficina.setMaximum(true);
-            telaOficina.setMaximizable(false);
-        } catch (PropertyVetoException ex) {
-            Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        if(usuarioValidado){
+            jDesktopPane_InputDeTela.removeAll();
+            TelaOficinas telaOficina = new TelaOficinas();
+            jDesktopPane_InputDeTela.add(telaOficina);
+            try {
+                telaOficina.setVisible(true);
+                telaOficina.setSelected(true);
+                telaOficina.setMaximum(true);
+                telaOficina.setMaximizable(false);
+            } catch (PropertyVetoException ex) {
+                Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }else{
+            JOptionPane.showMessageDialog(rootPane, "Login Necessário");
         }
     }//GEN-LAST:event_jMenu_OficinaMouseClicked
 
     private void jMenu_OrdemDeServicoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu_OrdemDeServicoMouseClicked
         // Abrir a parte da ordem de serviço
-        jDesktopPane_InputDeTela.removeAll();
-        TelaOrdemDeServico telaOrdemDeServico = new TelaOrdemDeServico();
-        jDesktopPane_InputDeTela.add(telaOrdemDeServico);
-        try {
-            telaOrdemDeServico.setVisible(true);
-            telaOrdemDeServico.setSelected(true);
-            telaOrdemDeServico.setMaximum(true);
-            telaOrdemDeServico.setMaximizable(false);
-        } catch (PropertyVetoException ex) {
-            Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        if(usuarioValidado){
+            jDesktopPane_InputDeTela.removeAll();
+            TelaOrdemDeServico telaOrdemDeServico = new TelaOrdemDeServico();
+            jDesktopPane_InputDeTela.add(telaOrdemDeServico);
+            try {
+                telaOrdemDeServico.setVisible(true);
+                telaOrdemDeServico.setSelected(true);
+                telaOrdemDeServico.setMaximum(true);
+                telaOrdemDeServico.setMaximizable(false);
+            } catch (PropertyVetoException ex) {
+                Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }else{
+            JOptionPane.showMessageDialog(rootPane, "Login Necessário");
         }
     }//GEN-LAST:event_jMenu_OrdemDeServicoMouseClicked
 
+    private void jMenu_LoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu_LoginMouseClicked
+        // TODO add your handling code here:
+        jDesktopPane_InputDeTela.removeAll();
+        TelaLogin telaLogin = new TelaLogin(this);
+        jDesktopPane_InputDeTela.add(telaLogin);
+        try {
+            telaLogin.setVisible(true);
+            telaLogin.setSelected(true);
+            telaLogin.setMaximum(true);
+            telaLogin.setMaximizable(false);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_jMenu_LoginMouseClicked
+    
+    public void usuarioVerificado(){
+        usuarioValidado = true;
+    }
+    
   /**
    * @param args the command line arguments
    */
@@ -534,6 +619,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem_Veiculo;
     private javax.swing.JMenuItem jMenuItem_VeiculoAcessorio;
     private javax.swing.JMenu jMenu_ClientesVeiculos;
+    private javax.swing.JMenu jMenu_Login;
     private javax.swing.JMenu jMenu_Oficina;
     private javax.swing.JMenu jMenu_OpcoesPeca;
     private javax.swing.JMenu jMenu_OpcoesServico;

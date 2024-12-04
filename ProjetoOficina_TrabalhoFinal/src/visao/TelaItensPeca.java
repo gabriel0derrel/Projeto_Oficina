@@ -296,11 +296,12 @@ public class TelaItensPeca extends javax.swing.JInternalFrame {
             atualizarPrecos();
             ItensPeca objeto = new ItensPeca();
             
-            objeto.setIdItensPeca(Integer.parseInt(jTextField_ID.getText()));
-            
+            objeto.setIdItensPeca(0);
             objeto.setPeca(new Pecas(Integer.parseInt(jComboBox_Peca.getSelectedItem().toString().split("-")[0])));
             objeto.setOrdem(new OrdemDeServico(Integer.parseInt(jComboBox_Ordem.getSelectedItem().toString().split("-")[0])));
             
+            if(jTextField_Quantidade.getText().isEmpty()) throw new Exception("Quantidade Vazia");
+            if(!jTextField_Quantidade.getText().matches("\\d+")) throw new Exception("Quantidade precisa ser um inteiro positivo");
             objeto.setQuantidade(Integer.parseInt(jTextField_Quantidade.getText()));
             objeto.setValorUnitario(jTextField_PrecoUnitario.getText().replace(",", "."));       
             objeto.setValorTotal(jTextField_PrecoTotal.getText().replace(",", "."));
@@ -319,11 +320,13 @@ public class TelaItensPeca extends javax.swing.JInternalFrame {
             atualizarPrecos();
             ItensPeca objeto = new ItensPeca();
             
+            if(jTextField_ID.getText().isEmpty()) throw new Exception("ID vazio");
             objeto.setIdItensPeca(Integer.parseInt(jTextField_ID.getText()));
-            
             objeto.setPeca(new Pecas(Integer.parseInt(jComboBox_Peca.getSelectedItem().toString().split("-")[0])));
             objeto.setOrdem(new OrdemDeServico(Integer.parseInt(jComboBox_Ordem.getSelectedItem().toString().split("-")[0])));
             
+            if(jTextField_Quantidade.getText().isEmpty()) throw new Exception("Quantidade Vazia");
+            if(!jTextField_Quantidade.getText().matches("\\d+")) throw new Exception("Quantidade precisa ser um inteiro positivo");
             objeto.setQuantidade(Integer.parseInt(jTextField_Quantidade.getText()));
             objeto.setValorUnitario(jTextField_PrecoUnitario.getText().replace(",", "."));       
             objeto.setValorTotal(jTextField_PrecoTotal.getText().replace(",", "."));

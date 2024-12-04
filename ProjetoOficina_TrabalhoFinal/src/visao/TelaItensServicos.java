@@ -323,7 +323,7 @@ public class TelaItensServicos extends javax.swing.JInternalFrame {
             atualizarPrecos();
             ItensServicos objeto = new ItensServicos();
             
-            objeto.setIdItensServico(Integer.parseInt(jTextField_ID.getText()));
+            objeto.setIdItensServico(0);
             
             objeto.setServico(new Servicos(Integer.parseInt(jComboBox_Servico.getSelectedItem().toString().split("-")[0])));
             objeto.setOrdem(new OrdemDeServico(Integer.parseInt(jComboBox_Ordem.getSelectedItem().toString().split("-")[0])));
@@ -347,12 +347,15 @@ public class TelaItensServicos extends javax.swing.JInternalFrame {
             atualizarPrecos();
             ItensServicos objeto = new ItensServicos();
             
+            if(jTextField_ID.getText().isEmpty()) throw new Exception("ID vazio");
             objeto.setIdItensServico(Integer.parseInt(jTextField_ID.getText()));
             
             objeto.setServico(new Servicos(Integer.parseInt(jComboBox_Servico.getSelectedItem().toString().split("-")[0])));
             objeto.setOrdem(new OrdemDeServico(Integer.parseInt(jComboBox_Ordem.getSelectedItem().toString().split("-")[0])));
             objeto.setFuncionario(new Funcionario(Integer.parseInt(jComboBox_Funcionario.getSelectedItem().toString().split("-")[0])));
             
+            if(jTextField_Quantidade.getText().isEmpty()) throw new Exception("Quantidade Vazia");
+            if(!jTextField_Quantidade.getText().matches("\\d+")) throw new Exception("Quantidade precisa ser um inteiro positivo");
             objeto.setQuantidade(Integer.parseInt(jTextField_Quantidade.getText()));
             objeto.setPrecoUnitario(jTextField_PrecoUnitario.getText().replace(",", "."));       
             objeto.setPrecoFinal(jTextField_PrecoTotal.getText().replace(",", "."));
