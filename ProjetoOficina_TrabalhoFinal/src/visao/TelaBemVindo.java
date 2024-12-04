@@ -8,12 +8,12 @@ package visao;
  *
  * @author misuka
  */
-public class TelaBemVindo_JInternalFrame extends javax.swing.JInternalFrame {
+public class TelaBemVindo extends javax.swing.JInternalFrame {
 
     /**
      * Creates new form TelaBemVindo_JInternalFrame
      */
-    public TelaBemVindo_JInternalFrame() {
+    public TelaBemVindo() {
         initComponents();
     }
 

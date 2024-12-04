@@ -42,7 +42,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         
         // Como inserir uma tela na tela principal
         jDesktopPane_InputDeTela.removeAll();
-        TelaBemVindo_JInternalFrame telaBemVindo = new TelaBemVindo_JInternalFrame();
+        TelaBemVindo telaBemVindo = new TelaBemVindo();
         jDesktopPane_InputDeTela.add(telaBemVindo);
         try {
             telaBemVindo.setVisible(true);
