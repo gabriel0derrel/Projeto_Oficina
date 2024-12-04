@@ -102,10 +102,14 @@ public class Veiculo {
         this.modelo = modelo;
     }
 
+    /*@Override
+    public String toString() {
+        return placa + "-" + anoFabricacao + "=>" + dataRegistro + "=>" + chassi + "=>" + patrimonio + "=>" + kilometragem + "=>" + anoModelo + "=>" + modelo.toString();
+    }*/
+    
     @Override
     public String toString() {
-        return placa + "-" + anoFabricacao + "=>" + dataRegistro + "=>" + chassi + "=>" + patrimonio + "=>" + kilometragem + "=>" + anoModelo + "=>" + modelo.getIdModelo();
+        return placa + "-" + modelo.toString();
     }
-    
     
 }

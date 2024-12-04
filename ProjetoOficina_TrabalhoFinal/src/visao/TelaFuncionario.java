@@ -271,7 +271,7 @@ public class TelaFuncionario extends javax.swing.JInternalFrame {
                 return;
             }
             if (!email.matches("^[\\w.%+-]+@[\\w.-]+\\.[A-Za-z]{2,}$")) {
-                JOptionPane.showMessageDialog(rootPane, "Insira um email válido no formato: exemplo@dominio.com.");
+                JOptionPane.showMessageDialog(rootPane, "Insira um email válido no formato: exemplo@dominio.com");
                 return;
             }
 

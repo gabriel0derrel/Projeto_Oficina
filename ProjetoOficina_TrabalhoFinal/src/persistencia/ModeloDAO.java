@@ -24,6 +24,7 @@ public class ModeloDAO implements ICrud<Modelo>{
     
         //Conexao com o banco
     private Connection conexao = null;
+    private final ICrud<Marca> marcaDB = new MarcaDAO();
 
     public ModeloDAO() throws Exception{
       conexao = ConexaoBD.getConexao();
@@ -77,6 +78,7 @@ public class ModeloDAO implements ICrud<Modelo>{
             if(!rs.isBeforeFirst()) throw new Exception("Modelo nao encontrada");
             while(rs.next()) {
                 Marca marca = new Marca(rs.getInt("idMarca"));
+                marca = marcaDB.consultar(marca);
                 objModeloBusca = new Modelo(rs.getInt("idModelo"), rs.getString("descricao"),marca);
             }
             return objModeloBusca;
@@ -97,6 +99,7 @@ public class ModeloDAO implements ICrud<Modelo>{
             ResultSet rs = statement.executeQuery(sql);
             while(rs.next()) {
                 Marca marca = new Marca(rs.getInt("idMarca"));
+                marca = marcaDB.consultar(marca);
                 Modelo objModelo = new Modelo(rs.getInt("idModelo"), rs.getString("descricao"),marca);
                 listaDeMarca.add(objModelo);
             }

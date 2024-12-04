@@ -283,20 +283,18 @@ public class TelaCadastroServicos extends javax.swing.JInternalFrame {
             String descricao = jTextField1_Descricao.getText().toUpperCase();
             if (descricao.isEmpty()) {
                 JOptionPane.showMessageDialog(rootPane, "O campo de descrição não pode estar vazio.");
-                return;
             }
-                    // Verifica se o preço está vazio
+            
+            // Verifica se o preço está vazio
             String precoTexto = jTextField1_Preco.getText().trim();
             precoTexto = precoTexto.replace(",", ".");
             if (precoTexto.isEmpty()) {
                 JOptionPane.showMessageDialog(rootPane, "O campo de preço não pode estar vazio.");
-                return;
             }
 
             // Valida o preço com uma expressão regular
             if (!precoTexto.matches("\\d+(\\.\\d{1,2})?")) {
                 JOptionPane.showMessageDialog(rootPane, "O preço deve ser um número inteiro ou decimal com até duas casas decimais (ex.: 123 ou 123.45).");
-                return;
             }
             System.out.println(precoTexto);
             Servicos objServico = new Servicos(0, descricao, precoTexto);
@@ -314,20 +312,17 @@ public class TelaCadastroServicos extends javax.swing.JInternalFrame {
             String descricao = jTextField1_Descricao.getText().toUpperCase();
             if (descricao.isEmpty()) {
                 JOptionPane.showMessageDialog(rootPane, "O campo de descrição não pode estar vazio.");
-                return;
             }
                     // Verifica se o preço está vazio
             String precoTexto = jTextField1_Preco.getText().trim();
             precoTexto = precoTexto.replace(",", ".");
             if (precoTexto.isEmpty()) {
                 JOptionPane.showMessageDialog(rootPane, "O campo de preço não pode estar vazio.");
-                return;
             }
 
             // Valida o preço com uma expressão regular
             if (!precoTexto.matches("\\d+(\\.\\d{1,2})?")) {
                 JOptionPane.showMessageDialog(rootPane, "O preço deve ser um número inteiro ou decimal com até duas casas decimais (ex.: 123 ou 123.45).");
-                return;
             }
             Servicos objServico = new Servicos(Integer.parseInt(jTextField1_IdServico.getText()), descricao, precoTexto);
             servicoBD.alterar(objServico);

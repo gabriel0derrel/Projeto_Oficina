@@ -146,10 +146,14 @@ public class Cliente {
         this.inscricaoEstadual = inscricaoEstadual;
     }
 
-    @Override
+    /*@Override
     public String toString() {
         return idCliente + " - " + nome + " => " + telefone1.toString() + " => " + telefone2.toString() + " => " + email;
-    }
+    }*/
     
+    @Override
+    public String toString() {
+        return idCliente + " - " + nome + " => " + email;
+    }
     
 }

@@ -91,10 +91,10 @@ create table Proprietario(
 	foreign key(idCLiente) references Cliente(idCliente),
 	foreign key(placa) references Veiculo(placa)
 );
-create type estadoEnum as enum('Orçamento','Aprovado','Execução','Finalizado','Pago');
+create type statusEnum as enum('Orçamento','Aprovado','Execução','Finalizado','Pago');
 create table OrdemDeServico(
 	idOrdem serial primary key,  
-	estado estadoEnum not null,
+	status statusEnum not null,
 	inicio date not null,
 	fim date not null, 
 	valorTotal money not null,

@@ -26,6 +26,7 @@ public class VeiculoDAO implements ICrud<Veiculo>{
     
         //Conexao com o banco
     private Connection conexao = null;
+    private final ICrud<Modelo> modeloDB = new ModeloDAO();
 
     public VeiculoDAO() throws Exception{
       conexao = ConexaoBD.getConexao();
@@ -57,7 +58,7 @@ public class VeiculoDAO implements ICrud<Veiculo>{
         } catch(Exception erro){
               throw new Exception("Incluir Persistencia: " + erro);
         }
-}
+    }
 
     @Override
     public void alterar(Veiculo objeto) throws Exception {
@@ -97,6 +98,7 @@ public class VeiculoDAO implements ICrud<Veiculo>{
             if(!rs.isBeforeFirst()) throw new Exception("Veiculo nao encontrado");
             while(rs.next()) {
                 Modelo modelo = new Modelo(rs.getInt("idModelo"));
+                modelo = modeloDB.consultar(modelo);
                 Integer patrimonio = (Integer) rs.getInt("patrimonio");
                 if(rs.wasNull()){
                     patrimonio = null;
@@ -121,6 +123,7 @@ public class VeiculoDAO implements ICrud<Veiculo>{
             ResultSet rs = statement.executeQuery(sql);
             while(rs.next()) {   
                 Modelo modelo = new Modelo(rs.getInt("idModelo"));
+                modelo = modeloDB.consultar(modelo);
                 Integer patrimonio = (Integer) rs.getInt("patrimonio");
                 if(rs.wasNull()){
                     patrimonio = null;
