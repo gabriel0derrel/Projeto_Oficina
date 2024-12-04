@@ -290,7 +290,17 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void jMenuItem_ProprietarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_ProprietarioActionPerformed
         // Abrir parte do Proprietário
-        
+        jDesktopPane_InputDeTela.removeAll();
+        TelaProprietario telaProprietario = new TelaProprietario();
+        jDesktopPane_InputDeTela.add(telaProprietario);
+        try {
+            telaProprietario.setVisible(true);
+            telaProprietario.setSelected(true);
+            telaProprietario.setMaximum(true);
+            telaProprietario.setMaximizable(false);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jMenuItem_ProprietarioActionPerformed
 
     private void jMenuItem_MarcaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_MarcaActionPerformed
@@ -385,7 +395,17 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void jMenuItem_ItensDePecaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_ItensDePecaActionPerformed
         // Abrir parte dos Itens de Peça
-        
+        jDesktopPane_InputDeTela.removeAll();
+        TelaItensPeca telaItensPeca = new TelaItensPeca();
+        jDesktopPane_InputDeTela.add(telaItensPeca);
+        try {
+            telaItensPeca.setVisible(true);
+            telaItensPeca.setSelected(true);
+            telaItensPeca.setMaximum(true);
+            telaItensPeca.setMaximizable(false);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jMenuItem_ItensDePecaActionPerformed
 
     private void jMenuItem_ServicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_ServicoActionPerformed
@@ -420,7 +440,17 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void jMenuItem_ItensDeServicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_ItensDeServicoActionPerformed
         // Abrir parte dos Itens de Serviço
-        
+        jDesktopPane_InputDeTela.removeAll();
+        TelaItensServicos telaItensServicos = new TelaItensServicos();
+        jDesktopPane_InputDeTela.add(telaItensServicos);
+        try {
+            telaItensServicos.setVisible(true);
+            telaItensServicos.setSelected(true);
+            telaItensServicos.setMaximum(true);
+            telaItensServicos.setMaximizable(false);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jMenuItem_ItensDeServicoActionPerformed
 
     private void jMenu_OficinaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu_OficinaMouseClicked
@@ -440,6 +470,17 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
     private void jMenu_OrdemDeServicoMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu_OrdemDeServicoMouseClicked
         // Abrir a parte da ordem de serviço
+        jDesktopPane_InputDeTela.removeAll();
+        TelaOrdemDeServico telaOrdemDeServico = new TelaOrdemDeServico();
+        jDesktopPane_InputDeTela.add(telaOrdemDeServico);
+        try {
+            telaOrdemDeServico.setVisible(true);
+            telaOrdemDeServico.setSelected(true);
+            telaOrdemDeServico.setMaximum(true);
+            telaOrdemDeServico.setMaximizable(false);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }//GEN-LAST:event_jMenu_OrdemDeServicoMouseClicked
 
   /**

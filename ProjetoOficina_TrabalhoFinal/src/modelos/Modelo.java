@@ -52,7 +52,7 @@ public class Modelo {
 
     @Override
     public String toString() {
-        return idModelo + "-" + descricao + "=>" + marca.getIdMarca();
+        return idModelo + "-" + descricao + "=>" + marca.toString();
     }
     
     
