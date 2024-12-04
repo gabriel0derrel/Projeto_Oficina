@@ -24,6 +24,8 @@ import modelos.VeiculoAcessorio;
 public class VeiculoAcessorioDAO implements ICrud<VeiculoAcessorio>{
     //Conexao com o banco
     private Connection conexao = null;
+    ICrud<Veiculo> veiculoDAO = new VeiculoDAO();
+    ICrud<Acessorio> acessorioDAO = new AcessorioDAO();
 
     public VeiculoAcessorioDAO() throws Exception{
       conexao = ConexaoBD.getConexao();
@@ -77,8 +79,8 @@ public class VeiculoAcessorioDAO implements ICrud<VeiculoAcessorio>{
             ResultSet rs = preparedStatement.executeQuery();
             if(!rs.isBeforeFirst()) throw new Exception("Acessorio ou veiculo nao encontrada");
             while(rs.next()) {
-                Veiculo veiculo = new Veiculo(rs.getString("placa"));
-                Acessorio acessorio = new Acessorio(rs.getInt("idAcessorio"));
+                Veiculo veiculo = veiculoDAO.consultar(new Veiculo(rs.getString("placa")));
+                Acessorio acessorio = acessorioDAO.consultar(new Acessorio(rs.getInt("idAcessorio")));
                 objVeiculoAcessorioBusca = new VeiculoAcessorio(veiculo,acessorio);
             }
             return objVeiculoAcessorioBusca;
@@ -98,8 +100,8 @@ public class VeiculoAcessorioDAO implements ICrud<VeiculoAcessorio>{
             Statement statement = conexao.createStatement();
             ResultSet rs = statement.executeQuery(sql);
             while(rs.next()) {
-                Veiculo veiculo = new Veiculo(rs.getString("placa"));
-                Acessorio acessorio = new Acessorio(rs.getInt("idAcessorio"));
+                Veiculo veiculo = veiculoDAO.consultar(new Veiculo(rs.getString("placa")));
+                Acessorio acessorio = acessorioDAO.consultar(new Acessorio(rs.getInt("idAcessorio")));
                 VeiculoAcessorio objVeiculoAcessorioBusca = new VeiculoAcessorio(veiculo,acessorio);
                 listaDeVeiculoAcessorio.add(objVeiculoAcessorioBusca);
             }
