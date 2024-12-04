@@ -469,7 +469,6 @@ public class TelaCliente extends javax.swing.JInternalFrame {
                     Integer.parseInt(jTextField_Numero.getText()), jTextField_CEP.getText(), 
                     jTextField_Bairro.getText().toUpperCase(),jTextField_Complemento.getText().toUpperCase(), 
                     jTextField_Cidade.getText().toUpperCase(),jTextField_Estado.getText().toUpperCase());
-            
             Cliente objeto = new Cliente(idCliente, nome, telefone1, telefone2, email, endereco, 
                     jComboBox_Opcoes.getSelectedItem().toString(), jTextField_CPF.getText(), 
                     jTextField_CNPJ.getText(), jTextField_Contato.getText(), 

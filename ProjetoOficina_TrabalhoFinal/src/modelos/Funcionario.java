@@ -63,7 +63,7 @@ public class Funcionario {
 
     @Override
     public String toString() {
-        return "Funcionario{" + "idFuncionario=" + idFuncionario + ", nome=" + nome + ", email=" + email + ", telefone=" + telefone + '}';
+        return idFuncionario + "-" + nome + "=>" + email + "=>" + telefone;
     }
     
     

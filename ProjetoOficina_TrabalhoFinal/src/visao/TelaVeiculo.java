@@ -23,20 +23,20 @@ import persistencia.VeiculoDAO;
  * @author Cliente
  */
 public class TelaVeiculo extends javax.swing.JInternalFrame {
-    private ICrud<Modelo> ModeloBD = null;
-    private ICrud<Veiculo> VeiculoBD = null;
+    private ICrud<Modelo> modeloBD = null;
+    private ICrud<Veiculo> veiculoBD = null;
     /**
      * Creates new form TelaVeiculo
      */
     public TelaVeiculo() {
         initComponents();
         try {
-            ModeloBD = new ModeloDAO();
-            VeiculoBD = new VeiculoDAO();
+            modeloBD = new ModeloDAO();
+            veiculoBD = new VeiculoDAO();
           
             List<Modelo> listaDeModelo = new ArrayList<>();
             listaDeModelo = null;
-            listaDeModelo = ModeloBD.listar();
+            listaDeModelo = modeloBD.listar();
             jComboBox_Modelo.removeAllItems();
             for(int pos = 0; pos < listaDeModelo.size(); pos++){
               jComboBox_Modelo.addItem(listaDeModelo.get(pos).toString());
@@ -60,7 +60,7 @@ public class TelaVeiculo extends javax.swing.JInternalFrame {
     try {
       List<Veiculo> listaDeVeiculo = new ArrayList<>();
       listaDeVeiculo = null;
-      listaDeVeiculo = VeiculoBD.listar();
+      listaDeVeiculo = veiculoBD.listar();
       DefaultTableModel model =  (DefaultTableModel) jTable_Saida.getModel();
       model.setNumRows(0); 
       if(listaDeVeiculo.isEmpty()) 
@@ -78,15 +78,19 @@ public class TelaVeiculo extends javax.swing.JInternalFrame {
             saida[0] = objVeiculo.getPlaca()+ "";
             saida[1] = String.valueOf(anoFabricacao);
             saida[2] = objVeiculo.getDataRegistro()+ "";
-            saida[3] = objVeiculo.getChassi()+ "";
+            if(objVeiculo.getChassi() == null){
+                saida[3] = "";
+            }else{
+                saida[3] = objVeiculo.getChassi()+ "";
+            }
             if(objVeiculo.getPatrimonio() == null){
-                saida[4] = "null";
+                saida[4] = "";
             }else{
                 saida[4] = objVeiculo.getPatrimonio()+ "";
             }
             saida[5] = objVeiculo.getKilometragem()+ "";
             saida[6] = String.valueOf(anoModelo);
-            saida[7] = ModeloBD.consultar(objVeiculo.getModelo()).toString()+ "";
+            saida[7] = objVeiculo.getModelo().toString()+ "";
         model.addRow(saida);
       }  
     } catch (Exception erro) {
@@ -372,6 +376,7 @@ public class TelaVeiculo extends javax.swing.JInternalFrame {
             String[] vetModelo = aux.split("-");
             int idModelo = Integer.parseInt(vetModelo[0]);
             Modelo modelo = new Modelo(idModelo);
+            modelo = modeloBD.consultar(modelo);
 
             // **Criação das datas ajustadas**
             Calendar calendarAnoFabricacao = Calendar.getInstance();
@@ -398,7 +403,7 @@ public class TelaVeiculo extends javax.swing.JInternalFrame {
                 modelo
             );
             // **Persistência no banco**
-            VeiculoBD.incluir(objVeiculo);
+            veiculoBD.incluir(objVeiculo);
             limparTela();
             mostrarVeiculoNaGrid();
         } catch (Exception erro) {
@@ -484,7 +489,7 @@ public class TelaVeiculo extends javax.swing.JInternalFrame {
                 dataAnoModelo, 
                 modelo
             );
-            VeiculoBD.alterar(objVeiculo);
+            veiculoBD.alterar(objVeiculo);
             limparTela();
             mostrarVeiculoNaGrid();
         } catch (Exception erro) {
@@ -497,13 +502,18 @@ public class TelaVeiculo extends javax.swing.JInternalFrame {
         try {
         if(jTextField_placa.getText().isEmpty()) throw new Exception("placa vazio");
             Veiculo objVeiculo = new Veiculo(jTextField_placa.getText().toUpperCase());
-            objVeiculo = (VeiculoBD.consultar(objVeiculo));
+            objVeiculo = (veiculoBD.consultar(objVeiculo));
       
             jTextField_placa.setText(objVeiculo.getPlaca());
             jTextField_chassi.setText(objVeiculo.getChassi());
             jTextField_kilometragem.setText(objVeiculo.getKilometragem()+"");
-            jTextField_patrimonio.setText(objVeiculo.getPatrimonio()+"");
-            jComboBox_Modelo.setSelectedItem(ModeloBD.consultar(objVeiculo.getModelo()).toString());
+            if(objVeiculo.getPatrimonio() != null){
+                jTextField_patrimonio.setText(objVeiculo.getPatrimonio()+"");
+            }
+            else{
+                jTextField_patrimonio.setText("");
+            }
+            jComboBox_Modelo.setSelectedItem(modeloBD.consultar(objVeiculo.getModelo()).toString());
             
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(objVeiculo.getAnoFabricacao());
@@ -553,7 +563,7 @@ public class TelaVeiculo extends javax.swing.JInternalFrame {
             String auxModelo = (String) model.getValueAt(selectedRowIndex, 7);
             String vetModelo[] = auxModelo.split("-");
             Modelo modelo = new Modelo(Integer.parseInt(vetModelo[0]));
-            jComboBox_Modelo.setSelectedItem(ModeloBD.consultar(modelo).toString());
+            jComboBox_Modelo.setSelectedItem(modeloBD.consultar(modelo).toString());
         } catch (Exception ex) {
             Logger.getLogger(TelaVeiculo.class.getName()).log(Level.SEVERE, null, ex);
         }
