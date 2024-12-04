@@ -41,7 +41,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         
         // Como inserir uma tela na tela principal
-        jDesktopPane_InputDeTela.removeAll();
+        /*jDesktopPane_InputDeTela.removeAll();
         TelaBemVindo telaBemVindo = new TelaBemVindo();
         jDesktopPane_InputDeTela.add(telaBemVindo);
         try {
@@ -49,6 +49,17 @@ public class TelaPrincipal extends javax.swing.JFrame {
             telaBemVindo.setSelected(true);
             telaBemVindo.setMaximum(true);
             telaBemVindo.setMaximizable(false);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }*/
+        jDesktopPane_InputDeTela.removeAll();
+        TelaLogin telaLogin = new TelaLogin(this);
+        jDesktopPane_InputDeTela.add(telaLogin);
+        try {
+            telaLogin.setVisible(true);
+            telaLogin.setSelected(true);
+            telaLogin.setMaximum(true);
+            telaLogin.setMaximizable(false);
         } catch (PropertyVetoException ex) {
             Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
         }
