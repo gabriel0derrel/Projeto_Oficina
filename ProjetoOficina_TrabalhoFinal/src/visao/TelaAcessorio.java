@@ -275,8 +275,7 @@ public class TelaAcessorio extends javax.swing.JInternalFrame {
             // **Validação do Ano do Acessório**
             int anoAtual = Calendar.getInstance().get(Calendar.YEAR);
             if (ano < 1800 || ano > anoAtual + 1) {
-                JOptionPane.showMessageDialog(rootPane, "Ano do Acessório inválido! Deve ser entre 1800 e no máximo " + (anoAtual + 1) + ".");
-                return;
+                throw new Exception("Ano do Acessório inválido! Deve ser entre 1800 e no máximo " + (anoAtual + 1));
             }
 
             // Inicializa a data como 1º de janeiro do ano selecionado
@@ -289,8 +288,7 @@ public class TelaAcessorio extends javax.swing.JInternalFrame {
             // Verifica se a descrição está vazia
             String descricao = jTextField1_descricao.getText().trim();
             if (descricao.isEmpty()) {
-                JOptionPane.showMessageDialog(rootPane, "O campo de descrição não pode estar vazio.");
-                return;
+                throw new Exception("O campo de descrição não pode estar vazio.");
             }
 
             // Cria o objeto Acessorio
@@ -311,6 +309,11 @@ public class TelaAcessorio extends javax.swing.JInternalFrame {
         try {
             // Obtém o ano do JYearChooser
             int ano = jYearChooser1_ano.getYear();
+            // **Validação do Ano do Acessório**
+            int anoAtual = Calendar.getInstance().get(Calendar.YEAR);
+            if (ano < 1800 || ano > anoAtual + 1) {
+                throw new Exception("Ano do Acessório inválido! Deve ser entre 1800 e no máximo " + (anoAtual + 1));
+            }
 
             // Inicializa a data como 1º de janeiro do ano selecionado
             Calendar calendar = Calendar.getInstance();
@@ -322,8 +325,7 @@ public class TelaAcessorio extends javax.swing.JInternalFrame {
             // Verifica se a descrição está vazia
             String descricao = jTextField1_descricao.getText().trim();
             if (descricao.isEmpty()) {
-                JOptionPane.showMessageDialog(rootPane, "O campo de descrição não pode estar vazio.");
-                return;
+                throw new Exception("O campo de descrição não pode estar vazio.");
             }
 
             Acessorio objAcessorio = new Acessorio(Integer.parseInt(jTextField1_ID.getText()), data, jTextField1_descricao.getText().toUpperCase());

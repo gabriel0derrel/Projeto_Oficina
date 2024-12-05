@@ -68,7 +68,7 @@ public class TelaItensPeca extends javax.swing.JInternalFrame {
             listaDeItens = itensDB.listar();
             DefaultTableModel model =  (DefaultTableModel) jTable_Saida.getModel();
             model.setNumRows(0); 
-            if(listaDeItens.isEmpty()) throw new Exception("Lista de Oficina BD Vazia");
+            if(listaDeItens.isEmpty()) throw new Exception("Lista de Itens Peça BD Vazia");
 
             jTable_Saida.setRowHeight(75);
             for(int j = 0; j<6;j++){
@@ -319,8 +319,8 @@ public class TelaItensPeca extends javax.swing.JInternalFrame {
             if(jTextField_Quantidade.getText().isEmpty()) throw new Exception("Quantidade Vazia");
             if(!jTextField_Quantidade.getText().matches("\\d+")) throw new Exception("Quantidade precisa ser um inteiro positivo");
             objeto.setQuantidade(Integer.parseInt(jTextField_Quantidade.getText()));
-            objeto.setValorUnitario(jTextField_PrecoUnitario.getText().replace(",", "."));       
-            objeto.setValorTotal(jTextField_PrecoTotal.getText().replace(",", "."));
+            objeto.setValorUnitario(jTextField_PrecoUnitario.getText().replace(".", "").replace(",", "."));       
+            objeto.setValorTotal(jTextField_PrecoTotal.getText().replace(".", "").replace(",", "."));
             
             itensDB.incluir(objeto);
             limparTela();
@@ -344,8 +344,8 @@ public class TelaItensPeca extends javax.swing.JInternalFrame {
             if(jTextField_Quantidade.getText().isEmpty()) throw new Exception("Quantidade Vazia");
             if(!jTextField_Quantidade.getText().matches("\\d+")) throw new Exception("Quantidade precisa ser um inteiro positivo");
             objeto.setQuantidade(Integer.parseInt(jTextField_Quantidade.getText()));
-            objeto.setValorUnitario(jTextField_PrecoUnitario.getText().replace(",", "."));       
-            objeto.setValorTotal(jTextField_PrecoTotal.getText().replace(",", "."));
+            objeto.setValorUnitario(jTextField_PrecoUnitario.getText().replace(".", "").replace(",", "."));       
+            objeto.setValorTotal(jTextField_PrecoTotal.getText().replace(".", "").replace(",", "."));
             
             itensDB.alterar(objeto);
             limparTela();

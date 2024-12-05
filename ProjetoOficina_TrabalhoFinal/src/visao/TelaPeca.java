@@ -45,7 +45,7 @@ public class TelaPeca extends javax.swing.JInternalFrame {
     DefaultTableModel model =  (DefaultTableModel) jTable_Peca.getModel();
     model.setNumRows(0); 
     if(listaDePeca.isEmpty()) 
-      throw new Exception("Lista de Servico BD Vazia");
+      throw new Exception("Lista de Peça BD Vazia");
  
     for(int pos = 0; pos < listaDePeca.size(); pos++){
       Pecas objPeca = listaDePeca.get(pos);
@@ -259,54 +259,45 @@ public class TelaPeca extends javax.swing.JInternalFrame {
             String IDpeca = jTextField_IdPeca.getText();
            // Valida o ID
             if (IDpeca.isEmpty()) {
-                JOptionPane.showMessageDialog(rootPane, "O ID não pode estar vazio.");
-                return;
+                throw new Exception("O ID não pode estar vazio.");
             }
             if (!IDpeca.matches("\\d+")) {
-                JOptionPane.showMessageDialog(rootPane, "O ID deve ser um número inteiro");
-                return;
+                throw new Exception("O ID deve ser um número inteiro");
             }
             
             String descricao = jTextField_descricaoPeca.getText().toUpperCase();
             if (descricao.isEmpty()) {
-                JOptionPane.showMessageDialog(rootPane, "O campo de descrição não pode estar vazio.");
-                return;
+                throw new Exception("O campo de descrição não pode estar vazio.");
             }
             
             String codigoFabricante = jTextField_codigoFabricantePeca.getText();
             if (codigoFabricante.isEmpty()) {
-                JOptionPane.showMessageDialog(rootPane, "O campo de Codigo Fabricante não pode estar vazio.");
-                return;
+                throw new Exception("O campo de Codigo Fabricante não pode estar vazio.");
             }
             // Valida o codigoFabricante
             if (!codigoFabricante.matches("\\d+")) {
-                JOptionPane.showMessageDialog(rootPane, "O Codigo Fabricante deve ser um número inteiro");
-                return;
+                throw new Exception("O Codigo Fabricante deve ser um número inteiro");
             }
             
             String quantidade = jTextField_quantidade.getText();
             // Valida a quantidade
             if (quantidade.isEmpty()) {
-                JOptionPane.showMessageDialog(rootPane, "Quantidade não pode estar vazia.");
-                return;
+                throw new Exception("Quantidade não pode estar vazia.");
             }
             if (!quantidade.matches("\\d+")) {
-                JOptionPane.showMessageDialog(rootPane, "A quantidade deve ser um número inteiro");
-                return;
+                throw new Exception("A quantidade deve ser um número inteiro");
             }
             
             String valorUnitario = jTextField_ValorUnitario.getText().trim();
-            valorUnitario = valorUnitario.replace(",", ".");
+            valorUnitario = valorUnitario.replace(".", "").replace(",", ".");
             // Valida se o valor está vazio
             if (valorUnitario.isEmpty()) {
-                JOptionPane.showMessageDialog(rootPane, "O Valor Unitário não pode estar vazio.");
-                return;
+                throw new Exception("O Valor Unitário não pode estar vazio.");
             }
 
             // Valida o preço com uma expressão regular
             if (!valorUnitario.matches("\\d+(\\.\\d{1,2})?")) {
-                JOptionPane.showMessageDialog(rootPane, "O Valor Unitário deve ser um número inteiro ou decimal com até duas casas decimais (ex.: 123 ou 123.45).");
-                return;
+                throw new Exception("O Valor Unitário deve ser um número inteiro ou decimal com até duas casas decimais (ex.: 123 ou 123.45).");
             }
             
             Pecas objPeca = new Pecas(Integer.parseInt(IDpeca), descricao, Integer.parseInt(codigoFabricante), valorUnitario, Integer.parseInt(quantidade));
@@ -324,54 +315,45 @@ public class TelaPeca extends javax.swing.JInternalFrame {
             String IDpeca = jTextField_IdPeca.getText();
             // Valida o ID
             if (IDpeca.isEmpty()) {
-                JOptionPane.showMessageDialog(rootPane, "O ID não pode estar vazio.");
-                return;
+                throw new Exception("O ID não pode estar vazio.");
             }
             if (!IDpeca.matches("\\d+")) {
-                JOptionPane.showMessageDialog(rootPane, "O ID deve ser um número inteiro");
-                return;
+                throw new Exception("O ID deve ser um número inteiro");
             }
             
             String descricao = jTextField_descricaoPeca.getText().toUpperCase();
             if (descricao.isEmpty()) {
-                JOptionPane.showMessageDialog(rootPane, "O campo de descrição não pode estar vazio.");
-                return;
+                throw new Exception("O campo de descrição não pode estar vazio.");
             }
             
             String codigoFabricante = jTextField_codigoFabricantePeca.getText();
             if (codigoFabricante.isEmpty()) {
-                JOptionPane.showMessageDialog(rootPane, "O campo de Codigo Fabricante não pode estar vazio.");
-                return;
+                throw new Exception("O campo de Codigo Fabricante não pode estar vazio.");
             }
             // Valida o codigoFabricante
             if (!codigoFabricante.matches("\\d+")) {
-                JOptionPane.showMessageDialog(rootPane, "O Codigo Fabricante deve ser um número inteiro");
-                return;
+                throw new Exception("O Codigo Fabricante deve ser um número inteiro");
             }
             
             String quantidade = jTextField_quantidade.getText();
             // Valida a quantidade
             if (quantidade.isEmpty()) {
-                JOptionPane.showMessageDialog(rootPane, "Quantidade não pode estar vazia.");
-                return;
+                throw new Exception("Quantidade não pode estar vazia.");
             }
             if (!quantidade.matches("\\d+")) {
-                JOptionPane.showMessageDialog(rootPane, "A quantidade deve ser um número inteiro");
-                return;
+                throw new Exception("A quantidade deve ser um número inteiro");
             }
             
             String valorUnitario = jTextField_ValorUnitario.getText().trim();
-            valorUnitario = valorUnitario.replace(",", ".");
+            valorUnitario = valorUnitario.replace(".", "").replace(",", ".");
             // Valida se o valor está vazio
             if (valorUnitario.isEmpty()) {
-                JOptionPane.showMessageDialog(rootPane, "O Valor Unitário não pode estar vazio.");
-                return;
+                throw new Exception("O Valor Unitário não pode estar vazio.");
             }
 
             // Valida o preço com uma expressão regular
             if (!valorUnitario.matches("\\d+(\\.\\d{1,2})?")) {
-                JOptionPane.showMessageDialog(rootPane, "O Valor Unitário deve ser um número inteiro ou decimal com até duas casas decimais (ex.: 123 ou 123.45).");
-                return;
+                throw new Exception("O Valor Unitário deve ser um número inteiro ou decimal com até duas casas decimais (ex.: 123 ou 123.45).");
             }
             
             Pecas objPeca = new Pecas(Integer.parseInt(IDpeca), descricao, Integer.parseInt(codigoFabricante), valorUnitario, Integer.parseInt(quantidade));

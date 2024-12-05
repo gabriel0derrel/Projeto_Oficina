@@ -56,7 +56,7 @@ public class TelaModelo extends javax.swing.JInternalFrame {
       DefaultTableModel model =  (DefaultTableModel) jTable_Saida.getModel();
       model.setNumRows(0); 
       if(listaDeModelo.isEmpty()) 
-        throw new Exception("Lista de Acessorio BD Vazia");
+        throw new Exception("Lista de Modelo BD Vazia");
       for(int j = 0; j<3;j++){
           jTable_Saida.getColumnModel().getColumn(j);
            }
@@ -238,8 +238,7 @@ public class TelaModelo extends javax.swing.JInternalFrame {
             Marca marca = new Marca(idMarca);
             String descricao = jTextField_descricao.getText().toUpperCase();
             if (descricao.isEmpty()) {
-                JOptionPane.showMessageDialog(rootPane, "O campo de descrição não pode estar vazio.");
-                return;
+                throw new Exception("O campo de descrição não pode estar vazio.");
             }
             Modelo objModelo = new Modelo(0,descricao,marca);
             ModeloBD.incluir(objModelo);
@@ -261,8 +260,7 @@ public class TelaModelo extends javax.swing.JInternalFrame {
             Marca marca = new Marca(idMarca);
             String descricao = jTextField_descricao.getText().toUpperCase();
             if (descricao.isEmpty()) {
-                JOptionPane.showMessageDialog(rootPane, "O campo de descrição não pode estar vazio.");
-                return;
+                throw new Exception("O campo de descrição não pode estar vazio.");
             }
             Modelo objModelo = new Modelo(Integer.parseInt(jTextField_idModelo.getText()),descricao,marca);
             ModeloBD.alterar(objModelo);

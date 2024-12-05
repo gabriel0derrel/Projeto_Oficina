@@ -78,7 +78,7 @@ public class TelaItensServicos extends javax.swing.JInternalFrame {
             listaDeItens = itensDB.listar();
             DefaultTableModel model =  (DefaultTableModel) jTable_Saida.getModel();
             model.setNumRows(0); 
-            if(listaDeItens.isEmpty()) throw new Exception("Lista de Oficina BD Vazia");
+            if(listaDeItens.isEmpty()) throw new Exception("Lista de Itens Serviço BD Vazia");
 
             jTable_Saida.setRowHeight(75);
             for(int j = 0; j<7;j++){
@@ -349,8 +349,8 @@ public class TelaItensServicos extends javax.swing.JInternalFrame {
             objeto.setFuncionario(new Funcionario(Integer.parseInt(jComboBox_Funcionario.getSelectedItem().toString().split("-")[0])));
             
             objeto.setQuantidade(Integer.parseInt(jTextField_Quantidade.getText()));
-            objeto.setPrecoUnitario(jTextField_PrecoUnitario.getText().replace(",", "."));       
-            objeto.setPrecoFinal(jTextField_PrecoTotal.getText().replace(",", "."));
+            objeto.setPrecoUnitario(jTextField_PrecoUnitario.getText().replace(".", "").replace(",", "."));       
+            objeto.setPrecoFinal(jTextField_PrecoTotal.getText().replace(".", "").replace(",", "."));
             
             itensDB.incluir(objeto);
             limparTela();
@@ -376,8 +376,8 @@ public class TelaItensServicos extends javax.swing.JInternalFrame {
             if(jTextField_Quantidade.getText().isEmpty()) throw new Exception("Quantidade Vazia");
             if(!jTextField_Quantidade.getText().matches("\\d+")) throw new Exception("Quantidade precisa ser um inteiro positivo");
             objeto.setQuantidade(Integer.parseInt(jTextField_Quantidade.getText()));
-            objeto.setPrecoUnitario(jTextField_PrecoUnitario.getText().replace(",", "."));       
-            objeto.setPrecoFinal(jTextField_PrecoTotal.getText().replace(",", "."));
+            objeto.setPrecoUnitario(jTextField_PrecoUnitario.getText().replace(".", "").replace(",", "."));       
+            objeto.setPrecoFinal(jTextField_PrecoTotal.getText().replace(".", "").replace(",", "."));
             
             itensDB.alterar(objeto);
             limparTela();
@@ -419,7 +419,7 @@ public class TelaItensServicos extends javax.swing.JInternalFrame {
                 quantidade = Integer.parseInt(jTextField_Quantidade.getText());
             }
             jTextField_PrecoUnitario.setText(servicoDB.consultar(objeto.getServico()).getPrecoServico().replace("R$", "").trim());
-            float precoUnitario = Float.parseFloat(jTextField_PrecoUnitario.getText().replace(",", "."));
+            float precoUnitario = Float.parseFloat(jTextField_PrecoUnitario.getText().replace(".", "").replace(",", "."));
             float precoFinal = precoUnitario*quantidade;
             jTextField_PrecoTotal.setText(precoFinal+"");
         } catch(Exception erro){

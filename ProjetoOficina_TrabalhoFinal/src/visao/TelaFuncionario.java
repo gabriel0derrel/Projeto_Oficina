@@ -272,35 +272,29 @@ public class TelaFuncionario extends javax.swing.JInternalFrame {
             // Validação do nome
             String nome = jTextField1_nome.getText().trim().toUpperCase();
             if (nome.isEmpty()) {
-                JOptionPane.showMessageDialog(rootPane, "O campo de nome não pode estar vazio.");
-                return;
+                throw new Exception("O campo de nome não pode estar vazio.");
             }
             if (!nome.matches("^[A-Za-zÀ-Üà-ü\\s]+$")) {
-                JOptionPane.showMessageDialog(rootPane, "O nome deve conter apenas letras e espaços.");
-                return;
+                throw new Exception("O nome deve conter apenas letras e espaços.");
             }
 
             // Validação do email
             String email = jTextField3_email.getText().trim();
             if (email.isEmpty()) {
-                JOptionPane.showMessageDialog(rootPane, "O campo de email não pode estar vazio.");
-                return;
+                throw new Exception("O campo de email não pode estar vazio.");
             }
             if (!email.matches("^[\\w.%+-]+@[\\w.-]+\\.[A-Za-z]{2,}$")) {
-                JOptionPane.showMessageDialog(rootPane, "Insira um email válido no formato: exemplo@dominio.com");
-                return;
+                throw new Exception("Insira um email válido no formato: exemplo@dominio.com");
             }
 
             // Validação do telefone
             String numeroTele = jFormattedTextField1_telefone.getText().trim();
             if (numeroTele.isEmpty()) {
-                JOptionPane.showMessageDialog(rootPane, "O campo de telefone não pode estar vazio.");
-                return;
+                throw new Exception("O campo de telefone não pode estar vazio.");
             }
             // Verifica o formato do telefone: (XX)XXXX-XXXX ou (XX)XXXXX-XXXX
             if (!numeroTele.matches("\\+\\d{2}\\(\\d{2}\\)\\d{4,5}-\\d{4}")) {
-                JOptionPane.showMessageDialog(rootPane, "Insira um telefone válido no formato: +XX(XX)XXXXX-XXXX.");
-                return;
+                throw new Exception("Insira um telefone válido no formato: +XX(XX)XXXXX-XXXX.");
             }
 
             // Extrai DDI, DDD e número do telefone
@@ -329,35 +323,29 @@ public class TelaFuncionario extends javax.swing.JInternalFrame {
             // Validação do nome
             String nome = jTextField1_nome.getText().trim().toUpperCase();
             if (nome.isEmpty()) {
-                JOptionPane.showMessageDialog(rootPane, "O campo de nome não pode estar vazio.");
-                return;
+                throw new Exception("O campo de nome não pode estar vazio.");
             }
             if (!nome.matches("^[A-Za-zÀ-Üà-ü\\s]+$")) {
-                JOptionPane.showMessageDialog(rootPane, "O nome deve conter apenas letras e espaços.");
-                return;
+                throw new Exception("O nome deve conter apenas letras e espaços.");
             }
 
             // Validação do email
             String email = jTextField3_email.getText().trim();
             if (email.isEmpty()) {
-                JOptionPane.showMessageDialog(rootPane, "O campo de email não pode estar vazio.");
-                return;
+                throw new Exception("O campo de email não pode estar vazio.");
             }
             if (!email.matches("^[\\w.%+-]+@[\\w.-]+\\.[A-Za-z]{2,}$")) {
-                JOptionPane.showMessageDialog(rootPane, "Insira um email válido no formato: exemplo@dominio.com.");
-                return;
+                throw new Exception("Insira um email válido no formato: exemplo@dominio.com.");
             }
 
             // Validação do telefone
             String numeroTele = jFormattedTextField1_telefone.getText().trim();
             if (numeroTele.isEmpty()) {
-                JOptionPane.showMessageDialog(rootPane, "O campo de telefone não pode estar vazio.");
-                return;
+                throw new Exception("O campo de telefone não pode estar vazio.");
             }
             // Verifica o formato do telefone: (XX)XXXX-XXXX ou (XX)XXXXX-XXXX
             if (!numeroTele.matches("\\+\\d{2}\\(\\d{2}\\)\\d{4,5}-\\d{4}")) {
-                JOptionPane.showMessageDialog(rootPane, "Insira um telefone válido no formato: +XX(XX)XXXXX-XXXX.");
-                return;
+                throw new Exception("Insira um telefone válido no formato: +XX(XX)XXXXX-XXXX.");
             }
 
             // Extrai DDI, DDD e número do telefone

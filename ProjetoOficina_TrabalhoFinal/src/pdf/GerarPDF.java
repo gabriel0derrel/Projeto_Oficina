@@ -72,7 +72,7 @@ public class GerarPDF {
             tabelaCliente.setWidthPercentage(100);
             tabelaCliente.setSpacingAfter(10);
             tabelaCliente.setWidths(new int[]{1, 3}); // Largura relativa das colunas
-
+            
             tabelaCliente.addCell(new Phrase("Cliente:", fontTabela));
             tabelaCliente.addCell(new Phrase(cliente.getNome(), fontTexto));
             tabelaCliente.addCell(new Phrase("Endereço:", fontTabela));

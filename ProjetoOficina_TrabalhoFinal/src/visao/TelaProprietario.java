@@ -69,7 +69,7 @@ public class TelaProprietario extends javax.swing.JInternalFrame {
             listaDeProprietario = proprietarioDB.listar();
             DefaultTableModel model =  (DefaultTableModel) jTable_Saida.getModel();
             model.setNumRows(0); 
-            if(listaDeProprietario.isEmpty()) throw new Exception("Lista de Oficina BD Vazia");
+            if(listaDeProprietario.isEmpty()) throw new Exception("Lista de Proprietário BD Vazia");
 
             jTable_Saida.setRowHeight(75);
             for(int j = 0; j<5;j++){

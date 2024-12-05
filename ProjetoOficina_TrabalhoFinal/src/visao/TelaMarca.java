@@ -253,8 +253,7 @@ public class TelaMarca extends javax.swing.JInternalFrame {
         try {
             String descricao = jTextField1_descricao.getText().toUpperCase();
             if (descricao.isEmpty()) {
-                JOptionPane.showMessageDialog(rootPane, "O campo de descrição não pode estar vazio.");
-                return;
+                throw new Exception("O campo de descrição não pode estar vazio.");
             }
             Marca objMarca = new Marca(0 , descricao);
             MarcaBD.incluir(objMarca);
@@ -269,8 +268,7 @@ public class TelaMarca extends javax.swing.JInternalFrame {
         try {
             String descricao = jTextField1_descricao.getText().toUpperCase();
             if (descricao.isEmpty()) {
-                JOptionPane.showMessageDialog(rootPane, "O campo de descrição não pode estar vazio.");
-                return;
+                throw new Exception("O campo de descrição não pode estar vazio.");
             }
             Marca objMarca = new Marca(Integer.parseInt(jTextField1_ID.getText()), descricao);
             MarcaBD.alterar(objMarca);

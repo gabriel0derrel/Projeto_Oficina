@@ -691,7 +691,7 @@ public class TelaCliente extends javax.swing.JInternalFrame {
             listaDeClientes = clienteDB.listar();
             DefaultTableModel model =  (DefaultTableModel) jTable_Saida.getModel();
             model.setNumRows(0); 
-            if(listaDeClientes.isEmpty()) throw new Exception("Lista de Oficina BD Vazia");
+            if(listaDeClientes.isEmpty()) throw new Exception("Lista de Cliente BD Vazia");
 
             jTable_Saida.setRowHeight(75);
             for(int j = 0; j<10;j++){

@@ -39,9 +39,15 @@ public class OficinaDAO implements ICrud<Oficina>{
       preparedStatement.setInt(3, objOficina.getTelefone1().getDdi());
       preparedStatement.setInt(4, objOficina.getTelefone1().getDdd());
       preparedStatement.setInt(5, objOficina.getTelefone1().getNumero());
-      preparedStatement.setInt(6, objOficina.getTelefone2().getDdi());
-      preparedStatement.setInt(7, objOficina.getTelefone2().getDdd());
-      preparedStatement.setInt(8, objOficina.getTelefone2().getNumero());
+      if(objOficina.getTelefone2()!=null){
+        preparedStatement.setInt(6, objOficina.getTelefone2().getDdi());
+        preparedStatement.setInt(7, objOficina.getTelefone2().getDdd());
+        preparedStatement.setInt(8, objOficina.getTelefone2().getNumero());
+      }else{
+          preparedStatement.setNull(6, java.sql.Types.INTEGER);
+          preparedStatement.setNull(7, java.sql.Types.INTEGER);
+          preparedStatement.setNull(8, java.sql.Types.INTEGER);
+      }
       preparedStatement.setString(9, objOficina.getEndereco().getLogradouro());
       preparedStatement.setInt(10, objOficina.getEndereco().getNumeroEndereco());
       preparedStatement.setString(11, objOficina.getEndereco().getCep());
@@ -69,9 +75,15 @@ public class OficinaDAO implements ICrud<Oficina>{
       preparedStatement.setInt(2, objOficina.getTelefone1().getDdi());
       preparedStatement.setInt(3, objOficina.getTelefone1().getDdd());
       preparedStatement.setInt(4, objOficina.getTelefone1().getNumero());
-      preparedStatement.setInt(5, objOficina.getTelefone2().getDdi());
-      preparedStatement.setInt(6, objOficina.getTelefone2().getDdd());
-      preparedStatement.setInt(7, objOficina.getTelefone2().getNumero());
+      if(objOficina.getTelefone2()!=null){
+        preparedStatement.setInt(5, objOficina.getTelefone2().getDdi());
+        preparedStatement.setInt(6, objOficina.getTelefone2().getDdd());
+        preparedStatement.setInt(7, objOficina.getTelefone2().getNumero());
+      }else{
+          preparedStatement.setNull(5, java.sql.Types.INTEGER);
+          preparedStatement.setNull(6, java.sql.Types.INTEGER);
+          preparedStatement.setNull(7, java.sql.Types.INTEGER);
+      }
       preparedStatement.setString(8, objOficina.getEndereco().getLogradouro());
       preparedStatement.setInt(9, objOficina.getEndereco().getNumeroEndereco());
       preparedStatement.setString(10, objOficina.getEndereco().getCep());
@@ -99,9 +111,18 @@ public class OficinaDAO implements ICrud<Oficina>{
             if(!rs.isBeforeFirst()) throw new Exception("Oficina nao encontrado");
             while(rs.next()) {
                 Telefone Telefone1 = new Telefone(rs.getInt("ddi1"),rs.getInt("ddd1"),rs.getInt("numeroTelefone1"));
-                Telefone Telefone2 = new Telefone(rs.getInt("ddi2"),rs.getInt("ddd2"),rs.getInt("numeroTelefone2"));
+                Telefone telefone2;
+                
+                Integer ddi2 = (Integer) rs.getObject("ddi2");
+                Integer ddd2 = (Integer) rs.getObject("ddd2");
+                Integer numeroTelefone2 = (Integer) rs.getObject("numeroTelefone2");
+                if(ddi2 != null && ddd2 != null && numeroTelefone2 != null){
+                    telefone2 = new Telefone(ddi2, ddd2, numeroTelefone2);
+                }else{
+                    telefone2 = null;
+                }
                 Endereco endereco = new Endereco(rs.getString("logradouro"), rs.getInt("numeroEndereco"), rs.getString("cep"), rs.getString("bairro"), rs.getString("complemento"), rs.getString("cidade"), rs.getString("estado"));
-                objOficinaBusca = new Oficina(rs.getString("email"),rs.getString("nome"), Telefone1, Telefone2, endereco);
+                objOficinaBusca = new Oficina(rs.getString("email"),rs.getString("nome"), Telefone1, telefone2, endereco);
             }
             return objOficinaBusca;
     } catch (SQLException erro) {
@@ -121,9 +142,18 @@ public class OficinaDAO implements ICrud<Oficina>{
             ResultSet rs = statement.executeQuery(sql);
             while(rs.next()) {
                 Telefone Telefone1 = new Telefone(rs.getInt("ddi1"),rs.getInt("ddd1"),rs.getInt("numeroTelefone1"));
-                Telefone Telefone2 = new Telefone(rs.getInt("ddi2"),rs.getInt("ddd2"),rs.getInt("numeroTelefone2"));
+                Telefone telefone2;
+                
+                Integer ddi2 = (Integer) rs.getObject("ddi2");
+                Integer ddd2 = (Integer) rs.getObject("ddd2");
+                Integer numeroTelefone2 = (Integer) rs.getObject("numeroTelefone2");
+                if(ddi2 != null && ddd2 != null && numeroTelefone2 != null){
+                    telefone2 = new Telefone(ddi2, ddd2, numeroTelefone2);
+                }else{
+                    telefone2 = null;
+                }
                 Endereco endereco = new Endereco(rs.getString("logradouro"), rs.getInt("numeroEndereco"), rs.getString("cep"), rs.getString("bairro"), rs.getString("complemento"), rs.getString("cidade"), rs.getString("estado"));
-                Oficina objOficina = new Oficina(rs.getString("email"), rs.getString("nome"), Telefone1, Telefone2, endereco);
+                Oficina objOficina = new Oficina(rs.getString("email"), rs.getString("nome"), Telefone1, telefone2, endereco);
                 listaDeOficina.add(objOficina);
             }
             return listaDeOficina;

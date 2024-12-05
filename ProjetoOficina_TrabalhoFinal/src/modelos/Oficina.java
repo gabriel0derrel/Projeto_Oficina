@@ -75,7 +75,11 @@ public class Oficina {
 
   @Override
   public String toString() {
-    return identificador_Email + "-" + nome + " => " + Telefone1.toString() + " => " + Telefone2.toString()+ " => " + endereco.toString();
+        if(Telefone2 != null){
+            return identificador_Email + "-" + nome + " => " + Telefone1.toString() + " => " + Telefone2.toString()+ " => " + endereco.toString();
+        }else{
+           return identificador_Email + "-" + nome + " => " + Telefone1.toString() + " => " + endereco.toString();
+        }
   }
   
   

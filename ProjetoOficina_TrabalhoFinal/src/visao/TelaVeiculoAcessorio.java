@@ -63,7 +63,7 @@ public class TelaVeiculoAcessorio extends javax.swing.JInternalFrame {
       DefaultTableModel model =  (DefaultTableModel) jTable_Saida.getModel();
       model.setNumRows(0); 
       if(listaDeVeiculoAcessorio.isEmpty()) 
-        throw new Exception("Lista de Acessorio BD Vazia");
+        throw new Exception("Lista de Veículo Acessorio BD Vazia");
       for(int j = 0; j<2;j++){
           jTable_Saida.getColumnModel().getColumn(j);
            }

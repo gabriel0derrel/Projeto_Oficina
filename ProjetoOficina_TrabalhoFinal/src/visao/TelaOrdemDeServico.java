@@ -95,7 +95,7 @@ public class TelaOrdemDeServico extends javax.swing.JInternalFrame {
             listaDeOrdem = ordemDB.listar();
             DefaultTableModel model =  (DefaultTableModel) jTable_Saida.getModel();
             model.setNumRows(0); 
-            if(listaDeOrdem.isEmpty()) throw new Exception("Lista de Oficina BD Vazia");
+            if(listaDeOrdem.isEmpty()) throw new Exception("Lista de Ordem De Serviço BD Vazia");
 
             jTable_Saida.setRowHeight(75);
             for(int j = 0; j<8;j++){
@@ -551,6 +551,7 @@ public class TelaOrdemDeServico extends javax.swing.JInternalFrame {
             Oficina oficina = (oficinaBD.consultar(new Oficina(jComboBox_Oficina.getSelectedItem().toString().split("-")[0])));
             Veiculo veiculo = (veiculoDB.consultar(new Veiculo(jComboBox_Veiculo.getSelectedItem().toString().split("-")[0])));
             OrdemDeServico ordem = new OrdemDeServico(Integer.parseInt(jTextField_ID.getText()));
+            if(cliente == null) throw new Exception("Não foi encontrado um cliente que seja propriétário do veículo.");
             pdf.gerarPdf(ordem,veiculo,cliente,listaDeAcessorio,listaDePecasOrdemAtual,listaDeServicoOrdemAtual,oficina);
             JOptionPane.showMessageDialog(rootPane, "PDF gerado com sucesso!");
         } catch (Exception erro) {

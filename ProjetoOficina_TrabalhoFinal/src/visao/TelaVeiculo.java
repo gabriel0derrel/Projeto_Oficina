@@ -64,7 +64,7 @@ public class TelaVeiculo extends javax.swing.JInternalFrame {
       DefaultTableModel model =  (DefaultTableModel) jTable_Saida.getModel();
       model.setNumRows(0); 
       if(listaDeVeiculo.isEmpty()) 
-        throw new Exception("Lista de Acessorio BD Vazia");
+        throw new Exception("Lista de Veículo BD Vazia");
       for (Veiculo objVeiculo : listaDeVeiculo){
         Calendar calendarAnoFabricacao = Calendar.getInstance();
         calendarAnoFabricacao.setTime(objVeiculo.getAnoFabricacao());
@@ -349,49 +349,49 @@ public class TelaVeiculo extends javax.swing.JInternalFrame {
 // **Validação da Placa**
             String placa = jTextField_placa.getText().trim().toUpperCase();
             if (placa.isEmpty() || !placa.matches("^[A-Z]{3}[0-9][0-9A-Z][0-9]{2}$"))
-                JOptionPane.showMessageDialog(rootPane, "Placa inválida! Use o formato ABC-1234 ou ABC1D23.");
+                throw new Exception("Placa inválida! Use o formato ABC-1234 ou ABC1D23.");
 
             // **Validação do Ano de Fabricação**
             int anoFabricacao = jYearChooser2_anofabricacao.getYear();
             int anoAtual = Calendar.getInstance().get(Calendar.YEAR);
             if (anoFabricacao < 1900 || anoFabricacao > anoAtual)
-                JOptionPane.showMessageDialog(rootPane, "Ano de fabricação inválido! Deve estar entre 1900 e " + anoAtual + ".");
+                throw new Exception("Ano de fabricação inválido! Deve estar entre 1900 e " + anoAtual + ".");
 
             // **Validação do Ano do Modelo**
             int anoModelo = jYearChooser1_anomodelo.getYear();
             if (anoModelo > anoAtual + 1)
-                JOptionPane.showMessageDialog(rootPane, "Ano do modelo inválido! Deve ser no máximo " + (anoAtual + 1) + ".");
+                throw new Exception("Ano do modelo inválido! Deve ser no máximo " + (anoAtual + 1) + ".");
 
             // **Validação da Data de Registro**
             Date dataRegistro = jCalendar1_dataregistro.getDate();
             if (dataRegistro == null)
-                JOptionPane.showMessageDialog(rootPane, "Data de registro inválida! Selecione uma data válida.");
+                throw new Exception("Data de registro inválida! Selecione uma data válida.");
 
             // **Validação do Chassi**
             String chassi = jFormattedTextField1_chassi.getText().trim().toUpperCase();
             if (chassi.isEmpty())
                 chassi = null; 
             else if (chassi.length() != 17 || !chassi.matches("[A-Z0-9]+"))
-                JOptionPane.showMessageDialog(rootPane, "Chassi inválido! Deve conter exatamente 17 caracteres alfanuméricos.");
+                throw new Exception("Chassi inválido! Deve conter exatamente 17 caracteres alfanuméricos.");
 
             // **Validação do Patrimônio**
             String patrimonioTexto = jTextField_patrimonio.getText().trim();
             if (patrimonioTexto.isEmpty())
                 patrimonioTexto = "-1";
             else if (!patrimonioTexto.matches("\\d+"))
-                JOptionPane.showMessageDialog(rootPane, "Patrimônio inválido! Deve ser um número inteiro positivo.");
+                throw new Exception("Patrimônio inválido! Deve ser um número inteiro positivo.");
             Integer patrimonio = Integer.valueOf(patrimonioTexto);
             // **Validação da Quilometragem**
             String kilometragemTexto = jTextField_kilometragem.getText().trim();
             if (!kilometragemTexto.matches("\\d+"))
-                JOptionPane.showMessageDialog(rootPane, "Quilometragem inválida! Deve ser um número inteiro não negativo.");
+                throw new Exception("Quilometragem inválida! Deve ser um número inteiro não negativo.");
 
             int kilometragem = Integer.parseInt(kilometragemTexto);
 
             // **Validação do Modelo**
             String aux = (String) jComboBox_Modelo.getSelectedItem();
             if (aux == null || !aux.contains("-")) 
-                JOptionPane.showMessageDialog(rootPane, "Selecione um modelo válido no campo de modelo.");
+                throw new Exception("Selecione um modelo válido no campo de modelo.");
                 
             String[] vetModelo = aux.split("-");
             int idModelo = Integer.parseInt(vetModelo[0]);
@@ -437,49 +437,48 @@ public class TelaVeiculo extends javax.swing.JInternalFrame {
 // **Validação da Placa**
             String placa = jTextField_placa.getText().trim().toUpperCase();
             if (placa.isEmpty() || !placa.matches("^[A-Z]{3}[0-9][0-9A-Z][0-9]{2}$"))
-                JOptionPane.showMessageDialog(rootPane, "Placa inválida! Use o formato ABC-1234 ou ABC1D23.");
-
+                throw new Exception("Placa inválida! Use o formato ABC-1234 ou ABC1D23.");
             // **Validação do Ano de Fabricação**
             int anoFabricacao = jYearChooser2_anofabricacao.getYear();
             int anoAtual = Calendar.getInstance().get(Calendar.YEAR);
             if (anoFabricacao < 1900 || anoFabricacao > anoAtual)
-                JOptionPane.showMessageDialog(rootPane, "Ano de fabricação inválido! Deve estar entre 1900 e " + anoAtual + ".");
+                throw new Exception("Ano de fabricação inválido! Deve estar entre 1900 e " + anoAtual + ".");
 
             // **Validação do Ano do Modelo**
             int anoModelo = jYearChooser1_anomodelo.getYear();
             if (anoModelo > anoAtual + 1)
-                JOptionPane.showMessageDialog(rootPane, "Ano do modelo inválido! Deve ser no máximo " + (anoAtual + 1) + ".");
+                throw new Exception("Ano do modelo inválido! Deve ser no máximo " + (anoAtual + 1) + ".");
 
             // **Validação da Data de Registro**
             Date dataRegistro = jCalendar1_dataregistro.getDate();
             if (dataRegistro == null)
-                JOptionPane.showMessageDialog(rootPane, "Data de registro inválida! Selecione uma data válida.");
+                throw new Exception("Data de registro inválida! Selecione uma data válida.");
 
             // **Validação do Chassi**
             String chassi = jFormattedTextField1_chassi.getText().trim().toUpperCase();
             if (chassi.isEmpty())
                 chassi = null; 
             else if (chassi.length() != 17 || !chassi.matches("[A-Z0-9]+"))
-                JOptionPane.showMessageDialog(rootPane, "Chassi inválido! Deve conter exatamente 17 caracteres alfanuméricos.");
+                throw new Exception("Chassi inválido! Deve conter exatamente 17 caracteres alfanuméricos.");
 
             // **Validação do Patrimônio**
             String patrimonioTexto = jTextField_patrimonio.getText().trim();
             if (patrimonioTexto.isEmpty())
                 patrimonioTexto = "-1";
             else if (!patrimonioTexto.matches("\\d+"))
-                JOptionPane.showMessageDialog(rootPane, "Patrimônio inválido! Deve ser um número inteiro positivo.");
+                throw new Exception("Patrimônio inválido! Deve ser um número inteiro positivo.");
             Integer patrimonio = Integer.valueOf(patrimonioTexto);
             // **Validação da Quilometragem**
             String kilometragemTexto = jTextField_kilometragem.getText().trim();
             if (!kilometragemTexto.matches("\\d+"))
-                JOptionPane.showMessageDialog(rootPane, "Quilometragem inválida! Deve ser um número inteiro não negativo.");
+                throw new Exception("Quilometragem inválida! Deve ser um número inteiro não negativo.");
 
             int kilometragem = Integer.parseInt(kilometragemTexto);
 
             // **Validação do Modelo**
             String aux = (String) jComboBox_Modelo.getSelectedItem();
             if (aux == null || !aux.contains("-")) 
-                JOptionPane.showMessageDialog(rootPane, "Selecione um modelo válido no campo de modelo.");
+                throw new Exception("Selecione um modelo válido no campo de modelo.");
                 
             String[] vetModelo = aux.split("-");
             int idModelo = Integer.parseInt(vetModelo[0]);
