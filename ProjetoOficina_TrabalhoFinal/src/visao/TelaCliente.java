@@ -5,6 +5,7 @@
 package visao;
 
 import java.awt.Color;
+import java.util.Arrays;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -474,10 +475,10 @@ public class TelaCliente extends javax.swing.JInternalFrame {
         jTextField_Cidade.setText(vetEnd[4].trim());
         jTextField_Estado.setText(vetEnd[5].trim());
         jFormattedTextField1_cep.setText((vetEnd[6] + vetEnd[7]).trim());
-
-        if(model.getValueAt(selectedRowIndex, 6).toString().compareTo("") == 0){
+        if(model.getValueAt(selectedRowIndex, 6).toString().equals("")){
             jComboBox_Opcoes.setSelectedItem("Pessoa Jurídica");
             escolherEntrePessoaFisicaOuJuridica();
+            jFormattedTextField1_cpf.setValue(null);
             jFormattedTextField1_cnpj.setText(model.getValueAt(selectedRowIndex, 7).toString());
             jTextField_Contato.setText(model.getValueAt(selectedRowIndex, 8).toString());
             jTextField_InscricaoEstadual.setText(model.getValueAt(selectedRowIndex, 9).toString());
@@ -485,6 +486,9 @@ public class TelaCliente extends javax.swing.JInternalFrame {
             jComboBox_Opcoes.setSelectedItem("Pessoa Física");
             escolherEntrePessoaFisicaOuJuridica();
             jFormattedTextField1_cpf.setText(model.getValueAt(selectedRowIndex, 6).toString());
+            jFormattedTextField1_cnpj.setValue(null);
+            jTextField_Contato.setText("");
+            jTextField_InscricaoEstadual.setText("");
         }
     }//GEN-LAST:event_jTable_SaidaMouseClicked
 
@@ -533,7 +537,7 @@ public class TelaCliente extends javax.swing.JInternalFrame {
             String validacaoID = jTextField_IdCliente.getText();
             if(validacaoID.isEmpty()) throw new Exception("ID Vazio");
             int idCliente = Integer.parseInt(validacaoID);
-            String nome = jTextField_Nome.getText();
+            String nome = jTextField_Nome.getText().toUpperCase();
             if(nome.isEmpty()) throw new Exception("Nome Vazio");
             if (!nome.matches("^[A-Za-zÀ-Üà-ü\\s]+$")) throw new Exception("O nome deve conter apenas letras e espaços.");
             String email = jTextField_Email.getText();
@@ -601,7 +605,7 @@ public class TelaCliente extends javax.swing.JInternalFrame {
     private void jButton_IncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_IncluirActionPerformed
         // TODO add your handling code here:
         try {
-            String nome = jTextField_Nome.getText();
+            String nome = jTextField_Nome.getText().toUpperCase();
             if(nome.isEmpty()) throw new Exception("Nome Vazio");
             if (!nome.matches("^[A-Za-zÀ-Üà-ü\\s]+$")) throw new Exception("O nome deve conter apenas letras e espaços.");
             String email = jTextField_Email.getText();

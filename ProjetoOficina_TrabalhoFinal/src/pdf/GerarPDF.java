@@ -41,10 +41,17 @@ public class GerarPDF {
             Paragraph header = new Paragraph(oficina.getNome(), fontTitulo);
             header.setAlignment(Element.ALIGN_CENTER);
             document.add(header);
-
-            Paragraph endereco = new Paragraph("Logradouro:"+oficina.getEndereco().getLogradouro()+"\n"+"Numero:"+oficina.getEndereco().getNumeroEndereco()+"\n"+
+            
+            Paragraph endereco = null;
+            if(oficina.getTelefone2() != null){
+                endereco = new Paragraph("Logradouro:"+oficina.getEndereco().getLogradouro()+"\n"+"Numero:"+oficina.getEndereco().getNumeroEndereco()+"\n"+
+                                                    "Cep:"+oficina.getEndereco().getCep()+"\n"+"Bairro:"+oficina.getEndereco().getBairro()+"\n"+"Complemento:"+oficina.getEndereco().getComplemento()+"\n"+
+                                                    "Cidade:"+oficina.getEndereco().getCidade()+"-"+oficina.getEndereco().getEstado()+"\n"+oficina.getTelefone1().toString()+"   "+oficina.getTelefone2().toString()+"\n"+oficina.getIdentificador_Email(), fontTexto);
+            }else{
+                endereco = new Paragraph("Logradouro:"+oficina.getEndereco().getLogradouro()+"\n"+"Numero:"+oficina.getEndereco().getNumeroEndereco()+"\n"+
                                                 "Cep:"+oficina.getEndereco().getCep()+"\n"+"Bairro:"+oficina.getEndereco().getBairro()+"\n"+"Complemento:"+oficina.getEndereco().getComplemento()+"\n"+
-                                                "Cidade:"+oficina.getEndereco().getCidade()+"-"+oficina.getEndereco().getEstado()+"\n"+oficina.getTelefone1().toString()+"   "+oficina.getTelefone2().toString()+"\n"+oficina.getIdentificador_Email(), fontTexto);
+                                                "Cidade:"+oficina.getEndereco().getCidade()+"-"+oficina.getEndereco().getEstado()+"\n"+oficina.getTelefone1().toString()+"\n"+oficina.getIdentificador_Email(), fontTexto);
+            }
             endereco.setAlignment(Element.ALIGN_CENTER);
             endereco.setSpacingAfter(2);
             document.add(endereco);
@@ -73,7 +80,11 @@ public class GerarPDF {
             tabelaCliente.addCell(new Phrase("CPF/CNPJ:", fontTabela));
             tabelaCliente.addCell(new Phrase(cliente.getCpf()+","+cliente.getCnpj(), fontTexto));
             tabelaCliente.addCell(new Phrase("Fones:", fontTabela));
-            tabelaCliente.addCell(new Phrase(cliente.getTelefone1().toString()+"--"+cliente.getTelefone2().toString(), fontTexto));
+            if(cliente.getTelefone2() != null){
+                tabelaCliente.addCell(new Phrase(cliente.getTelefone1().toString()+" -- "+cliente.getTelefone2().toString(), fontTexto));
+            }else{
+                tabelaCliente.addCell(new Phrase(cliente.getTelefone1().toString(), fontTexto));
+            }
             tabelaCliente.addCell(new Phrase("Email:", fontTabela));
             tabelaCliente.addCell(new Phrase(cliente.getEmail(), fontTexto));
             tabelaCliente.addCell(new Phrase("Ins. Est:", fontTabela));
@@ -93,16 +104,21 @@ public class GerarPDF {
             tabelaVeiculo.setSpacingAfter(10);
             tabelaVeiculo.setWidths(new int[]{1, 3});
 
-            tabelaVeiculo.addCell(new Phrase("Veículo/Ano:", fontTabela));
-            tabelaVeiculo.addCell(new Phrase(veiculo.getModelo().getDescricao()+veiculo.getAnoModelo(), fontTexto));
+            tabelaVeiculo.addCell(new Phrase("Modelo/Ano:", fontTabela));
+            tabelaVeiculo.addCell(new Phrase(veiculo.getModelo().getDescricao()+" "+veiculo.getAnoModelo(), fontTexto));
             tabelaVeiculo.addCell(new Phrase("Marca:", fontTabela));
             tabelaVeiculo.addCell(new Phrase(veiculo.getModelo().getMarca().getDescricao(), fontTexto));
             tabelaVeiculo.addCell(new Phrase("Placa:", fontTabela));
             tabelaVeiculo.addCell(new Phrase(veiculo.getPlaca(), fontTexto));
             tabelaVeiculo.addCell(new Phrase("Nº Chassis:", fontTabela));
             tabelaVeiculo.addCell(new Phrase(veiculo.getChassi(), fontTexto));
-            tabelaVeiculo.addCell(new Phrase("Nº Patrimônio:", fontTabela));
-            tabelaVeiculo.addCell(new Phrase(veiculo.getPatrimonio()+"", fontTexto));
+            if(veiculo.getPatrimonio() != null){
+                tabelaVeiculo.addCell(new Phrase("Nº Patrimônio:", fontTabela));
+                tabelaVeiculo.addCell(new Phrase(veiculo.getPatrimonio()+"", fontTexto));
+            }else{
+                tabelaVeiculo.addCell(new Phrase("Nº Patrimônio:", fontTabela));
+                tabelaVeiculo.addCell(new Phrase("", fontTexto));
+            }
             tabelaVeiculo.addCell(new Phrase("Kilometragem:", fontTabela));
             tabelaVeiculo.addCell(new Phrase(veiculo.getKilometragem()+"", fontTexto));
             tabelaVeiculo.addCell(new Phrase("Entrada:", fontTabela));
@@ -188,7 +204,7 @@ public class GerarPDF {
             document.add(tabelaTotais);
 
             // Nota de Encerramento
-            Paragraph notaEncerramento = new Paragraph("*** ORÇAMENTO " + ordem.getStatus().toUpperCase() + " ***", fontTexto);
+            Paragraph notaEncerramento = new Paragraph("*** STATUS: " + ordem.getStatus().toUpperCase() + " ***", fontTexto);
             notaEncerramento.setAlignment(Element.ALIGN_CENTER);
             document.add(notaEncerramento);
 
@@ -211,7 +227,7 @@ public class GerarPDF {
             } else {
                 throw new Exception("A funcionalidade Desktop não é suportada neste sistema operacional.");
             }
-            throw new Exception("PDF gerado com sucesso!");
+            //throw new Exception("PDF gerado com sucesso!");
         } catch (Exception erro) {
             throw new Exception("Gerar PDF: " + erro);
         }

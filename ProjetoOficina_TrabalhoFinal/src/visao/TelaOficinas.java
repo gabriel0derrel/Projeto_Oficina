@@ -639,9 +639,8 @@ public class TelaOficinas extends javax.swing.JInternalFrame {
             }
 
             String cep = jFormattedTextField1_cep.getText().trim();
-            if (cep.isEmpty() || !cep.matches("\\d{8}")) {
-                JOptionPane.showMessageDialog(rootPane, "Insira um CEP válido no formato: XXXXXXXX.");
-                return;
+            if (cep.isEmpty() || !cep.matches("\\d{5}\\-\\d{3}")) {
+                JOptionPane.showMessageDialog(rootPane, "Insira um CEP válido no formato: XXXXX-XXX.");
             }
 
             String bairro = jTextField3_BAIRO.getText().trim().toUpperCase();
@@ -699,7 +698,7 @@ public class TelaOficinas extends javax.swing.JInternalFrame {
         jTextField3_BAIRO.setText(vetEnd[3].trim());
         jTextField5_cidade.setText(vetEnd[4].trim());
         jTextField6_estado.setText(vetEnd[5].trim());
-        jFormattedTextField1_cep.setText(vetEnd[6].trim());
+        jFormattedTextField1_cep.setText((vetEnd[6]+"-"+vetEnd[7]).trim());
         
         //aux
         //String vetTelefone1[] = model.getValueAt

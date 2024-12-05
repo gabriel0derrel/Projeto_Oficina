@@ -552,6 +552,7 @@ public class TelaOrdemDeServico extends javax.swing.JInternalFrame {
             Veiculo veiculo = (veiculoDB.consultar(new Veiculo(jComboBox_Veiculo.getSelectedItem().toString().split("-")[0])));
             OrdemDeServico ordem = new OrdemDeServico(Integer.parseInt(jTextField_ID.getText()));
             pdf.gerarPdf(ordem,veiculo,cliente,listaDeAcessorio,listaDePecasOrdemAtual,listaDeServicoOrdemAtual,oficina);
+            JOptionPane.showMessageDialog(rootPane, "PDF gerado com sucesso!");
         } catch (Exception erro) {
             JOptionPane.showMessageDialog(rootPane, "Erro ao Gerar PDF: " + erro.getMessage());
         }

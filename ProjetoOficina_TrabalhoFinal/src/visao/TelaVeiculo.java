@@ -71,7 +71,7 @@ public class TelaVeiculo extends javax.swing.JInternalFrame {
         int anoFabricacao = calendarAnoFabricacao.get(Calendar.YEAR);
         
         Calendar calendarAnoModelo = Calendar.getInstance();
-        calendarAnoModelo.setTime(objVeiculo.getAnoFabricacao());
+        calendarAnoModelo.setTime(objVeiculo.getAnoModelo());
         int anoModelo = calendarAnoModelo.get(Calendar.YEAR);
         
         String[] saida = new String[8];
