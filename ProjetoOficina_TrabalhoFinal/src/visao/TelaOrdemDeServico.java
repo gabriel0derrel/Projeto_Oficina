@@ -6,14 +6,29 @@ package visao;
 
 import java.util.Calendar;
 import java.util.Date;
+import java.util.LinkedList;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
+import modelos.Acessorio;
+import modelos.Cliente;
 import modelos.OrdemDeServico;
 import modelos.ICrud;
+import modelos.ItensPeca;
+import modelos.ItensServicos;
+import modelos.Oficina;
+import modelos.Proprietario;
 import modelos.Veiculo;
+import modelos.VeiculoAcessorio;
 import modelos.enums.StatusEnum;
+import pdf.GerarPDF;
+import persistencia.ClienteDAO;
+import persistencia.ItensPecaDAO;
+import persistencia.ItensServicosDAO;
+import persistencia.OficinaDAO;
 import persistencia.OrdemDeServicoDAO;
+import persistencia.ProprietarioDAO;
+import persistencia.VeiculoAcessorioDAO;
 import persistencia.VeiculoDAO;
 
 /**
@@ -24,6 +39,12 @@ public class TelaOrdemDeServico extends javax.swing.JInternalFrame {
 
     private Date dataAtual = null;
     private ICrud<Veiculo> veiculoDB = null;
+    private ICrud<Oficina> oficinaBD = null;
+    private ICrud<VeiculoAcessorio> veiculoAcessorioBD = null;
+    private ICrud<ItensServicos> itensServicoBD = null;
+    private ICrud<ItensPeca> itensPecaBD = null;
+    private ICrud<Proprietario> proprietarioBD = null;
+    private ICrud<Cliente> clienteBD = null;
     private ICrud<OrdemDeServico> ordemDB = null;
     
     public TelaOrdemDeServico() {
@@ -32,6 +53,7 @@ public class TelaOrdemDeServico extends javax.swing.JInternalFrame {
             dataAtual = jCalendar_DataInicio.getDate();
             veiculoDB = new VeiculoDAO();
             ordemDB = new OrdemDeServicoDAO();
+            oficinaBD = new OficinaDAO();
           
             List<Veiculo> listaDeVeiculo = veiculoDB.listar();
             jComboBox_Veiculo.removeAllItems();
@@ -42,6 +64,12 @@ public class TelaOrdemDeServico extends javax.swing.JInternalFrame {
             jComboBox_Status.removeAll();
             for(StatusEnum status : StatusEnum.values()){
                 jComboBox_Status.addItem(status.getDescricao());
+            }
+            
+            List<Oficina> listaDeOficina = oficinaBD.listar();
+            jComboBox_Oficina.removeAllItems();
+            for(int pos = 0; pos < listaDeOficina.size(); pos++){
+                jComboBox_Oficina.addItem(listaDeOficina.get(pos).toString());
             }
             jTextField_Diferenca.setEditable(false);
             mostrarNaGrid();
@@ -121,49 +149,74 @@ public class TelaOrdemDeServico extends javax.swing.JInternalFrame {
         jCalendar_DataInicio = new com.toedter.calendar.JCalendar();
         jLabel8 = new javax.swing.JLabel();
         jCalendar_DataFim = new com.toedter.calendar.JCalendar();
+        jButton1_pdf = new javax.swing.JButton();
+        jComboBox_Oficina = new javax.swing.JComboBox<>();
+        jLabel9 = new javax.swing.JLabel();
 
         jLabel1.setFont(new java.awt.Font("sansserif", 1, 18)); // NOI18N
         jLabel1.setText("ID");
 
+        jTextField_ID.setBackground(new java.awt.Color(204, 255, 204));
+
         jLabel2.setFont(new java.awt.Font("sansserif", 1, 18)); // NOI18N
         jLabel2.setText("Status");
+
+        jComboBox_Status.setBackground(new java.awt.Color(204, 255, 204));
 
         jLabel3.setFont(new java.awt.Font("sansserif", 1, 18)); // NOI18N
         jLabel3.setText("Valor Total");
 
+        jTextField_ValorTotal.setBackground(new java.awt.Color(204, 255, 204));
+
         jLabel4.setFont(new java.awt.Font("sansserif", 1, 18)); // NOI18N
         jLabel4.setText("Valor Pago");
+
+        jTextField_ValorPago.setBackground(new java.awt.Color(204, 255, 204));
 
         jLabel5.setFont(new java.awt.Font("sansserif", 1, 18)); // NOI18N
         jLabel5.setText("Diferença");
 
+        jTextField_Diferenca.setBackground(new java.awt.Color(204, 255, 204));
+
         jLabel6.setFont(new java.awt.Font("sansserif", 1, 18)); // NOI18N
         jLabel6.setText("Veículo");
 
-        jButton_Incluir.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
-        jButton_Incluir.setText("Incluir");
+        jComboBox_Veiculo.setBackground(new java.awt.Color(204, 255, 204));
+
+        jButton_Incluir.setBackground(new java.awt.Color(0, 153, 0));
+        jButton_Incluir.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
+        jButton_Incluir.setForeground(new java.awt.Color(0, 255, 204));
+        jButton_Incluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/figuras/seta.png"))); // NOI18N
+        jButton_Incluir.setText("INCLUIR");
         jButton_Incluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_IncluirActionPerformed(evt);
             }
         });
 
-        jButton_Alterar.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
-        jButton_Alterar.setText("Alterar");
+        jButton_Alterar.setBackground(new java.awt.Color(0, 153, 0));
+        jButton_Alterar.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
+        jButton_Alterar.setForeground(new java.awt.Color(0, 255, 204));
+        jButton_Alterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/figuras/troca.png"))); // NOI18N
+        jButton_Alterar.setText("ALTERAR");
         jButton_Alterar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_AlterarActionPerformed(evt);
             }
         });
 
-        jButton_Buscar.setFont(new java.awt.Font("sansserif", 1, 14)); // NOI18N
-        jButton_Buscar.setText("Buscar");
+        jButton_Buscar.setBackground(new java.awt.Color(0, 153, 0));
+        jButton_Buscar.setFont(new java.awt.Font("sansserif", 1, 12)); // NOI18N
+        jButton_Buscar.setForeground(new java.awt.Color(0, 255, 204));
+        jButton_Buscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/figuras/procurar.png"))); // NOI18N
+        jButton_Buscar.setText("BUSCAR");
         jButton_Buscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton_BuscarActionPerformed(evt);
             }
         });
 
+        jTable_Saida.setBackground(new java.awt.Color(153, 255, 204));
         jTable_Saida.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
@@ -198,23 +251,34 @@ public class TelaOrdemDeServico extends javax.swing.JInternalFrame {
         jLabel7.setFont(new java.awt.Font("sansserif", 1, 18)); // NOI18N
         jLabel7.setText("Data Inicial");
 
+        jCalendar_DataInicio.setBackground(new java.awt.Color(153, 255, 153));
+
         jLabel8.setFont(new java.awt.Font("sansserif", 1, 18)); // NOI18N
         jLabel8.setText("Data Final");
+
+        jCalendar_DataFim.setBackground(new java.awt.Color(153, 255, 153));
+
+        jButton1_pdf.setBackground(new java.awt.Color(0, 153, 0));
+        jButton1_pdf.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        jButton1_pdf.setIcon(new javax.swing.ImageIcon(getClass().getResource("/figuras/pdf.png"))); // NOI18N
+        jButton1_pdf.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1_pdfActionPerformed(evt);
+            }
+        });
+
+        jLabel9.setFont(new java.awt.Font("sansserif", 1, 18)); // NOI18N
+        jLabel9.setText("Oficina");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(22, 22, 22)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane1)
+                .addGap(23, 23, 23)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel5)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField_Diferenca))
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel4)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -230,27 +294,39 @@ public class TelaOrdemDeServico extends javax.swing.JInternalFrame {
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jLabel1)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(jTextField_ID, javax.swing.GroupLayout.PREFERRED_SIZE, 115, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel6)
-                                    .addComponent(jButton_Incluir))
+                                .addComponent(jTextField_ID))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                                .addComponent(jButton_Incluir, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jComboBox_Veiculo, javax.swing.GroupLayout.PREFERRED_SIZE, 174, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jButton_Alterar)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jButton_Buscar)))))
-                        .addGap(27, 27, 27)
+                                .addComponent(jButton_Alterar)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jButton_Buscar, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel5)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(jTextField_Diferenca))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel6)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addComponent(jComboBox_Veiculo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addGap(12, 12, 12)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jCalendar_DataInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 444, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jCalendar_DataInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 372, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel7))
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel8)
-                            .addComponent(jCalendar_DataFim, javax.swing.GroupLayout.PREFERRED_SIZE, 444, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                .addContainerGap(31, Short.MAX_VALUE))
+                            .addComponent(jCalendar_DataFim, javax.swing.GroupLayout.PREFERRED_SIZE, 372, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel9)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jComboBox_Oficina, javax.swing.GroupLayout.PREFERRED_SIZE, 754, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1_pdf, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(170, Short.MAX_VALUE))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jScrollPane1)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -264,35 +340,44 @@ public class TelaOrdemDeServico extends javax.swing.JInternalFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel2)
+                                    .addComponent(jComboBox_Status, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jTextField_ValorTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel4)
+                                    .addComponent(jTextField_ValorPago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel5)
+                                    .addComponent(jTextField_Diferenca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jLabel6)
+                                    .addComponent(jComboBox_Veiculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(18, 18, 18)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                    .addComponent(jButton_Incluir)
+                                    .addComponent(jButton_Alterar)
+                                    .addComponent(jButton_Buscar)))
+                            .addComponent(jCalendar_DataInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel2)
-                            .addComponent(jComboBox_Status, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jComboBox_Oficina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel9)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jCalendar_DataFim, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel3)
-                            .addComponent(jTextField_ValorTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel4)
-                            .addComponent(jTextField_ValorPago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel5)
-                            .addComponent(jTextField_Diferenca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel6)
-                            .addComponent(jComboBox_Veiculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jButton_Incluir)
-                            .addComponent(jButton_Alterar)
-                            .addComponent(jButton_Buscar)))
-                    .addComponent(jCalendar_DataInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jCalendar_DataFim, javax.swing.GroupLayout.PREFERRED_SIZE, 225, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 354, Short.MAX_VALUE)
-                .addGap(18, 18, 18))
+                        .addComponent(jButton1_pdf, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(14, 14, 14)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -413,13 +498,74 @@ public class TelaOrdemDeServico extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_jTable_SaidaMouseClicked
 
+    private void jButton1_pdfActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1_pdfActionPerformed
+        // TODO add your handling code here:
+        try {
+            if (jTextField_ID.getText().isEmpty()) throw new Exception("ID Vazio");
+            GerarPDF pdf = new GerarPDF();
+            Cliente cliente = null;
+            proprietarioBD = new ProprietarioDAO();
+            clienteBD = new ClienteDAO();
+            List<Proprietario> listaDeProprietario = null;
+            listaDeProprietario = proprietarioBD.listar();
+            for(int pos = 0; pos < listaDeProprietario.size(); pos++){
+                Proprietario objProprietario = listaDeProprietario.get(pos);
+                if(objProprietario.getDataFim()== null && objProprietario.getVeiculo().getPlaca().compareTo(jComboBox_Veiculo.getSelectedItem().toString().split("-")[0])==0){
+                    cliente = clienteBD.consultar(new Cliente(objProprietario.getCliente().getIdCliente()));
+                }
+            }         
+            List<Acessorio> listaDeAcessorio = null;
+            listaDeAcessorio = new LinkedList<>();
+            veiculoAcessorioBD = new VeiculoAcessorioDAO();
+            List<VeiculoAcessorio> listaDeVeiculoAcessorio = null;
+            listaDeVeiculoAcessorio = veiculoAcessorioBD.listar();
+            for(int pos = 0; pos < listaDeVeiculoAcessorio.size(); pos++){
+                VeiculoAcessorio objVeiculoAcessorio = listaDeVeiculoAcessorio.get(pos);
+                if(objVeiculoAcessorio.getVeiculo().getPlaca().compareTo(jComboBox_Veiculo.getSelectedItem().toString().split("-")[0])==0){
+                    listaDeAcessorio.add(objVeiculoAcessorio.getAcessorio());
+                }
+            }
+            List<ItensPeca> listaDePecasOrdemAtual = null;
+            listaDePecasOrdemAtual = new LinkedList<>();
+            itensPecaBD = new ItensPecaDAO();
+            List<ItensPeca> listaDeBuscaOrdemPecas = null;
+            listaDeBuscaOrdemPecas = itensPecaBD.listar();
+            for(int pos = 0; pos < listaDeBuscaOrdemPecas.size(); pos++){
+                ItensPeca objItensPecas = listaDeBuscaOrdemPecas.get(pos);
+                if(objItensPecas.getOrdem().getIdOrdem() == Integer.parseInt(jTextField_ID.getText())){
+                    listaDePecasOrdemAtual.add(objItensPecas);
+                }
+            }
+            List<ItensServicos> listaDeServicoOrdemAtual = null;
+            listaDeServicoOrdemAtual = new LinkedList<>();
+            itensServicoBD = new ItensServicosDAO();
+            List<ItensServicos> listaDeBuscaOrdemServico = null;
+            listaDeBuscaOrdemServico = itensServicoBD.listar();
+            for(int pos = 0; pos < listaDeBuscaOrdemServico.size(); pos++){
+                ItensServicos objItensServico = listaDeBuscaOrdemServico.get(pos);
+                if(objItensServico.getOrdem().getIdOrdem() == Integer.parseInt(jTextField_ID.getText())){
+                    listaDeServicoOrdemAtual.add(objItensServico);
+                }
+            }
+            
+            Oficina oficina = (oficinaBD.consultar(new Oficina(jComboBox_Oficina.getSelectedItem().toString().split("-")[0])));
+            Veiculo veiculo = (veiculoDB.consultar(new Veiculo(jComboBox_Veiculo.getSelectedItem().toString().split("-")[0])));
+            OrdemDeServico ordem = new OrdemDeServico(Integer.parseInt(jTextField_ID.getText()));
+            pdf.gerarPdf(ordem,veiculo,cliente,listaDeAcessorio,listaDePecasOrdemAtual,listaDeServicoOrdemAtual,oficina);
+        } catch (Exception erro) {
+            JOptionPane.showMessageDialog(rootPane, "Erro ao Gerar PDF: " + erro.getMessage());
+        }
+    }//GEN-LAST:event_jButton1_pdfActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton jButton1_pdf;
     private javax.swing.JButton jButton_Alterar;
     private javax.swing.JButton jButton_Buscar;
     private javax.swing.JButton jButton_Incluir;
     private com.toedter.calendar.JCalendar jCalendar_DataFim;
     private com.toedter.calendar.JCalendar jCalendar_DataInicio;
+    private javax.swing.JComboBox<String> jComboBox_Oficina;
     private javax.swing.JComboBox<String> jComboBox_Status;
     private javax.swing.JComboBox<String> jComboBox_Veiculo;
     private javax.swing.JLabel jLabel1;
@@ -430,6 +576,7 @@ public class TelaOrdemDeServico extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTable jTable_Saida;
     private javax.swing.JTextField jTextField_Diferenca;

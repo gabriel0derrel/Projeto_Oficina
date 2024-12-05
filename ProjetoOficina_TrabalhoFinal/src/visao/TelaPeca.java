@@ -90,35 +90,44 @@ public class TelaPeca extends javax.swing.JInternalFrame {
 
         setPreferredSize(new java.awt.Dimension(1146, 573));
 
-        jLabel1.setFont(new java.awt.Font("Segoe UI", 3, 36)); // NOI18N
+        jLabel1.setFont(new java.awt.Font("SansSerif", 1, 36)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("CADASTRO DE PECAS");
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
+        jLabel2.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
         jLabel2.setText("IdPeca");
 
-        jLabel3.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
+        jLabel3.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
         jLabel3.setText("Descricao");
 
-        jLabel4.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
+        jLabel4.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
         jLabel4.setText("Codigo Fabricante");
 
-        jLabel5.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
+        jLabel5.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
         jLabel5.setText("Valor Unitario");
 
-        jLabel6.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
+        jLabel6.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
         jLabel6.setText("Quantidade");
 
+        jTextField_IdPeca.setBackground(new java.awt.Color(204, 255, 204));
         jTextField_IdPeca.setFont(new java.awt.Font("Segoe UI", 3, 14)); // NOI18N
 
+        jTextField_descricaoPeca.setBackground(new java.awt.Color(204, 255, 204));
         jTextField_descricaoPeca.setFont(new java.awt.Font("Segoe UI", 3, 14)); // NOI18N
 
+        jTextField_codigoFabricantePeca.setBackground(new java.awt.Color(204, 255, 204));
         jTextField_codigoFabricantePeca.setFont(new java.awt.Font("Segoe UI", 3, 14)); // NOI18N
 
+        jTextField_ValorUnitario.setBackground(new java.awt.Color(204, 255, 204));
         jTextField_ValorUnitario.setFont(new java.awt.Font("Segoe UI", 3, 14)); // NOI18N
 
+        jTextField_quantidade.setBackground(new java.awt.Color(204, 255, 204));
         jTextField_quantidade.setFont(new java.awt.Font("Segoe UI", 3, 14)); // NOI18N
 
-        jButton_Incluir.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
+        jButton_Incluir.setBackground(new java.awt.Color(0, 153, 0));
+        jButton_Incluir.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        jButton_Incluir.setForeground(new java.awt.Color(0, 255, 204));
+        jButton_Incluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/figuras/seta.png"))); // NOI18N
         jButton_Incluir.setText("INCLUIR");
         jButton_Incluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -126,7 +135,10 @@ public class TelaPeca extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton_Alterar.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
+        jButton_Alterar.setBackground(new java.awt.Color(0, 153, 0));
+        jButton_Alterar.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        jButton_Alterar.setForeground(new java.awt.Color(0, 255, 204));
+        jButton_Alterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/figuras/troca.png"))); // NOI18N
         jButton_Alterar.setText("ALTERAR");
         jButton_Alterar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -134,7 +146,10 @@ public class TelaPeca extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton_Buscar.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
+        jButton_Buscar.setBackground(new java.awt.Color(0, 153, 0));
+        jButton_Buscar.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        jButton_Buscar.setForeground(new java.awt.Color(0, 255, 204));
+        jButton_Buscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/figuras/procurar.png"))); // NOI18N
         jButton_Buscar.setText("BUSCAR");
         jButton_Buscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -142,6 +157,7 @@ public class TelaPeca extends javax.swing.JInternalFrame {
             }
         });
 
+        jTable_Peca.setBackground(new java.awt.Color(153, 255, 204));
         jTable_Peca.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null, null},
@@ -168,42 +184,43 @@ public class TelaPeca extends javax.swing.JInternalFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(366, 366, 366)
-                                .addComponent(jLabel1))
-                            .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addGroup(layout.createSequentialGroup()
                                         .addComponent(jLabel5)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jTextField_ValorUnitario, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jLabel6)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jTextField_quantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addComponent(jTextField_ValorUnitario, javax.swing.GroupLayout.PREFERRED_SIZE, 102, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addGroup(layout.createSequentialGroup()
                                         .addGap(15, 15, 15)
                                         .addComponent(jLabel2)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jTextField_IdPeca, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jLabel3)
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                        .addComponent(jTextField_IdPeca)))
+                                .addGap(6, 6, 6)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(jLabel6)
+                                    .addComponent(jLabel3))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jTextField_quantidade, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addGroup(layout.createSequentialGroup()
                                         .addComponent(jTextField_descricaoPeca, javax.swing.GroupLayout.PREFERRED_SIZE, 313, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(jLabel4)
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                        .addComponent(jTextField_codigoFabricantePeca, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE))))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jButton_Incluir)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton_Alterar)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton_Buscar)))
-                        .addGap(0, 130, Short.MAX_VALUE)))
+                                        .addComponent(jTextField_codigoFabricantePeca, javax.swing.GroupLayout.PREFERRED_SIZE, 223, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                .addGap(0, 76, Short.MAX_VALUE))
+                            .addComponent(jLabel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
                 .addContainerGap())
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGap(0, 0, Short.MAX_VALUE)
+                .addComponent(jButton_Incluir)
+                .addGap(89, 89, 89)
+                .addComponent(jButton_Alterar)
+                .addGap(74, 74, 74)
+                .addComponent(jButton_Buscar)
+                .addGap(373, 373, 373))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -223,13 +240,13 @@ public class TelaPeca extends javax.swing.JInternalFrame {
                     .addComponent(jLabel6)
                     .addComponent(jTextField_ValorUnitario, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jTextField_quantidade, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGap(80, 80, 80)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton_Incluir)
                     .addComponent(jButton_Alterar)
                     .addComponent(jButton_Buscar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 353, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
 

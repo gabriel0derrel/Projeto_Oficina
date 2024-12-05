@@ -5,6 +5,8 @@
 package visao;
 
 import conexao.ConexaoBD;
+import java.awt.Color;
+import java.awt.Image;
 import java.sql.Connection;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
@@ -12,6 +14,9 @@ import java.beans.PropertyVetoException;
 import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.Icon;
+import javax.swing.ImageIcon;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
 /**
@@ -40,18 +45,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
         WindowClosingEventHandler();
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         
-        // Como inserir uma tela na tela principal
-        /*jDesktopPane_InputDeTela.removeAll();
-        TelaBemVindo telaBemVindo = new TelaBemVindo();
-        jDesktopPane_InputDeTela.add(telaBemVindo);
-        try {
-            telaBemVindo.setVisible(true);
-            telaBemVindo.setSelected(true);
-            telaBemVindo.setMaximum(true);
-            telaBemVindo.setMaximizable(false);
-        } catch (PropertyVetoException ex) {
-            Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-        }*/
         jDesktopPane_InputDeTela.removeAll();
         TelaLogin telaLogin = new TelaLogin(this);
         jDesktopPane_InputDeTela.add(telaLogin);
@@ -65,8 +58,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
         }
         
     }
-    
-    
     
     private void WindowClosingEventHandler(){
         addWindowListener(new WindowAdapter() {
@@ -95,7 +86,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jDesktopPane_InputDeTela = new javax.swing.JDesktopPane();
         jMenuBar_Opcoes = new javax.swing.JMenuBar();
-        jMenu_Login = new javax.swing.JMenu();
         jMenu_Oficina = new javax.swing.JMenu();
         jMenu_ClientesVeiculos = new javax.swing.JMenu();
         jMenuItem_Cliente = new javax.swing.JMenuItem();
@@ -132,13 +122,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
             .addGap(0, 639, Short.MAX_VALUE)
         );
 
-        jMenu_Login.setText("LOGIN");
-        jMenu_Login.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jMenu_LoginMouseClicked(evt);
-            }
-        });
-        jMenuBar_Opcoes.add(jMenu_Login);
+        jMenuBar_Opcoes.setBackground(new java.awt.Color(0, 0, 0));
 
         jMenu_Oficina.setText("Oficina");
         jMenu_Oficina.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -264,6 +248,8 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jMenuBar_Opcoes.add(jMenu_PecasServicos);
 
+        jMenu_OrdemDeServico.setBackground(new java.awt.Color(255, 102, 102));
+        jMenu_OrdemDeServico.setForeground(new java.awt.Color(0, 0, 0));
         jMenu_OrdemDeServico.setText("Ordem de Serviço");
         jMenu_OrdemDeServico.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -305,6 +291,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 telaCliente.setSelected(true);
                 telaCliente.setMaximum(true);
                 telaCliente.setMaximizable(false);
+                telaCliente.getContentPane().setBackground(new Color(153, 255, 153));
             } catch (PropertyVetoException ex) {
                 Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -324,6 +311,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 telaProprietario.setSelected(true);
                 telaProprietario.setMaximum(true);
                 telaProprietario.setMaximizable(false);
+                telaProprietario.getContentPane().setBackground(new Color(153, 255, 153));
             } catch (PropertyVetoException ex) {
                 Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -343,6 +331,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 telaMarca.setSelected(true);
                 telaMarca.setMaximum(true);
                 telaMarca.setMaximizable(false);
+                telaMarca.getContentPane().setBackground(new Color(153, 255, 153));
             } catch (PropertyVetoException ex) {
                 Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -362,6 +351,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 telaModelo.setSelected(true);
                 telaModelo.setMaximum(true);
                 telaModelo.setMaximizable(false);
+                telaModelo.getContentPane().setBackground(new Color(153, 255, 153));
             } catch (PropertyVetoException ex) {
                 Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -381,6 +371,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 telaAcessorio.setSelected(true);
                 telaAcessorio.setMaximum(true);
                 telaAcessorio.setMaximizable(false);
+                telaAcessorio.getContentPane().setBackground(new Color(153, 255, 153));
             } catch (PropertyVetoException ex) {
                 Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -400,6 +391,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 telaVeiculo.setSelected(true);
                 telaVeiculo.setMaximum(true);
                 telaVeiculo.setMaximizable(false);
+                telaVeiculo.getContentPane().setBackground(new Color(153, 255, 153));
             } catch (PropertyVetoException ex) {
                 Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -419,6 +411,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 telaVeiculoAcessorio.setSelected(true);
                 telaVeiculoAcessorio.setMaximum(true);
                 telaVeiculoAcessorio.setMaximizable(false);
+                telaVeiculoAcessorio.getContentPane().setBackground(new Color(153, 255, 153));
             } catch (PropertyVetoException ex) {
                 Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -438,6 +431,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 telaPeca.setSelected(true);
                 telaPeca.setMaximum(true);
                 telaPeca.setMaximizable(false);
+                telaPeca.getContentPane().setBackground(new Color(153, 255, 153));
             } catch (PropertyVetoException ex) {
                 Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -457,6 +451,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 telaItensPeca.setSelected(true);
                 telaItensPeca.setMaximum(true);
                 telaItensPeca.setMaximizable(false);
+                telaItensPeca.getContentPane().setBackground(new Color(153, 255, 153));
             } catch (PropertyVetoException ex) {
                 Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -476,6 +471,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 telaServico.setSelected(true);
                 telaServico.setMaximum(true);
                 telaServico.setMaximizable(false);
+                telaServico.getContentPane().setBackground(new Color(153, 255, 153));
             } catch (PropertyVetoException ex) {
                 Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -495,6 +491,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 telaFuncionario.setSelected(true);
                 telaFuncionario.setMaximum(true);
                 telaFuncionario.setMaximizable(false);
+                telaFuncionario.getContentPane().setBackground(new Color(153, 255, 153));
             } catch (PropertyVetoException ex) {
                 Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -514,6 +511,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 telaItensServicos.setSelected(true);
                 telaItensServicos.setMaximum(true);
                 telaItensServicos.setMaximizable(false);
+                telaItensServicos.getContentPane().setBackground(new Color(153, 255, 153));
             } catch (PropertyVetoException ex) {
                 Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -533,6 +531,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 telaOficina.setSelected(true);
                 telaOficina.setMaximum(true);
                 telaOficina.setMaximizable(false);
+                telaOficina.getContentPane().setBackground(new Color(153, 255, 153));
             } catch (PropertyVetoException ex) {
                 Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -552,6 +551,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 telaOrdemDeServico.setSelected(true);
                 telaOrdemDeServico.setMaximum(true);
                 telaOrdemDeServico.setMaximizable(false);
+                telaOrdemDeServico.getContentPane().setBackground(new Color(153, 255, 153));
             } catch (PropertyVetoException ex) {
                 Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
             }
@@ -559,24 +559,24 @@ public class TelaPrincipal extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane, "Login Necessário");
         }
     }//GEN-LAST:event_jMenu_OrdemDeServicoMouseClicked
-
-    private void jMenu_LoginMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu_LoginMouseClicked
-        // TODO add your handling code here:
-        jDesktopPane_InputDeTela.removeAll();
-        TelaLogin telaLogin = new TelaLogin(this);
-        jDesktopPane_InputDeTela.add(telaLogin);
-        try {
-            telaLogin.setVisible(true);
-            telaLogin.setSelected(true);
-            telaLogin.setMaximum(true);
-            telaLogin.setMaximizable(false);
-        } catch (PropertyVetoException ex) {
-            Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }//GEN-LAST:event_jMenu_LoginMouseClicked
     
     public void usuarioVerificado(){
         usuarioValidado = true;
+    }
+    
+    public void chamarTelaBemVindo(){
+        // Como inserir uma tela na tela principal
+        jDesktopPane_InputDeTela.removeAll();
+        TelaBemVindo telaBemVindo = new TelaBemVindo();
+        jDesktopPane_InputDeTela.add(telaBemVindo);
+        try {
+            telaBemVindo.setVisible(true);
+            telaBemVindo.setSelected(true);
+            telaBemVindo.setMaximum(true);
+            telaBemVindo.setMaximizable(false);
+        } catch (PropertyVetoException ex) {
+            Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     
   /**
@@ -630,7 +630,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem_Veiculo;
     private javax.swing.JMenuItem jMenuItem_VeiculoAcessorio;
     private javax.swing.JMenu jMenu_ClientesVeiculos;
-    private javax.swing.JMenu jMenu_Login;
     private javax.swing.JMenu jMenu_Oficina;
     private javax.swing.JMenu jMenu_OpcoesPeca;
     private javax.swing.JMenu jMenu_OpcoesServico;

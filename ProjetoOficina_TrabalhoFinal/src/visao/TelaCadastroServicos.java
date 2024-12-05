@@ -90,6 +90,7 @@ public class TelaCadastroServicos extends javax.swing.JInternalFrame {
         jLabel6.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
         jLabel6.setText("IdServico");
 
+        jTextField1_IdServico.setBackground(new java.awt.Color(204, 255, 204));
         jTextField1_IdServico.setFont(new java.awt.Font("Arial", 3, 14)); // NOI18N
         jTextField1_IdServico.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -105,6 +106,7 @@ public class TelaCadastroServicos extends javax.swing.JInternalFrame {
         jLabel7.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
         jLabel7.setText("Descricao");
 
+        jTextField1_Descricao.setBackground(new java.awt.Color(204, 255, 204));
         jTextField1_Descricao.setFont(new java.awt.Font("Arial", 3, 14)); // NOI18N
         jTextField1_Descricao.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -120,6 +122,7 @@ public class TelaCadastroServicos extends javax.swing.JInternalFrame {
         jLabel8.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
         jLabel8.setText("Preco");
 
+        jTextField1_Preco.setBackground(new java.awt.Color(204, 255, 204));
         jTextField1_Preco.setFont(new java.awt.Font("Arial", 3, 14)); // NOI18N
         jTextField1_Preco.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -132,7 +135,10 @@ public class TelaCadastroServicos extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton_Incluir.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
+        jButton_Incluir.setBackground(new java.awt.Color(0, 153, 0));
+        jButton_Incluir.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        jButton_Incluir.setForeground(new java.awt.Color(0, 255, 204));
+        jButton_Incluir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/figuras/seta.png"))); // NOI18N
         jButton_Incluir.setText("INCLUIR");
         jButton_Incluir.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -140,7 +146,10 @@ public class TelaCadastroServicos extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton_Alterar.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
+        jButton_Alterar.setBackground(new java.awt.Color(0, 153, 0));
+        jButton_Alterar.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        jButton_Alterar.setForeground(new java.awt.Color(0, 255, 204));
+        jButton_Alterar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/figuras/troca.png"))); // NOI18N
         jButton_Alterar.setText("ALTERAR");
         jButton_Alterar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -148,7 +157,10 @@ public class TelaCadastroServicos extends javax.swing.JInternalFrame {
             }
         });
 
-        jButton_Buscar.setFont(new java.awt.Font("Segoe UI", 3, 18)); // NOI18N
+        jButton_Buscar.setBackground(new java.awt.Color(0, 153, 0));
+        jButton_Buscar.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        jButton_Buscar.setForeground(new java.awt.Color(0, 255, 204));
+        jButton_Buscar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/figuras/procurar.png"))); // NOI18N
         jButton_Buscar.setText("BUSCAR");
         jButton_Buscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -156,6 +168,7 @@ public class TelaCadastroServicos extends javax.swing.JInternalFrame {
             }
         });
 
+        jTable_Servico.setBackground(new java.awt.Color(153, 255, 204));
         jTable_Servico.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
@@ -179,36 +192,35 @@ public class TelaCadastroServicos extends javax.swing.JInternalFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
+                .addComponent(jScrollPane1)
+                .addContainerGap())
+            .addGroup(layout.createSequentialGroup()
+                .addGap(128, 128, 128)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
+                        .addGap(238, 238, 238)
+                        .addComponent(jLabel1))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel6)
+                        .addGap(18, 18, 18)
+                        .addComponent(jTextField1_IdServico, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
-                                .addGap(332, 332, 332)
-                                .addComponent(jLabel1))
-                            .addGroup(layout.createSequentialGroup()
-                                .addContainerGap()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel6)
-                                    .addComponent(jButton_Incluir))
+                                .addComponent(jButton_Incluir)
                                 .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jButton_Alterar)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jButton_Buscar))
-                                    .addGroup(layout.createSequentialGroup()
-                                        .addComponent(jTextField1_IdServico, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jLabel7)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jTextField1_Descricao, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jLabel8)
-                                        .addGap(18, 18, 18)
-                                        .addComponent(jTextField1_Preco, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)))))
-                        .addGap(0, 165, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addContainerGap())
+                                .addComponent(jButton_Alterar)
+                                .addGap(18, 18, 18)
+                                .addComponent(jButton_Buscar))
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(jLabel7)
+                                .addGap(18, 18, 18)
+                                .addComponent(jTextField1_Descricao, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(18, 18, 18)
+                                .addComponent(jLabel8)))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextField1_Preco, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(82, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)

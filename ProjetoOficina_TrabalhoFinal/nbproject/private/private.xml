@@ -4,10 +4,10 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/home/misuka/Documentos/Projeto_Oficina/ProjetoOficina_TrabalhoFinal/src/visao/TelaPrincipal.java</file>
+            <file>file:/home/misuka/Documentos/Projeto_Oficina/ProjetoOficina_TrabalhoFinal/src/visao/TelaProprietario.java</file>
             <file>file:/home/misuka/Documentos/Projeto_Oficina/ProjetoOficina_TrabalhoFinal/src/visao/TelaLogin.java</file>
-            <file>file:/home/misuka/Documentos/Projeto_Oficina/ProjetoOficina_TrabalhoFinal/src/conexao/ConexaoBD.java</file>
-            <file>file:/home/misuka/Documentos/Projeto_Oficina/ProjetoOficina_TrabalhoFinal/src/visao/TelaBemVindo.java</file>
-            <file>file:/home/misuka/Documentos/Projeto_Oficina/ProjetoOficina_TrabalhoFinal/src/persistencia/VeiculoAcessorioDAO.java</file>
+            <file>file:/home/misuka/Documentos/Projeto_Oficina/ProjetoOficina_TrabalhoFinal/src/visao/TelaOrdemDeServico.java</file>
+            <file>file:/home/misuka/Documentos/Projeto_Oficina/ProjetoOficina_TrabalhoFinal/src/pdf/GerarPDF.java</file>
         </group>
     </open-files>
 </project-private>
