@@ -123,7 +123,7 @@ public class TelaModelo extends javax.swing.JInternalFrame {
                 {null, null, null}
             },
             new String [] {
-                "idModelo", "Descricao", "idMarca"
+                "idModelo", "Descricao", "Marca"
             }
         ));
         jTable_Saida.addMouseListener(new java.awt.event.MouseAdapter() {

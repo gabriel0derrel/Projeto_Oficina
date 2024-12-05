@@ -55,7 +55,7 @@ public class TelaItensServicos extends javax.swing.JInternalFrame {
             }
             jTextField_Quantidade.setText("0");
             jTextField_PrecoTotal.setEditable(false);
-            jTextField_PrecoUnitario.setEditable(false);
+            //jTextField_PrecoUnitario.setEditable(false);
             atualizarPrecos();
             mostrarNaGrid();
         } catch (Exception erro) {

@@ -109,7 +109,7 @@ public class TelaVeiculoAcessorio extends javax.swing.JInternalFrame {
                 {null, null}
             },
             new String [] {
-                "veiculo", "Acessorio"
+                "Veiculo", "Acessorio"
             }
         ));
         jTable_Saida.addMouseListener(new java.awt.event.MouseAdapter() {
