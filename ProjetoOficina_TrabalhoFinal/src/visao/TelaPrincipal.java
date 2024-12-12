@@ -99,12 +99,10 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenu_PecasServicos = new javax.swing.JMenu();
         jMenu_OpcoesPeca = new javax.swing.JMenu();
         jMenuItem_Peca = new javax.swing.JMenuItem();
-        jMenuItem_ItensDePeca = new javax.swing.JMenuItem();
         jMenu_OpcoesServico = new javax.swing.JMenu();
-        jMenuItem_Funcionario = new javax.swing.JMenuItem();
         jMenuItem_Servico = new javax.swing.JMenuItem();
-        jMenuItem_ItensDeServico = new javax.swing.JMenuItem();
         jMenu_OrdemDeServico = new javax.swing.JMenu();
+        jMenuFuncionario = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -208,25 +206,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
         jMenu_OpcoesPeca.add(jMenuItem_Peca);
 
-        jMenuItem_ItensDePeca.setText("Itens de Peça");
-        jMenuItem_ItensDePeca.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem_ItensDePecaActionPerformed(evt);
-            }
-        });
-        jMenu_OpcoesPeca.add(jMenuItem_ItensDePeca);
-
         jMenu_PecasServicos.add(jMenu_OpcoesPeca);
 
         jMenu_OpcoesServico.setText("Opções de Serviço");
-
-        jMenuItem_Funcionario.setText("Funcionário");
-        jMenuItem_Funcionario.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem_FuncionarioActionPerformed(evt);
-            }
-        });
-        jMenu_OpcoesServico.add(jMenuItem_Funcionario);
 
         jMenuItem_Servico.setText("Serviço");
         jMenuItem_Servico.addActionListener(new java.awt.event.ActionListener() {
@@ -236,20 +218,11 @@ public class TelaPrincipal extends javax.swing.JFrame {
         });
         jMenu_OpcoesServico.add(jMenuItem_Servico);
 
-        jMenuItem_ItensDeServico.setText("Itens de Serviço");
-        jMenuItem_ItensDeServico.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenuItem_ItensDeServicoActionPerformed(evt);
-            }
-        });
-        jMenu_OpcoesServico.add(jMenuItem_ItensDeServico);
-
         jMenu_PecasServicos.add(jMenu_OpcoesServico);
 
         jMenuBar_Opcoes.add(jMenu_PecasServicos);
 
         jMenu_OrdemDeServico.setBackground(new java.awt.Color(255, 102, 102));
-        jMenu_OrdemDeServico.setForeground(new java.awt.Color(0, 0, 0));
         jMenu_OrdemDeServico.setText("Ordem de Serviço");
         jMenu_OrdemDeServico.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
@@ -257,6 +230,14 @@ public class TelaPrincipal extends javax.swing.JFrame {
             }
         });
         jMenuBar_Opcoes.add(jMenu_OrdemDeServico);
+
+        jMenuFuncionario.setText("Funcionario");
+        jMenuFuncionario.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jMenuFuncionarioMouseClicked(evt);
+            }
+        });
+        jMenuBar_Opcoes.add(jMenuFuncionario);
 
         setJMenuBar(jMenuBar_Opcoes);
 
@@ -440,26 +421,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_jMenuItem_PecaActionPerformed
 
-    private void jMenuItem_ItensDePecaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_ItensDePecaActionPerformed
-        // Abrir parte dos Itens de Peça
-        if(usuarioValidado){
-            jDesktopPane_InputDeTela.removeAll();
-            TelaItensPeca telaItensPeca = new TelaItensPeca();
-            jDesktopPane_InputDeTela.add(telaItensPeca);
-            try {
-                telaItensPeca.setVisible(true);
-                telaItensPeca.setSelected(true);
-                telaItensPeca.setMaximum(true);
-                telaItensPeca.setMaximizable(false);
-                telaItensPeca.getContentPane().setBackground(new Color(153, 255, 153));
-            } catch (PropertyVetoException ex) {
-                Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }else{
-            JOptionPane.showMessageDialog(rootPane, "Login Necessário");
-        }
-    }//GEN-LAST:event_jMenuItem_ItensDePecaActionPerformed
-
     private void jMenuItem_ServicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_ServicoActionPerformed
         // Abrir parte do Serviço
         if(usuarioValidado){
@@ -479,46 +440,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane, "Login Necessário");
         }
     }//GEN-LAST:event_jMenuItem_ServicoActionPerformed
-
-    private void jMenuItem_FuncionarioActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_FuncionarioActionPerformed
-        // Abrir parte do Funcionário
-        if(usuarioValidado){
-            jDesktopPane_InputDeTela.removeAll();
-            TelaFuncionario telaFuncionario = new TelaFuncionario();
-            jDesktopPane_InputDeTela.add(telaFuncionario);
-            try {
-                telaFuncionario.setVisible(true);
-                telaFuncionario.setSelected(true);
-                telaFuncionario.setMaximum(true);
-                telaFuncionario.setMaximizable(false);
-                telaFuncionario.getContentPane().setBackground(new Color(153, 255, 153));
-            } catch (PropertyVetoException ex) {
-                Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }else{
-            JOptionPane.showMessageDialog(rootPane, "Login Necessário");
-        }
-    }//GEN-LAST:event_jMenuItem_FuncionarioActionPerformed
-
-    private void jMenuItem_ItensDeServicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuItem_ItensDeServicoActionPerformed
-        // Abrir parte dos Itens de Serviço
-        if(usuarioValidado){
-            jDesktopPane_InputDeTela.removeAll();
-            TelaItensServicos telaItensServicos = new TelaItensServicos();
-            jDesktopPane_InputDeTela.add(telaItensServicos);
-            try {
-                telaItensServicos.setVisible(true);
-                telaItensServicos.setSelected(true);
-                telaItensServicos.setMaximum(true);
-                telaItensServicos.setMaximizable(false);
-                telaItensServicos.getContentPane().setBackground(new Color(153, 255, 153));
-            } catch (PropertyVetoException ex) {
-                Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
-            }
-        }else{
-            JOptionPane.showMessageDialog(rootPane, "Login Necessário");
-        }
-    }//GEN-LAST:event_jMenuItem_ItensDeServicoActionPerformed
 
     private void jMenu_OficinaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenu_OficinaMouseClicked
         // Abrir a parte da oficina
@@ -559,6 +480,26 @@ public class TelaPrincipal extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(rootPane, "Login Necessário");
         }
     }//GEN-LAST:event_jMenu_OrdemDeServicoMouseClicked
+
+    private void jMenuFuncionarioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jMenuFuncionarioMouseClicked
+        // Abrir parte do Funcionário
+        if(usuarioValidado){
+            jDesktopPane_InputDeTela.removeAll();
+            TelaFuncionario telaFuncionario = new TelaFuncionario();
+            jDesktopPane_InputDeTela.add(telaFuncionario);
+            try {
+                telaFuncionario.setVisible(true);
+                telaFuncionario.setSelected(true);
+                telaFuncionario.setMaximum(true);
+                telaFuncionario.setMaximizable(false);
+                telaFuncionario.getContentPane().setBackground(new Color(153, 255, 153));
+            } catch (PropertyVetoException ex) {
+                Logger.getLogger(TelaPrincipal.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }else{
+            JOptionPane.showMessageDialog(rootPane, "Login Necessário");
+        }
+    }//GEN-LAST:event_jMenuFuncionarioMouseClicked
     
     public void usuarioVerificado(){
         usuarioValidado = true;
@@ -617,11 +558,9 @@ public class TelaPrincipal extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JDesktopPane jDesktopPane_InputDeTela;
     private javax.swing.JMenuBar jMenuBar_Opcoes;
+    private javax.swing.JMenu jMenuFuncionario;
     private javax.swing.JMenuItem jMenuItem_Acessorio;
     private javax.swing.JMenuItem jMenuItem_Cliente;
-    private javax.swing.JMenuItem jMenuItem_Funcionario;
-    private javax.swing.JMenuItem jMenuItem_ItensDePeca;
-    private javax.swing.JMenuItem jMenuItem_ItensDeServico;
     private javax.swing.JMenuItem jMenuItem_Marca;
     private javax.swing.JMenuItem jMenuItem_Modelo;
     private javax.swing.JMenuItem jMenuItem_Peca;

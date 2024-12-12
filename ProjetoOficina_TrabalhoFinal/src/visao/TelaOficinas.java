@@ -490,7 +490,7 @@ public class TelaOficinas extends javax.swing.JInternalFrame {
     private void jButtonIncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonIncluirActionPerformed
         try {
             // Validação do nome da oficina
-            String nome = jTextField1_nome.getText().trim().toUpperCase();
+            String nome = jTextField1_nome.getText().replace("-", " ").trim().toUpperCase();
             if (nome.isEmpty()) {
                 throw new Exception("O campo de nome não pode estar vazio.");
             }
@@ -531,7 +531,7 @@ public class TelaOficinas extends javax.swing.JInternalFrame {
             }
 
             // Validação do endereço
-            String logradouro = jTextField1_logradouro.getText().trim().toUpperCase();
+            String logradouro = jTextField1_logradouro.getText().replace("-", " ").trim().toUpperCase();
             if (logradouro.isEmpty()) {
                 throw new Exception("O campo de logradouro não pode estar vazio.");
             }
@@ -546,14 +546,14 @@ public class TelaOficinas extends javax.swing.JInternalFrame {
                 throw new Exception("Insira um CEP válido no formato: XXXXX-XXX.");
             }
 
-            String bairro = jTextField3_BAIRO.getText().trim().toUpperCase();
+            String bairro = jTextField3_BAIRO.getText().trim().replace("-", " ").toUpperCase();
             if (bairro.isEmpty()) {
                 throw new Exception("O campo de bairro não pode estar vazio.");
             }
 
-            String complemento = jTextField3_complemento.getText().trim().toUpperCase();
+            String complemento = jTextField3_complemento.getText().replace("-", " ").trim().toUpperCase();
 
-            String cidade = jTextField5_cidade.getText().trim().toUpperCase();
+            String cidade = jTextField5_cidade.getText().replace("-", " ").trim().toUpperCase();
             if (cidade.isEmpty()) {
                 throw new Exception("O campo de cidade não pode estar vazio.");
             }
@@ -582,7 +582,7 @@ public class TelaOficinas extends javax.swing.JInternalFrame {
     private void jButtonAlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButtonAlterarActionPerformed
         try {
             // Validação do nome da oficina
-            String nome = jTextField1_nome.getText().trim().toUpperCase();
+            String nome = jTextField1_nome.getText().replace("-", " ").trim().toUpperCase();
             if (nome.isEmpty()) {
                 throw new Exception("O campo de nome não pode estar vazio.");
             }
@@ -623,7 +623,7 @@ public class TelaOficinas extends javax.swing.JInternalFrame {
             }
 
             // Validação do endereço
-            String logradouro = jTextField1_logradouro.getText().trim().toUpperCase();
+            String logradouro = jTextField1_logradouro.getText().replace("-", " ").trim().toUpperCase();
             if (logradouro.isEmpty()) {
                 throw new Exception("O campo de logradouro não pode estar vazio.");
             }
@@ -638,14 +638,14 @@ public class TelaOficinas extends javax.swing.JInternalFrame {
                 throw new Exception("Insira um CEP válido no formato: XXXXX-XXX.");
             }
 
-            String bairro = jTextField3_BAIRO.getText().trim().toUpperCase();
+            String bairro = jTextField3_BAIRO.getText().replace("-", " ").trim().toUpperCase();
             if (bairro.isEmpty()) {
                 throw new Exception("O campo de bairro não pode estar vazio.");
             }
 
-            String complemento = jTextField3_complemento.getText().trim().toUpperCase();
+            String complemento = jTextField3_complemento.getText().replace("-", " ").trim().toUpperCase();
 
-            String cidade = jTextField5_cidade.getText().trim().toUpperCase();
+            String cidade = jTextField5_cidade.getText().replace("-", " ").trim().toUpperCase();
             if (cidade.isEmpty()) {
                 throw new Exception("O campo de cidade não pode estar vazio.");
             }

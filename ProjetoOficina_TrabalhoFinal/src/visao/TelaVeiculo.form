@@ -187,7 +187,7 @@
                 <Column editable="true" title="patrimonio" type="java.lang.Object"/>
                 <Column editable="true" title="kilometragem" type="java.lang.Object"/>
                 <Column editable="true" title="anoModelo" type="java.lang.Object"/>
-                <Column editable="true" title="idModelo" type="java.lang.Object"/>
+                <Column editable="true" title="Modelo" type="java.lang.Object"/>
               </Table>
             </Property>
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">

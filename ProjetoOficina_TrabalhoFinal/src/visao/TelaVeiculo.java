@@ -140,7 +140,7 @@ public class TelaVeiculo extends javax.swing.JInternalFrame {
                 {null, null, null, null, null, null, null, null}
             },
             new String [] {
-                "placa", "anoFabricacao", "dataRegistro", "chassi", "patrimonio", "kilometragem", "anoModelo", "idModelo"
+                "placa", "anoFabricacao", "dataRegistro", "chassi", "patrimonio", "kilometragem", "anoModelo", "Modelo"
             }
         ));
         jTable_Saida.addMouseListener(new java.awt.event.MouseAdapter() {
@@ -479,7 +479,6 @@ public class TelaVeiculo extends javax.swing.JInternalFrame {
             String aux = (String) jComboBox_Modelo.getSelectedItem();
             if (aux == null || !aux.contains("-")) 
                 throw new Exception("Selecione um modelo válido no campo de modelo.");
-                
             String[] vetModelo = aux.split("-");
             int idModelo = Integer.parseInt(vetModelo[0]);
             Modelo modelo = new Modelo(idModelo);

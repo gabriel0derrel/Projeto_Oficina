@@ -517,7 +517,6 @@ public class TelaCliente extends javax.swing.JInternalFrame {
             jTextField_Estado.setText(objeto.getEndereco().getEstado());
             jTextField_Complemento.setText(objeto.getEndereco().getComplemento());
             String valueTelefone1 = ""+objeto.getTelefone1().getDdi()+objeto.getTelefone1().getDdd()+objeto.getTelefone1().getNumero();
-            System.out.println(valueTelefone1);
             jFormattedTextField_Telefone1.setText(valueTelefone1);
             if(objeto.getTelefone2() != null){
                 String valueTelefone2 = ""+objeto.getTelefone2().getDdi()+objeto.getTelefone2().getDdd()+objeto.getTelefone2().getNumero();
@@ -537,7 +536,7 @@ public class TelaCliente extends javax.swing.JInternalFrame {
             String validacaoID = jTextField_IdCliente.getText();
             if(validacaoID.isEmpty()) throw new Exception("ID Vazio");
             int idCliente = Integer.parseInt(validacaoID);
-            String nome = jTextField_Nome.getText().toUpperCase();
+            String nome = jTextField_Nome.getText().replace("-", " ").toUpperCase();
             if(nome.isEmpty()) throw new Exception("Nome Vazio");
             if (!nome.matches("^[A-Za-zÀ-Üà-ü\\s]+$")) throw new Exception("O nome deve conter apenas letras e espaços.");
             String email = jTextField_Email.getText();
@@ -573,10 +572,10 @@ public class TelaCliente extends javax.swing.JInternalFrame {
             if(jTextField_Estado.getText().isEmpty()) throw new Exception("Estado vazio");
             if(jTextField_Estado.getText().length() != 2 || !jTextField_Estado.getText().matches("[A-Z]{2}")) throw new Exception("O campo de estado deve conter 2 letras (ex: SP, RJ)");
 
-            Endereco endereco = new Endereco(jTextField_Logradouro.getText().toUpperCase(),
+            Endereco endereco = new Endereco(jTextField_Logradouro.getText().replace("-", " ").toUpperCase(),
                 Integer.parseInt(jTextField_Numero.getText()), jFormattedTextField1_cep.getText(),
-                jTextField_Bairro.getText().toUpperCase(),jTextField_Complemento.getText().toUpperCase(),
-                jTextField_Cidade.getText().toUpperCase(),jTextField_Estado.getText().toUpperCase());
+                jTextField_Bairro.getText().replace("-", " ").toUpperCase(),jTextField_Complemento.getText().replace("-", " ").toUpperCase(),
+                jTextField_Cidade.getText().replace("-", " ").toUpperCase(),jTextField_Estado.getText().toUpperCase());
 
             if(jComboBox_Opcoes.getSelectedItem().toString().compareTo("Pessoa Jurídica") == 0){
                 if(jFormattedTextField1_cnpj.getText().isEmpty()) throw new Exception("CNPJ vazio");
@@ -605,7 +604,7 @@ public class TelaCliente extends javax.swing.JInternalFrame {
     private void jButton_IncluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_IncluirActionPerformed
         // TODO add your handling code here:
         try {
-            String nome = jTextField_Nome.getText().toUpperCase();
+            String nome = jTextField_Nome.getText().replace("-", " ").toUpperCase();
             if(nome.isEmpty()) throw new Exception("Nome Vazio");
             if (!nome.matches("^[A-Za-zÀ-Üà-ü\\s]+$")) throw new Exception("O nome deve conter apenas letras e espaços.");
             String email = jTextField_Email.getText();
@@ -641,10 +640,10 @@ public class TelaCliente extends javax.swing.JInternalFrame {
             if(jTextField_Estado.getText().isEmpty()) throw new Exception("Estado vazio");
             if(jTextField_Estado.getText().length() != 2 || !jTextField_Estado.getText().matches("[A-Z]{2}")) throw new Exception("O campo de estado deve conter 2 letras (ex: SP, RJ)");
 
-            Endereco endereco = new Endereco(jTextField_Logradouro.getText().toUpperCase(),
+            Endereco endereco = new Endereco(jTextField_Logradouro.getText().replace("-", " ").toUpperCase(),
                 Integer.parseInt(jTextField_Numero.getText()), jFormattedTextField1_cep.getText(),
-                jTextField_Bairro.getText().toUpperCase(),jTextField_Complemento.getText().toUpperCase(),
-                jTextField_Cidade.getText().toUpperCase(),jTextField_Estado.getText().toUpperCase());
+                jTextField_Bairro.getText().replace("-", " ").toUpperCase(),jTextField_Complemento.getText().replace("-", " ").toUpperCase(),
+                jTextField_Cidade.getText().replace("-", " ").toUpperCase(),jTextField_Estado.getText().toUpperCase());
 
             if(jComboBox_Opcoes.getSelectedItem().toString().compareTo("Pessoa Jurídica") == 0){
                 if(jFormattedTextField1_cnpj.getText().isEmpty()) throw new Exception("CNPJ vazio");

@@ -5,7 +5,6 @@
 package visao;
 
 import java.util.Calendar;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -37,7 +36,6 @@ import persistencia.VeiculoDAO;
  */
 public class TelaOrdemDeServico extends javax.swing.JInternalFrame {
 
-    private Date dataAtual = null;
     private ICrud<Veiculo> veiculoDB = null;
     private ICrud<Oficina> oficinaBD = null;
     private ICrud<VeiculoAcessorio> veiculoAcessorioBD = null;
@@ -49,8 +47,12 @@ public class TelaOrdemDeServico extends javax.swing.JInternalFrame {
     
     public TelaOrdemDeServico() {
         initComponents();
+        jTextField_ValorPago.setEnabled(false);
+        jTextField_Diferenca.setEnabled(false);
+        jTextField_ValorTotal.setEnabled(false);
+        jButton_itensPeca.setEnabled(false);
+        jButton_itensServico.setEnabled(false);
         try {
-            dataAtual = jCalendar_DataInicio.getDate();
             veiculoDB = new VeiculoDAO();
             ordemDB = new OrdemDeServicoDAO();
             oficinaBD = new OficinaDAO();
@@ -79,8 +81,6 @@ public class TelaOrdemDeServico extends javax.swing.JInternalFrame {
     }
     
     private void limparTela(){
-        jCalendar_DataInicio.setDate(dataAtual);
-        jCalendar_DataFim.setDate(dataAtual);
         jComboBox_Veiculo.setSelectedIndex(0);
         jComboBox_Status.setSelectedIndex(0);
         jTextField_ValorTotal.setText("");
@@ -88,9 +88,36 @@ public class TelaOrdemDeServico extends javax.swing.JInternalFrame {
         jTextField_ValorPago.setText("");
         jTextField_Diferenca.setText("");
     }
-    
+    public void atualizarPrecosOrdem(int idOrdem){
+    try{
+        jTextField_ValorPago.setEnabled(false);
+            float valorTotal = 0;
+            itensPecaBD = new ItensPecaDAO();
+            List<ItensPeca> listaDePeca = null;
+            listaDePeca = itensPecaBD.listar();
+            for(int pos = 0; pos < listaDePeca.size(); pos++){
+                ItensPeca objItensPeca = listaDePeca.get(pos);
+                if(objItensPeca.getOrdem().getIdOrdem() == idOrdem){
+                    valorTotal += Float.parseFloat(objItensPeca.getValorTotal().replace("R$", "").replace(".", "").replace(",", ".").trim());
+                }
+            }
+            itensServicoBD = new ItensServicosDAO();
+            List<ItensServicos> listaDeServico = null;
+            listaDeServico = itensServicoBD.listar();
+            for(int pos = 0; pos < listaDeServico.size(); pos++){
+                ItensServicos objItensServico = listaDeServico.get(pos);
+                if(objItensServico.getOrdem().getIdOrdem() == idOrdem){
+                    valorTotal += Float.parseFloat(objItensServico.getPrecoFinal().replace("R$", "").replace(".", "").replace(",", ".").trim());
+                }
+            }
+            jTextField_ValorTotal.setText(valorTotal+"");
+    } catch(Exception erro){
+        JOptionPane.showMessageDialog(rootPane, "Erro: " + erro.getMessage());
+    }
+    }
     private void mostrarNaGrid(){
         try {
+            jTextField_ValorPago.setEnabled(false);
             List<OrdemDeServico> listaDeOrdem = null;
             listaDeOrdem = ordemDB.listar();
             DefaultTableModel model =  (DefaultTableModel) jTable_Saida.getModel();
@@ -145,13 +172,15 @@ public class TelaOrdemDeServico extends javax.swing.JInternalFrame {
         jButton_Buscar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jTable_Saida = new javax.swing.JTable();
-        jLabel7 = new javax.swing.JLabel();
-        jCalendar_DataInicio = new com.toedter.calendar.JCalendar();
-        jLabel8 = new javax.swing.JLabel();
-        jCalendar_DataFim = new com.toedter.calendar.JCalendar();
         jButton1_pdf = new javax.swing.JButton();
         jComboBox_Oficina = new javax.swing.JComboBox<>();
         jLabel9 = new javax.swing.JLabel();
+        jButton_itensPeca = new javax.swing.JButton();
+        jTextField_dataInicio = new javax.swing.JTextField();
+        jLabel7 = new javax.swing.JLabel();
+        jTextField_dataFim = new javax.swing.JTextField();
+        jLabel8 = new javax.swing.JLabel();
+        jButton_itensServico = new javax.swing.JButton();
 
         jLabel1.setFont(new java.awt.Font("sansserif", 1, 18)); // NOI18N
         jLabel1.setText("ID");
@@ -162,6 +191,11 @@ public class TelaOrdemDeServico extends javax.swing.JInternalFrame {
         jLabel2.setText("Status");
 
         jComboBox_Status.setBackground(new java.awt.Color(204, 255, 204));
+        jComboBox_Status.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jComboBox_StatusActionPerformed(evt);
+            }
+        });
 
         jLabel3.setFont(new java.awt.Font("sansserif", 1, 18)); // NOI18N
         jLabel3.setText("Valor Total");
@@ -248,19 +282,11 @@ public class TelaOrdemDeServico extends javax.swing.JInternalFrame {
             jTable_Saida.getColumnModel().getColumn(6).setMaxWidth(90);
         }
 
-        jLabel7.setFont(new java.awt.Font("sansserif", 1, 18)); // NOI18N
-        jLabel7.setText("Data Inicial");
-
-        jCalendar_DataInicio.setBackground(new java.awt.Color(153, 255, 153));
-
-        jLabel8.setFont(new java.awt.Font("sansserif", 1, 18)); // NOI18N
-        jLabel8.setText("Data Final");
-
-        jCalendar_DataFim.setBackground(new java.awt.Color(153, 255, 153));
-
         jButton1_pdf.setBackground(new java.awt.Color(0, 153, 0));
         jButton1_pdf.setFont(new java.awt.Font("SansSerif", 1, 12)); // NOI18N
+        jButton1_pdf.setForeground(new java.awt.Color(51, 255, 204));
         jButton1_pdf.setIcon(new javax.swing.ImageIcon(getClass().getResource("/figuras/pdf.png"))); // NOI18N
+        jButton1_pdf.setText("GERAR RELATORIO");
         jButton1_pdf.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton1_pdfActionPerformed(evt);
@@ -269,6 +295,38 @@ public class TelaOrdemDeServico extends javax.swing.JInternalFrame {
 
         jLabel9.setFont(new java.awt.Font("sansserif", 1, 18)); // NOI18N
         jLabel9.setText("Oficina");
+
+        jButton_itensPeca.setBackground(new java.awt.Color(51, 153, 0));
+        jButton_itensPeca.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
+        jButton_itensPeca.setForeground(new java.awt.Color(204, 255, 204));
+        jButton_itensPeca.setText("ADICIONAR ITENS PECA");
+        jButton_itensPeca.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_itensPecaActionPerformed(evt);
+            }
+        });
+
+        jTextField_dataInicio.setBackground(new java.awt.Color(204, 255, 204));
+        jTextField_dataInicio.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
+
+        jLabel7.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
+        jLabel7.setText("DATA INICIO:");
+
+        jTextField_dataFim.setBackground(new java.awt.Color(204, 255, 204));
+        jTextField_dataFim.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
+
+        jLabel8.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
+        jLabel8.setText("DATA FIM:");
+
+        jButton_itensServico.setBackground(new java.awt.Color(51, 153, 0));
+        jButton_itensServico.setFont(new java.awt.Font("Segoe UI", 3, 12)); // NOI18N
+        jButton_itensServico.setForeground(new java.awt.Color(204, 255, 204));
+        jButton_itensServico.setText("ADICIONAR ITENS SERVICO");
+        jButton_itensServico.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton_itensServicoActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -309,21 +367,25 @@ public class TelaOrdemDeServico extends javax.swing.JInternalFrame {
                                 .addComponent(jLabel6)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(jComboBox_Veiculo, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                        .addGap(12, 12, 12)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jCalendar_DataInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 372, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel7))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel8)
-                            .addComponent(jCalendar_DataFim, javax.swing.GroupLayout.PREFERRED_SIZE, 372, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jTextField_dataInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel7))
+                                .addGap(25, 25, 25)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(jLabel8)
+                                    .addComponent(jTextField_dataFim, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                            .addComponent(jButton_itensPeca)
+                            .addComponent(jButton_itensServico)))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel9)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jComboBox_Oficina, javax.swing.GroupLayout.PREFERRED_SIZE, 754, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1_pdf, javax.swing.GroupLayout.PREFERRED_SIZE, 57, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(170, Short.MAX_VALUE))
+                        .addComponent(jButton1_pdf)))
+                .addContainerGap(245, Short.MAX_VALUE))
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jScrollPane1)
                 .addContainerGap())
@@ -332,52 +394,58 @@ public class TelaOrdemDeServico extends javax.swing.JInternalFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jTextField_ID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7)
-                    .addComponent(jLabel8))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(jTextField_ID, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7))
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(jComboBox_Status, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel8)
+                        .addGroup(layout.createSequentialGroup()
+                            .addGap(22, 22, 22)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jTextField_dataInicio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(jTextField_dataFim, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(jTextField_ValorTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton_itensPeca))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(jTextField_ValorPago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton_itensServico))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel5)
+                    .addComponent(jTextField_Diferenca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel6)
+                    .addComponent(jComboBox_Veiculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jButton_Incluir)
+                    .addComponent(jButton_Alterar)
+                    .addComponent(jButton_Buscar))
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel2)
-                                    .addComponent(jComboBox_Status, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel3)
-                                    .addComponent(jTextField_ValorTotal, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jTextField_ValorPago, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel5)
-                                    .addComponent(jTextField_Diferenca, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jLabel6)
-                                    .addComponent(jComboBox_Veiculo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jButton_Incluir)
-                                    .addComponent(jButton_Alterar)
-                                    .addComponent(jButton_Buscar)))
-                            .addComponent(jCalendar_DataInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
+                        .addGap(45, 45, 45)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(jComboBox_Oficina, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel9)))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jCalendar_DataFim, javax.swing.GroupLayout.PREFERRED_SIZE, 212, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel9))
+                        .addGap(21, 21, 21))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton1_pdf, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(14, 14, 14)
+                        .addComponent(jButton1_pdf)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(20, Short.MAX_VALUE))
         );
 
         pack();
@@ -389,21 +457,14 @@ public class TelaOrdemDeServico extends javax.swing.JInternalFrame {
             OrdemDeServico objeto = new OrdemDeServico();
             objeto.setIdOrdem(0);
             
-            if(jCalendar_DataInicio.getDate().after(jCalendar_DataFim.getDate())) throw new Exception("A data inicial não pode ser maior que a final");
-            objeto.setDataInicio(jCalendar_DataInicio.getDate());
-            objeto.setDataFim(jCalendar_DataFim.getDate());
+            objeto.setDataInicio(Calendar.getInstance().getTime());
+            objeto.setDataFim(Calendar.getInstance().getTime());
             
             objeto.setVeiculo(new Veiculo(jComboBox_Veiculo.getSelectedItem().toString().split("-")[0]));
             
-            if(!jTextField_ValorTotal.getText().replace(",", ".").matches("\\d+(\\.\\d{1,2})?")) throw new Exception("O Valor Total deve ser um número inteiro ou decimal com até duas casas decimais (ex.: 123 ou 123.45)");
-            objeto.setValorTotal(jTextField_ValorTotal.getText().replace(",", "."));
-            float valorTotal = Float.parseFloat(jTextField_ValorTotal.getText().replace(",", "."));
-            if(!jTextField_ValorPago.getText().replace(",", ".").matches("\\d+(\\.\\d{1,2})?")) throw new Exception("O Valor Pago deve ser um número inteiro ou decimal com até duas casas decimais (ex.: 123 ou 123.45)");
-            objeto.setValorPago(jTextField_ValorPago.getText().replace(",", "."));
-            float valorPago = Float.parseFloat(jTextField_ValorPago.getText().replace(",", "."));
-            float diferenca = valorTotal - valorPago;
-            if(diferenca < 0.0) throw new Exception("O Valor Pago não pode ser maior que o valor total");
-            objeto.setDiferenca(diferenca+"");
+            objeto.setValorTotal(0+"");
+            objeto.setValorPago(0+"");
+            objeto.setDiferenca(0+"");
             
             objeto.setStatus(jComboBox_Status.getSelectedItem().toString());
             
@@ -418,12 +479,18 @@ public class TelaOrdemDeServico extends javax.swing.JInternalFrame {
     private void jButton_AlterarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_AlterarActionPerformed
         // TODO add your handling code here:
         try {
+            jButton_itensPeca.setEnabled(false);
+            jButton_itensServico.setEnabled(false);
+            jTextField_ValorPago.setEnabled(false);
             OrdemDeServico objeto = new OrdemDeServico();
+            OrdemDeServico objeto2 = ordemDB.consultar(new OrdemDeServico(Integer.parseInt(jTextField_ID.getText())));
+            
+            if(jComboBox_Status.getSelectedItem().toString().compareTo("Pago")==0){
             if(jTextField_ID.getText().isEmpty()) throw new Exception("ID vazio");
+            jTextField_ValorPago.setEnabled(true);
             objeto.setIdOrdem(Integer.parseInt(jTextField_ID.getText()));
-            if(jCalendar_DataInicio.getDate().after(jCalendar_DataFim.getDate())) throw new Exception("A data inicial não pode ser maior que a final");
-            objeto.setDataInicio(jCalendar_DataInicio.getDate());
-            objeto.setDataFim(jCalendar_DataFim.getDate());
+            objeto.setDataInicio(objeto2.getDataInicio());
+            objeto.setDataFim(Calendar.getInstance().getTime());
             
             objeto.setVeiculo(new Veiculo(jComboBox_Veiculo.getSelectedItem().toString().split("-")[0]));
             
@@ -441,6 +508,56 @@ public class TelaOrdemDeServico extends javax.swing.JInternalFrame {
             ordemDB.alterar(objeto);
             limparTela();
             mostrarNaGrid();
+            return;
+            }
+            
+            else if(jComboBox_Status.getSelectedItem().toString().compareTo("Orçamento")==0){
+            if(jTextField_ID.getText().isEmpty()) throw new Exception("ID vazio");
+            objeto.setIdOrdem(Integer.parseInt(jTextField_ID.getText()));
+            objeto.setDataInicio(objeto2.getDataInicio());
+            objeto.setDataFim(Calendar.getInstance().getTime());
+            objeto.setVeiculo(new Veiculo(jComboBox_Veiculo.getSelectedItem().toString().split("-")[0]));
+            if(!jTextField_ValorTotal.getText().replace(",", ".").matches("\\d+(\\.\\d{1,2})?")) throw new Exception("O Valor Total deve ser um número inteiro ou decimal com até duas casas decimais (ex.: 123 ou 123.45)");
+            objeto.setValorTotal(jTextField_ValorTotal.getText().replace(",", "."));
+            objeto.setValorPago(0+"");
+            objeto.setDiferenca(0+"");
+            
+            objeto.setStatus(jComboBox_Status.getSelectedItem().toString());
+            ordemDB.alterar(objeto);
+            limparTela();
+            mostrarNaGrid();
+            return;
+            }
+            
+            else if(jComboBox_Status.getSelectedItem().toString().compareTo("Finalizado")==0){
+            if(jTextField_ID.getText().isEmpty()) throw new Exception("ID vazio");
+            objeto.setIdOrdem(Integer.parseInt(jTextField_ID.getText()));
+            objeto.setDataInicio(objeto2.getDataInicio());
+            objeto.setDataFim(Calendar.getInstance().getTime());
+            
+            objeto.setVeiculo(new Veiculo(jComboBox_Veiculo.getSelectedItem().toString().split("-")[0]));
+            
+            objeto.setValorTotal(jTextField_ValorTotal.getText().replace(",", "."));
+            objeto.setValorPago(jTextField_ValorPago.getText().replace(",", "."));
+            objeto.setDiferenca(jTextField_Diferenca.getText().replace(",", "."));
+            
+            objeto.setStatus(jComboBox_Status.getSelectedItem().toString());
+            ordemDB.alterar(objeto);
+            limparTela();
+            mostrarNaGrid();
+            return;
+            }
+            
+            else{
+                if(jTextField_ID.getText().isEmpty()) throw new Exception("ID vazio");
+                objeto2.setStatus(jComboBox_Status.getSelectedItem().toString());
+                objeto.setDataFim(Calendar.getInstance().getTime());
+                objeto.setValorPago(0+"");
+                objeto.setDiferenca(0+"");
+                limparTela();
+                mostrarNaGrid();
+                return;
+            }
         } catch (Exception erro) {
             JOptionPane.showMessageDialog(rootPane, "Erro ao alterar Ordem de Serviço: " + erro.getMessage());
         }
@@ -453,8 +570,6 @@ public class TelaOrdemDeServico extends javax.swing.JInternalFrame {
 
             jTextField_ID.setText(objeto.getIdOrdem()+"");
 
-            jCalendar_DataInicio.setDate(objeto.getDataInicio());
-            jCalendar_DataFim.setDate(objeto.getDataFim());
 
             jComboBox_Veiculo.setSelectedItem(objeto.getVeiculo().toString());
             jComboBox_Status.setSelectedItem(objeto.getStatus());
@@ -471,30 +586,23 @@ public class TelaOrdemDeServico extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
         DefaultTableModel model = (DefaultTableModel)jTable_Saida.getModel();
         int selectedRowIndex = jTable_Saida.getSelectedRow();
-        
+        if(jComboBox_Status.getSelectedItem().toString().compareTo("Pago")==0)
+            jTextField_ValorPago.setEnabled(true);
         jTextField_ID.setText(model.getValueAt(selectedRowIndex, 0).toString());
         jComboBox_Status.setSelectedItem(model.getValueAt(selectedRowIndex, 1).toString());
         
         String strDataInicio = (String) model.getValueAt(selectedRowIndex, 2);
-        String[] vetDataInicio = strDataInicio.split("-");
-        Calendar dataInicio = Calendar.getInstance();
-        dataInicio.set(Calendar.YEAR, Integer.parseInt(vetDataInicio[0]));
-        dataInicio.set(Calendar.MONTH, Integer.parseInt(vetDataInicio[1]) - 1);
-        dataInicio.set(Calendar.DAY_OF_MONTH, Integer.parseInt(vetDataInicio[2]));
-        jCalendar_DataInicio.setDate(dataInicio.getTime());
+        jTextField_dataInicio.setText(strDataInicio);
         
         String strDataFim = (String) model.getValueAt(selectedRowIndex, 3);
-        String[] vetDataFim = strDataFim.split("-");
-        Calendar dataFim = Calendar.getInstance();
-        dataFim.set(Calendar.YEAR, Integer.parseInt(vetDataFim[0]));
-        dataFim.set(Calendar.MONTH, Integer.parseInt(vetDataFim[1]) - 1);
-        dataFim.set(Calendar.DAY_OF_MONTH, Integer.parseInt(vetDataFim[2]));
-        jCalendar_DataFim.setDate(dataFim.getTime());
+        jTextField_dataFim.setText(strDataFim);
         
         jTextField_ValorTotal.setText(model.getValueAt(selectedRowIndex, 4).toString().replace("R$", "").trim());
         jTextField_ValorPago.setText(model.getValueAt(selectedRowIndex, 5).toString().replace("R$", "").trim());
         jTextField_Diferenca.setText(model.getValueAt(selectedRowIndex, 6).toString().replace("R$", "").trim());
         jComboBox_Veiculo.setSelectedItem(model.getValueAt(selectedRowIndex, 7).toString());
+        jButton_itensPeca.setEnabled(true);
+        jButton_itensServico.setEnabled(true);
 
     }//GEN-LAST:event_jTable_SaidaMouseClicked
 
@@ -559,14 +667,55 @@ public class TelaOrdemDeServico extends javax.swing.JInternalFrame {
         }
     }//GEN-LAST:event_jButton1_pdfActionPerformed
 
+    private void jButton_itensPecaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_itensPecaActionPerformed
+            try {
+            OrdemDeServico ordem = new OrdemDeServico(Integer.parseInt(jTextField_ID.getText()));
+            TelaItensPecas telaItensPeca = new TelaItensPecas(ordem);
+            telaItensPeca.setVisible(true);
+            telaItensPeca.conectarComOrdemServico(this);
+            telaItensPeca.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        } catch (Exception erro) {
+            JOptionPane.showMessageDialog(null, erro);
+        }
+        atualizarPrecosOrdem(Integer.parseInt(jTextField_ID.getText()));
+    }//GEN-LAST:event_jButton_itensPecaActionPerformed
+
+    private void jButton_itensServicoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton_itensServicoActionPerformed
+        // TODO add your handling code here:
+            try {
+            OrdemDeServico ordem = new OrdemDeServico(Integer.parseInt(jTextField_ID.getText()));
+            TelaItensServico telaItensServico = new TelaItensServico(ordem);
+            telaItensServico.setVisible(true);
+            telaItensServico.conectarComOrdemServico(this);
+            telaItensServico.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
+        } catch (Exception erro) {
+            JOptionPane.showMessageDialog(null, erro);
+        }
+    }//GEN-LAST:event_jButton_itensServicoActionPerformed
+
+    public void executarAtualizacaoDosPrecosServico(){
+        atualizarPrecosOrdem(Integer.parseInt(jTextField_ID.getText()));
+    }
+    private void jComboBox_StatusActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox_StatusActionPerformed
+        // TODO add your handling code here:
+        try {
+        if(jComboBox_Status.getSelectedItem().toString().compareTo("Pago")==0)
+            jTextField_ValorPago.setEnabled(true);
+        else
+        jTextField_ValorPago.setEnabled(false);
+        } catch (Exception erro) {
+            JOptionPane.showMessageDialog(null, erro);
+        }
+    }//GEN-LAST:event_jComboBox_StatusActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1_pdf;
     private javax.swing.JButton jButton_Alterar;
     private javax.swing.JButton jButton_Buscar;
     private javax.swing.JButton jButton_Incluir;
-    private com.toedter.calendar.JCalendar jCalendar_DataFim;
-    private com.toedter.calendar.JCalendar jCalendar_DataInicio;
+    private javax.swing.JButton jButton_itensPeca;
+    private javax.swing.JButton jButton_itensServico;
     private javax.swing.JComboBox<String> jComboBox_Oficina;
     private javax.swing.JComboBox<String> jComboBox_Status;
     private javax.swing.JComboBox<String> jComboBox_Veiculo;
@@ -585,5 +734,7 @@ public class TelaOrdemDeServico extends javax.swing.JInternalFrame {
     private javax.swing.JTextField jTextField_ID;
     private javax.swing.JTextField jTextField_ValorPago;
     private javax.swing.JTextField jTextField_ValorTotal;
+    private javax.swing.JTextField jTextField_dataFim;
+    private javax.swing.JTextField jTextField_dataInicio;
     // End of variables declaration//GEN-END:variables
 }
