@@ -35,29 +35,29 @@ public class TelaFuncionario extends javax.swing.JInternalFrame {
     }
     
     private void mostrarFuncionarioNaGrid(){
-    try {
-      List<Funcionario> listaDeFuncionario = new ArrayList<>();
-      listaDeFuncionario = null;
-      listaDeFuncionario = FuncionarioBD.listar();
-      DefaultTableModel model =  (DefaultTableModel) jTableServicos.getModel();
-      model.setNumRows(0); 
-      if(listaDeFuncionario.isEmpty()) 
-        throw new Exception("Lista de Funcionario BD Vazia");
-      for(int j = 0; j<4;j++){
-          jTableServicos.getColumnModel().getColumn(j);
-           }
-      for(int pos = 0; pos < listaDeFuncionario.size(); pos++){
-        Funcionario objFuncionario = listaDeFuncionario.get(pos);
-        String[] saida = new String[4];
-          saida[0] = objFuncionario.getIdFuncionario()+ "";
-          saida[1] = objFuncionario.getNome() + "";
-          saida[2] = objFuncionario.getEmail().toString()+ "";
-          saida[3] = objFuncionario.getTelefone().toString()+ "";
-        model.addRow(saida);
-      }  
-    } catch (Exception erro) {
-        JOptionPane.showMessageDialog(rootPane, erro.getMessage());
-      }    
+        try {
+            List<Funcionario> listaDeFuncionario = new ArrayList<>();
+            listaDeFuncionario = null;
+            listaDeFuncionario = FuncionarioBD.listar();
+            DefaultTableModel model =  (DefaultTableModel) jTable_Funcionarios.getModel();
+            model.setNumRows(0); 
+            if(listaDeFuncionario.isEmpty()) throw new Exception("Lista de Funcionario BD Vazia");
+            jTable_Funcionarios.setRowHeight(75);
+            for(int j = 0; j<4;j++){
+                jTable_Funcionarios.getColumnModel().getColumn(j).setCellRenderer(new MultiLineTableCellRenderer());
+            }
+            for(int pos = 0; pos < listaDeFuncionario.size(); pos++){
+                Funcionario objFuncionario = listaDeFuncionario.get(pos);
+                String[] saida = new String[4];
+                saida[0] = objFuncionario.getIdFuncionario()+ "";
+                saida[1] = objFuncionario.getNome() + "";
+                saida[2] = objFuncionario.getEmail()+ "";
+                saida[3] = objFuncionario.getTelefone().toString()+ "";
+                model.addRow(saida);
+            }  
+        } catch (Exception erro) {
+            JOptionPane.showMessageDialog(rootPane, erro.getMessage());
+        }    
     }
 
     @SuppressWarnings("unchecked")
@@ -69,7 +69,7 @@ public class TelaFuncionario extends javax.swing.JInternalFrame {
         jButtonAlterar = new javax.swing.JButton();
         jTextField3_email = new javax.swing.JTextField();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTableServicos = new javax.swing.JTable();
+        jTable_Funcionarios = new javax.swing.JTable();
         jLabel7 = new javax.swing.JLabel();
         jFormattedTextField1_telefone = new javax.swing.JFormattedTextField();
         jLabel5 = new javax.swing.JLabel();
@@ -107,9 +107,9 @@ public class TelaFuncionario extends javax.swing.JInternalFrame {
         jTextField3_email.setBackground(new java.awt.Color(204, 255, 204));
         jTextField3_email.setFont(new java.awt.Font("Arial", 3, 14)); // NOI18N
 
-        jTableServicos.setBackground(new java.awt.Color(153, 255, 204));
-        jTableServicos.setFont(new java.awt.Font("Helvetica Neue", 3, 12)); // NOI18N
-        jTableServicos.setModel(new javax.swing.table.DefaultTableModel(
+        jTable_Funcionarios.setBackground(new java.awt.Color(153, 255, 204));
+        jTable_Funcionarios.setFont(new java.awt.Font("Helvetica Neue", 3, 12)); // NOI18N
+        jTable_Funcionarios.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -128,12 +128,12 @@ public class TelaFuncionario extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTableServicos.addMouseListener(new java.awt.event.MouseAdapter() {
+        jTable_Funcionarios.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTableServicosMouseClicked(evt);
+                jTable_FuncionariosMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(jTableServicos);
+        jScrollPane1.setViewportView(jTable_Funcionarios);
 
         jLabel7.setFont(new java.awt.Font("Arial", 3, 18)); // NOI18N
         jLabel7.setText("Email");
@@ -400,16 +400,16 @@ public class TelaFuncionario extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jFormattedTextField1_telefoneActionPerformed
 
-    private void jTableServicosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableServicosMouseClicked
+    private void jTable_FuncionariosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable_FuncionariosMouseClicked
         // TODO add your handling code here:
-        DefaultTableModel model = (DefaultTableModel)jTableServicos.getModel();
-        int selectedRowIndex = jTableServicos.getSelectedRow();
+        DefaultTableModel model = (DefaultTableModel)jTable_Funcionarios.getModel();
+        int selectedRowIndex = jTable_Funcionarios.getSelectedRow();
         
         jTextField1_ID.setText(model.getValueAt(selectedRowIndex, 0).toString());
         jTextField1_nome.setText(model.getValueAt(selectedRowIndex, 1).toString());
         jTextField3_email.setText(model.getValueAt(selectedRowIndex, 2).toString());
         jFormattedTextField1_telefone.setText(model.getValueAt(selectedRowIndex, 3).toString());
-    }//GEN-LAST:event_jTableServicosMouseClicked
+    }//GEN-LAST:event_jTable_FuncionariosMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -423,7 +423,7 @@ public class TelaFuncionario extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTableServicos;
+    private javax.swing.JTable jTable_Funcionarios;
     private javax.swing.JTextField jTextField1_ID;
     private javax.swing.JTextField jTextField1_nome;
     private javax.swing.JTextField jTextField3_email;

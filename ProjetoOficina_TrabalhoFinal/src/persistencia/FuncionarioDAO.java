@@ -91,7 +91,7 @@ public class FuncionarioDAO implements ICrud<Funcionario>{
     @Override
     public List<Funcionario> listar() throws Exception {
         List<Funcionario> listaDeFuncionario = new ArrayList<>();
-        String sql = "select * from funcionario order by nome";
+        String sql = "select * from funcionario order by idFuncionario";
         try {
             Statement statement = conexao.createStatement();
             ResultSet rs = statement.executeQuery(sql);

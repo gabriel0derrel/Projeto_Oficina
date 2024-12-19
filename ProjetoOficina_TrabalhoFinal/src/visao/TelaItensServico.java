@@ -16,7 +16,6 @@ import modelos.OrdemDeServico;
 import modelos.Servicos;
 import persistencia.FuncionarioDAO;
 import persistencia.ItensServicosDAO;
-import persistencia.OrdemDeServicoDAO;
 import persistencia.ServicoDAO;
 
 /**
@@ -25,19 +24,18 @@ import persistencia.ServicoDAO;
  */
 public class TelaItensServico extends javax.swing.JFrame {
     private ICrud<Servicos> servicoDB = null;
-    private ICrud<OrdemDeServico> ordemDB = null;
     private OrdemDeServico ordem = null;
     private ICrud<Funcionario> funcionarioDB = null;
     private ICrud<ItensServicos> itensDB = null;
     /**
      * Creates new form TelaItensServico
+     * @param ordem
      */
-    public TelaItensServico(OrdemDeServico ordens) {
+    public TelaItensServico(OrdemDeServico ordem) {
         initComponents();
         this.setLocationRelativeTo(null);
-                try {
-                    this.ordem =ordens;
-            ordemDB = new OrdemDeServicoDAO();
+        try {
+            this.ordem = ordem;
             servicoDB = new ServicoDAO();
             funcionarioDB = new FuncionarioDAO();
             itensDB = new ItensServicosDAO();
@@ -64,14 +62,17 @@ public class TelaItensServico extends javax.swing.JFrame {
         WindowClosingEventHandler();
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
     }
-private TelaOrdemDeServico tela;
-public void conectarComOrdemServico(TelaOrdemDeServico tela2){
-    this.tela=tela2;
-}
-public void executar(){
-    tela.atualizarPrecosOrdem(ordem.getIdOrdem());
-}
-        private void WindowClosingEventHandler(){
+    
+    private TelaOrdemDeServico tela;
+    
+    public void conectarComOrdemServico(TelaOrdemDeServico tela2){
+        this.tela=tela2;
+    }
+    
+    public void executar(){
+        tela.atualizarPrecosOrdem(ordem.getIdOrdem());
+    }
+    private void WindowClosingEventHandler(){
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
@@ -89,21 +90,22 @@ public void executar(){
     }
     
     private void atualizarPrecos(){
-    try{
-        ItensServicos objeto = new ItensServicos();
-        objeto.setServico(new Servicos(Integer.parseInt(jComboBox_Servico.getSelectedItem().toString().split("-")[0])));
-        int quantidade = 0;
-        if(!jTextField_Quantidade.getText().isEmpty()){
-            quantidade = Integer.parseInt(jTextField_Quantidade.getText());
+        try{
+            ItensServicos objeto = new ItensServicos();
+            objeto.setServico(new Servicos(Integer.parseInt(jComboBox_Servico.getSelectedItem().toString().split("-")[0])));
+            int quantidade = 0;
+            if(!jTextField_Quantidade.getText().isEmpty()){
+                quantidade = Integer.parseInt(jTextField_Quantidade.getText());
+            }
+            jTextField_PrecoUnitario.setText(servicoDB.consultar(objeto.getServico()).getPrecoServico().replace("R$", "").trim());
+            float precoUnitario = Float.parseFloat(jTextField_PrecoUnitario.getText().replace(".", "").replace(",", "."));
+            float precoFinal = precoUnitario*quantidade;
+            jTextField_PrecoTotal.setText(precoFinal+"");
+        } catch(Exception erro){
+            JOptionPane.showMessageDialog(rootPane, "Erro: " + erro.getMessage());
         }
-        jTextField_PrecoUnitario.setText(servicoDB.consultar(objeto.getServico()).getPrecoServico().replace("R$", "").trim());
-        float precoUnitario = Float.parseFloat(jTextField_PrecoUnitario.getText().replace(".", "").replace(",", "."));
-        float precoFinal = precoUnitario*quantidade;
-        jTextField_PrecoTotal.setText(precoFinal+"");
-    } catch(Exception erro){
-        JOptionPane.showMessageDialog(rootPane, "Erro: " + erro.getMessage());
     }
-    }
+    
     private void limparTela(){
         jTextField_ID.setText("");
         jComboBox_Servico.setSelectedIndex(0);
@@ -127,15 +129,17 @@ public void executar(){
             }
             for(int pos = 0; pos < listaDeItens.size(); pos++){
                 ItensServicos objOrdem = listaDeItens.get(pos);
-                String[] saida = new String[7];
-                saida[0] = objOrdem.getIdItensServico()+"";
-                saida[1] = objOrdem.getServico().toString();
-                saida[2] = objOrdem.getOrdem().toString();
-                saida[3] = objOrdem.getFuncionario().toString();
-                saida[4] = objOrdem.getQuantidade()+"";
-                saida[5] = objOrdem.getPrecoUnitario();
-                saida[6] = objOrdem.getPrecoFinal();
-                model.addRow(saida);
+                if(objOrdem.getOrdem().getIdOrdem() == ordem.getIdOrdem()){
+                    String[] saida = new String[7];
+                    saida[0] = objOrdem.getIdItensServico()+"";
+                    saida[1] = objOrdem.getServico().toString();
+                    saida[2] = objOrdem.getOrdem().toString();
+                    saida[3] = objOrdem.getFuncionario().toString();
+                    saida[4] = objOrdem.getQuantidade()+"";
+                    saida[5] = objOrdem.getPrecoUnitario();
+                    saida[6] = objOrdem.getPrecoFinal();
+                    model.addRow(saida);
+                }
             }  
         } catch (Exception erro) {
             JOptionPane.showMessageDialog(rootPane, erro.getMessage());
@@ -407,8 +411,8 @@ public void executar(){
             objeto.setPrecoFinal(jTextField_PrecoTotal.getText());
 
             itensDB.alterar(objeto);
-                    TelaOrdemDeServico tela = new TelaOrdemDeServico();
-        tela.atualizarPrecosOrdem(ordem.getIdOrdem());
+                    TelaOrdemDeServico telaOrdem = new TelaOrdemDeServico();
+        telaOrdem.atualizarPrecosOrdem(ordem.getIdOrdem());
             limparTela();
             mostrarNaGrid();
         } catch (Exception erro) {
@@ -452,8 +456,8 @@ public void executar(){
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
         // TODO add your handling code here:
-        TelaOrdemDeServico tela = new TelaOrdemDeServico();
-        tela.atualizarPrecosOrdem(ordem.getIdOrdem());
+        TelaOrdemDeServico telaOrdem = new TelaOrdemDeServico();
+        telaOrdem.atualizarPrecosOrdem(ordem.getIdOrdem());
     }//GEN-LAST:event_formWindowClosing
 
 

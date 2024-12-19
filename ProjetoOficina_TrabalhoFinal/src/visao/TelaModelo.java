@@ -49,28 +49,28 @@ public class TelaModelo extends javax.swing.JInternalFrame {
     }
     
     private void mostrarModeloNaGrid(){
-    try {
-      List<Modelo> listaDeModelo = new ArrayList<>();
-      listaDeModelo = null;
-      listaDeModelo = ModeloBD.listar();
-      DefaultTableModel model =  (DefaultTableModel) jTable_Saida.getModel();
-      model.setNumRows(0); 
-      if(listaDeModelo.isEmpty()) 
-        throw new Exception("Lista de Modelo BD Vazia");
-      for(int j = 0; j<3;j++){
-          jTable_Saida.getColumnModel().getColumn(j);
-           }
-      for(int pos = 0; pos < listaDeModelo.size(); pos++){
-        Modelo objModelo = listaDeModelo.get(pos);
-        String[] saida = new String[3];
-          saida[0] = objModelo.getIdModelo()+ "";
-          saida[1] = objModelo.getDescricao()+ "";
-          saida[2] = MarcaBD.consultar(objModelo.getMarca()).toString();
-        model.addRow(saida);
-      }  
-    } catch (Exception erro) {
-        JOptionPane.showMessageDialog(rootPane, erro.getMessage());
-      }    
+        try {
+            List<Modelo> listaDeModelo = new ArrayList<>();
+            listaDeModelo = null;
+            listaDeModelo = ModeloBD.listar();
+            DefaultTableModel model =  (DefaultTableModel) jTable_Saida.getModel();
+            model.setNumRows(0); 
+            if(listaDeModelo.isEmpty()) throw new Exception("Lista de Modelo BD Vazia");
+            jTable_Saida.setRowHeight(75);
+            for(int j = 0; j<3;j++){
+                jTable_Saida.getColumnModel().getColumn(j).setCellRenderer(new MultiLineTableCellRenderer());
+            }
+            for(int pos = 0; pos < listaDeModelo.size(); pos++){
+                Modelo objModelo = listaDeModelo.get(pos);
+                String[] saida = new String[3];
+                saida[0] = objModelo.getIdModelo()+ "";
+                saida[1] = objModelo.getDescricao()+ "";
+                saida[2] = MarcaBD.consultar(objModelo.getMarca()).toString();
+                model.addRow(saida);
+            }  
+        } catch (Exception erro) {
+            JOptionPane.showMessageDialog(rootPane, erro.getMessage());
+        }    
     }
 
     /**

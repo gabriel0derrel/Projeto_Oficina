@@ -92,36 +92,22 @@
             <Property name="text" type="java.lang.String" value="Pe&#xe7;as e Servi&#xe7;os"/>
           </Properties>
           <SubComponents>
-            <Menu class="javax.swing.JMenu" name="jMenu_OpcoesPeca">
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem_Peca">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Op&#xe7;&#xf5;es de Pe&#xe7;a"/>
+                <Property name="text" type="java.lang.String" value="Pe&#xe7;a"/>
               </Properties>
-              <SubComponents>
-                <MenuItem class="javax.swing.JMenuItem" name="jMenuItem_Peca">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Pe&#xe7;a"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem_PecaActionPerformed"/>
-                  </Events>
-                </MenuItem>
-              </SubComponents>
-            </Menu>
-            <Menu class="javax.swing.JMenu" name="jMenu_OpcoesServico">
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem_PecaActionPerformed"/>
+              </Events>
+            </MenuItem>
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuItem_Servico">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Op&#xe7;&#xf5;es de Servi&#xe7;o"/>
+                <Property name="text" type="java.lang.String" value="Servi&#xe7;o"/>
               </Properties>
-              <SubComponents>
-                <MenuItem class="javax.swing.JMenuItem" name="jMenuItem_Servico">
-                  <Properties>
-                    <Property name="text" type="java.lang.String" value="Servi&#xe7;o"/>
-                  </Properties>
-                  <Events>
-                    <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem_ServicoActionPerformed"/>
-                  </Events>
-                </MenuItem>
-              </SubComponents>
-            </Menu>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuItem_ServicoActionPerformed"/>
+              </Events>
+            </MenuItem>
           </SubComponents>
         </Menu>
         <Menu class="javax.swing.JMenu" name="jMenu_OrdemDeServico">

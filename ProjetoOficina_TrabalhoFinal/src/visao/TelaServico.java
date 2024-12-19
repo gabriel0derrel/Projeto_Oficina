@@ -16,12 +16,12 @@ import persistencia.ServicoDAO;
  *
  * @author Cliente
  */
-public class TelaCadastroServicos extends javax.swing.JInternalFrame {
+public class TelaServico extends javax.swing.JInternalFrame {
  private ICrud<Servicos> servicoBD = null;
     /**
      * Creates new form TelaCadastroServicos
      */
-    public TelaCadastroServicos() {
+    public TelaServico() {
         initComponents();
     try {
       servicoBD = new ServicoDAO();
@@ -43,9 +43,12 @@ public class TelaCadastroServicos extends javax.swing.JInternalFrame {
     if(listaDeServicos != null){
     DefaultTableModel model =  (DefaultTableModel) jTable_Servico.getModel();
     model.setNumRows(0); 
-    if(listaDeServicos.isEmpty()) 
-      throw new Exception("Lista de Servico BD Vazia");
- 
+    if(listaDeServicos.isEmpty()) throw new Exception("Lista de Servico BD Vazia");
+    jTable_Servico.setRowHeight(75);
+    for(int j = 0; j<3;j++){
+        jTable_Servico.getColumnModel().getColumn(j).setCellRenderer(new MultiLineTableCellRenderer());
+    }
+    
     for(int pos = 0; pos < listaDeServicos.size(); pos++){
       Servicos objServico = listaDeServicos.get(pos);
       String[] saida = new String[3];

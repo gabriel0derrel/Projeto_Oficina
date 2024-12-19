@@ -3,7 +3,21 @@
     <editor-bookmarks xmlns="http://www.netbeans.org/ns/editor-bookmarks/2" lastBookmarkId="0"/>
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
+            <file>file:/home/misuka/Documentos/Projeto_Oficina/ProjetoOficina_TrabalhoFinal/src/pdf/GerarPDF.java</file>
             <file>file:/home/misuka/Documentos/Projeto_Oficina/ProjetoOficina_TrabalhoFinal/src/visao/TelaPrincipal.java</file>
+            <file>file:/home/misuka/Documentos/Projeto_Oficina/ProjetoOficina_TrabalhoFinal/src/visao/TelaAcessorio.java</file>
+            <file>file:/home/misuka/Documentos/Projeto_Oficina/ProjetoOficina_TrabalhoFinal/src/visao/TelaOficinas.java</file>
+            <file>file:/home/misuka/Documentos/Projeto_Oficina/ProjetoOficina_TrabalhoFinal/src/conexao/ConexaoBD.java</file>
+            <file>file:/home/misuka/Documentos/Projeto_Oficina/ProjetoOficina_TrabalhoFinal/src/visao/TelaOrdemDeServico.java</file>
+            <file>file:/home/misuka/Documentos/Projeto_Oficina/ProjetoOficina_TrabalhoFinal/src/visao/TelaServico.java</file>
+            <file>file:/home/misuka/Documentos/Projeto_Oficina/ProjetoOficina_TrabalhoFinal/src/visao/TelaVeiculo.java</file>
+            <file>file:/home/misuka/Documentos/Projeto_Oficina/ProjetoOficina_TrabalhoFinal/src/visao/TelaPeca.java</file>
+            <file>file:/home/misuka/Documentos/Projeto_Oficina/ProjetoOficina_TrabalhoFinal/src/visao/TelaMarca.java</file>
+            <file>file:/home/misuka/Documentos/Projeto_Oficina/ProjetoOficina_TrabalhoFinal/src/visao/TelaItensServico.java</file>
+            <file>file:/home/misuka/Documentos/Projeto_Oficina/ProjetoOficina_TrabalhoFinal/src/visao/TelaModelo.java</file>
+            <file>file:/home/misuka/Documentos/Projeto_Oficina/ProjetoOficina_TrabalhoFinal/src/persistencia/FuncionarioDAO.java</file>
+            <file>file:/home/misuka/Documentos/Projeto_Oficina/ProjetoOficina_TrabalhoFinal/src/visao/TelaFuncionario.java</file>
+            <file>file:/home/misuka/Documentos/Projeto_Oficina/ProjetoOficina_TrabalhoFinal/src/visao/TelaItensPecas.java</file>
         </group>
     </open-files>
 </project-private>

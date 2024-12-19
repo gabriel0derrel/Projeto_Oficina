@@ -57,45 +57,48 @@ public class TelaVeiculo extends javax.swing.JInternalFrame {
     }
     
     private void mostrarVeiculoNaGrid(){
-    try {
-      List<Veiculo> listaDeVeiculo = new ArrayList<>();
-      listaDeVeiculo = null;
-      listaDeVeiculo = veiculoBD.listar();
-      DefaultTableModel model =  (DefaultTableModel) jTable_Saida.getModel();
-      model.setNumRows(0); 
-      if(listaDeVeiculo.isEmpty()) 
-        throw new Exception("Lista de Veículo BD Vazia");
-      for (Veiculo objVeiculo : listaDeVeiculo){
-        Calendar calendarAnoFabricacao = Calendar.getInstance();
-        calendarAnoFabricacao.setTime(objVeiculo.getAnoFabricacao());
-        int anoFabricacao = calendarAnoFabricacao.get(Calendar.YEAR);
-        
-        Calendar calendarAnoModelo = Calendar.getInstance();
-        calendarAnoModelo.setTime(objVeiculo.getAnoModelo());
-        int anoModelo = calendarAnoModelo.get(Calendar.YEAR);
-        
-        String[] saida = new String[8];
-            saida[0] = objVeiculo.getPlaca()+ "";
-            saida[1] = String.valueOf(anoFabricacao);
-            saida[2] = objVeiculo.getDataRegistro()+ "";
-            if(objVeiculo.getChassi() == null){
-                saida[3] = "";
-            }else{
-                saida[3] = objVeiculo.getChassi()+ "";
+        try {
+            List<Veiculo> listaDeVeiculo = new ArrayList<>();
+            listaDeVeiculo = null;
+            listaDeVeiculo = veiculoBD.listar();
+            DefaultTableModel model =  (DefaultTableModel) jTable_Saida.getModel();
+            model.setNumRows(0); 
+            if(listaDeVeiculo.isEmpty()) throw new Exception("Lista de Veículo BD Vazia");
+            jTable_Saida.setRowHeight(75);
+            for(int j = 0; j<8;j++){
+                jTable_Saida.getColumnModel().getColumn(j).setCellRenderer(new MultiLineTableCellRenderer());
             }
-            if(objVeiculo.getPatrimonio() == null){
-                saida[4] = "";
-            }else{
-                saida[4] = objVeiculo.getPatrimonio()+ "";
-            }
-            saida[5] = objVeiculo.getKilometragem()+ "";
-            saida[6] = String.valueOf(anoModelo);
-            saida[7] = objVeiculo.getModelo().toString()+ "";
-        model.addRow(saida);
-      }  
-    } catch (Exception erro) {
-        JOptionPane.showMessageDialog(rootPane, erro.getMessage());
-      }    
+            for (Veiculo objVeiculo : listaDeVeiculo){
+                Calendar calendarAnoFabricacao = Calendar.getInstance();
+                calendarAnoFabricacao.setTime(objVeiculo.getAnoFabricacao());
+                int anoFabricacao = calendarAnoFabricacao.get(Calendar.YEAR);
+
+                Calendar calendarAnoModelo = Calendar.getInstance();
+                calendarAnoModelo.setTime(objVeiculo.getAnoModelo());
+                int anoModelo = calendarAnoModelo.get(Calendar.YEAR);
+
+                String[] saida = new String[8];
+                    saida[0] = objVeiculo.getPlaca()+ "";
+                    saida[1] = String.valueOf(anoFabricacao);
+                    saida[2] = objVeiculo.getDataRegistro()+ "";
+                    if(objVeiculo.getChassi() == null){
+                        saida[3] = "";
+                    }else{
+                        saida[3] = objVeiculo.getChassi()+ "";
+                    }
+                    if(objVeiculo.getPatrimonio() == null){
+                        saida[4] = "";
+                    }else{
+                        saida[4] = objVeiculo.getPatrimonio()+ "";
+                    }
+                    saida[5] = objVeiculo.getKilometragem()+ "";
+                    saida[6] = String.valueOf(anoModelo);
+                    saida[7] = objVeiculo.getModelo().toString()+ "";
+                model.addRow(saida);
+            }  
+        } catch (Exception erro) {
+            JOptionPane.showMessageDialog(rootPane, erro.getMessage());
+        }    
     }
 
     /**
@@ -311,34 +314,30 @@ public class TelaVeiculo extends javax.swing.JInternalFrame {
                         .addComponent(jLabel4)))
                 .addGap(15, 15, 15)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel10)
-                        .addGap(143, 143, 143))
-                    .addGroup(layout.createSequentialGroup()
+                    .addComponent(jLabel10)
+                    .addComponent(jCalendar1_dataregistro, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 159, Short.MAX_VALUE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jYearChooser2_anofabricacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel9)
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel5)
+                                .addComponent(jTextField_patrimonio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(jCalendar1_dataregistro, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jYearChooser2_anofabricacao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel9)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jLabel5)
-                                        .addComponent(jTextField_patrimonio, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                                .addGap(18, 18, 18)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                        .addComponent(jLabel6)
-                                        .addComponent(jTextField_kilometragem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                    .addComponent(jLabel11)
-                                    .addComponent(jYearChooser1_anomodelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                                    .addComponent(jButtonincluir)
-                                    .addComponent(jButton_alterar)
-                                    .addComponent(jButton_buscar))))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 266, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(jLabel6)
+                                .addComponent(jTextField_kilometragem, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(jLabel11)
+                            .addComponent(jYearChooser1_anomodelo, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jButtonincluir)
+                            .addComponent(jButton_alterar)
+                            .addComponent(jButton_buscar))))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 313, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();

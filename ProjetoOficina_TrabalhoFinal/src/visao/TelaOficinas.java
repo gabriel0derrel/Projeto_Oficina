@@ -53,8 +53,7 @@ public class TelaOficinas extends javax.swing.JInternalFrame {
     if(listaDeOficina != null){
     DefaultTableModel model =  (DefaultTableModel) jTableOficina.getModel();
     model.setNumRows(0); 
-    if(listaDeOficina.isEmpty()) 
-      throw new Exception("Lista de Oficina BD Vazia");
+    if(listaDeOficina.isEmpty()) throw new Exception("Lista de Oficina BD Vazia");
     
         jTableOficina.setRowHeight(75);
     for(int j = 0; j<5;j++){

@@ -56,27 +56,27 @@ public class TelaVeiculoAcessorio extends javax.swing.JInternalFrame {
     }
     
     private void mostrarVeiculoAcessorioNaGrid(){
-    try {
-      List<VeiculoAcessorio> listaDeVeiculoAcessorio = new ArrayList<>();
-      listaDeVeiculoAcessorio = null;
-      listaDeVeiculoAcessorio = VeiculoAcessorioBD.listar();
-      DefaultTableModel model =  (DefaultTableModel) jTable_Saida.getModel();
-      model.setNumRows(0); 
-      if(listaDeVeiculoAcessorio.isEmpty()) 
-        throw new Exception("Lista de Veículo Acessorio BD Vazia");
-      for(int j = 0; j<2;j++){
-          jTable_Saida.getColumnModel().getColumn(j);
-           }
-      for(int pos = 0; pos < listaDeVeiculoAcessorio.size(); pos++){
-        VeiculoAcessorio objVeiculoAcessorio = listaDeVeiculoAcessorio.get(pos);
-        String[] saida = new String[2];
-          saida[0] = VeiculoBD.consultar(objVeiculoAcessorio.getVeiculo()).toString()+ "";
-          saida[1] = AcessorioBD.consultar(objVeiculoAcessorio.getAcessorio()).toString()+ "";
-        model.addRow(saida);
-      }  
-    } catch (Exception erro) {
-        JOptionPane.showMessageDialog(rootPane, erro.getMessage());
-      }    
+        try {
+            List<VeiculoAcessorio> listaDeVeiculoAcessorio = new ArrayList<>();
+            listaDeVeiculoAcessorio = null;
+            listaDeVeiculoAcessorio = VeiculoAcessorioBD.listar();
+            DefaultTableModel model =  (DefaultTableModel) jTable_Saida.getModel();
+            model.setNumRows(0); 
+            if(listaDeVeiculoAcessorio.isEmpty()) throw new Exception("Lista de Veículo Acessorio BD Vazia");
+            jTable_Saida.setRowHeight(75);
+            for(int j = 0; j<2;j++){
+                jTable_Saida.getColumnModel().getColumn(j).setCellRenderer(new MultiLineTableCellRenderer());
+            }
+            for(int pos = 0; pos < listaDeVeiculoAcessorio.size(); pos++){
+                VeiculoAcessorio objVeiculoAcessorio = listaDeVeiculoAcessorio.get(pos);
+                String[] saida = new String[2];
+                saida[0] = VeiculoBD.consultar(objVeiculoAcessorio.getVeiculo()).toString()+ "";
+                saida[1] = AcessorioBD.consultar(objVeiculoAcessorio.getAcessorio()).toString()+ "";
+                model.addRow(saida);
+            }  
+        } catch (Exception erro) {
+            JOptionPane.showMessageDialog(rootPane, erro.getMessage());
+        }    
     }
 
     /**

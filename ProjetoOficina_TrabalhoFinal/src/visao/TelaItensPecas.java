@@ -14,7 +14,6 @@ import modelos.ItensPeca;
 import modelos.OrdemDeServico;
 import modelos.Pecas;
 import persistencia.ItensPecaDAO;
-import persistencia.OrdemDeServicoDAO;
 import persistencia.PecaDAO;
 
 /**
@@ -23,17 +22,16 @@ import persistencia.PecaDAO;
  */
 public class TelaItensPecas extends javax.swing.JFrame {
     private ICrud<Pecas> pecaDB = null;
-    private ICrud<OrdemDeServico> ordemDB = null;
     private ICrud<ItensPeca> itensDB = null;
     private OrdemDeServico ordem = null;
     /**
      * Creates new form TelaPecas
+     * @param ordem
      */
-    public TelaItensPecas(OrdemDeServico ordens) {
+    public TelaItensPecas(OrdemDeServico ordem) {
         initComponents();
         try {
-            this.ordem = ordens;
-            ordemDB = new OrdemDeServicoDAO();
+            this.ordem = ordem;
             pecaDB = new PecaDAO();
             itensDB = new ItensPecaDAO();
           
@@ -55,14 +53,17 @@ public class TelaItensPecas extends javax.swing.JFrame {
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
     }
     
-private TelaOrdemDeServico tela;
-public void conectarComOrdemServico(TelaOrdemDeServico tela2){
-    this.tela=tela2;
-}
-public void executar(){
-    tela.atualizarPrecosOrdem(ordem.getIdOrdem());
-}
-        private void WindowClosingEventHandler(){
+    private TelaOrdemDeServico tela;
+    
+    public void conectarComOrdemServico(TelaOrdemDeServico tela2){
+        this.tela=tela2;
+    }
+    
+    public void executar(){
+        tela.atualizarPrecosOrdem(ordem.getIdOrdem());
+    }
+    
+    private void WindowClosingEventHandler(){
         addWindowListener(new WindowAdapter() {
             @Override
             public void windowClosing(WindowEvent e) {
@@ -78,7 +79,7 @@ public void executar(){
             }
         });
     }
-    
+
     
     private void limparTela(){
         jTextField_ID.setText("");
@@ -102,21 +103,24 @@ public void executar(){
             }
             for(int pos = 0; pos < listaDeItens.size(); pos++){
                 ItensPeca objOrdem = listaDeItens.get(pos);
-                String[] saida = new String[6];
-                saida[0] = objOrdem.getIdItensPeca()+"";
-                saida[1] = objOrdem.getPeca().toString();
-                saida[2] = objOrdem.getOrdem().toString();
-                saida[3] = objOrdem.getQuantidade()+"";
-                saida[4] = objOrdem.getValorUnitario();
-                saida[5] = objOrdem.getValorTotal();
-                model.addRow(saida);
+                if(objOrdem.getOrdem().getIdOrdem() == ordem.getIdOrdem()){
+                    String[] saida = new String[6];
+                    saida[0] = objOrdem.getIdItensPeca()+"";
+                    saida[1] = objOrdem.getPeca().toString();
+                    saida[2] = objOrdem.getOrdem().toString();
+                    saida[3] = objOrdem.getQuantidade()+"";
+                    saida[4] = objOrdem.getValorUnitario();
+                    saida[5] = objOrdem.getValorTotal();
+                    model.addRow(saida);
+                }
             }  
         } catch (Exception erro) {
             JOptionPane.showMessageDialog(rootPane, erro.getMessage());
         }
         
     }
-        private void atualizarPrecos(){
+    
+    private void atualizarPrecos(){
         try{
             ItensPeca objeto = new ItensPeca();
             objeto.setPeca(new Pecas(Integer.parseInt(jComboBox_Peca.getSelectedItem().toString().split("-")[0])));

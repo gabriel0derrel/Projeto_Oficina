@@ -37,13 +37,16 @@ public class TelaAcessorio extends javax.swing.JInternalFrame {
     private void mostrarAcessorioNaGrid(){
         try {
             List<Acessorio> listaDeAcessorio = AcessorioBD.listar();
-            DefaultTableModel model = (DefaultTableModel) jTableServicos.getModel();
+            DefaultTableModel model = (DefaultTableModel) jTableAcessorio.getModel();
             model.setNumRows(0);
 
             if (listaDeAcessorio.isEmpty()) {
                 throw new Exception("Lista de Acessórios BD Vazia");
             }
-
+            jTableAcessorio.setRowHeight(75);
+            for(int j = 0; j<3;j++){
+                jTableAcessorio.getColumnModel().getColumn(j).setCellRenderer(new MultiLineTableCellRenderer());
+            }
             for (Acessorio objAcessorio : listaDeAcessorio) {
                 Calendar calendar = Calendar.getInstance();
                 calendar.setTime(objAcessorio.getAno());
@@ -77,7 +80,7 @@ public class TelaAcessorio extends javax.swing.JInternalFrame {
         jButtonIncluir = new javax.swing.JButton();
         jButtonAlterar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTableServicos = new javax.swing.JTable();
+        jTableAcessorio = new javax.swing.JTable();
 
         jPanel1.setBackground(new java.awt.Color(153, 255, 153));
 
@@ -113,7 +116,6 @@ public class TelaAcessorio extends javax.swing.JInternalFrame {
 
         jLabel8.setBackground(new java.awt.Color(0, 0, 0));
         jLabel8.setFont(new java.awt.Font("SansSerif", 1, 18)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(0, 0, 0));
         jLabel8.setText("ID");
 
         jTextField1_descricao.setBackground(new java.awt.Color(204, 255, 204));
@@ -156,9 +158,9 @@ public class TelaAcessorio extends javax.swing.JInternalFrame {
             }
         });
 
-        jTableServicos.setBackground(new java.awt.Color(153, 255, 204));
-        jTableServicos.setFont(new java.awt.Font("Helvetica Neue", 3, 12)); // NOI18N
-        jTableServicos.setModel(new javax.swing.table.DefaultTableModel(
+        jTableAcessorio.setBackground(new java.awt.Color(153, 255, 204));
+        jTableAcessorio.setFont(new java.awt.Font("Helvetica Neue", 3, 12)); // NOI18N
+        jTableAcessorio.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
                 {null, null, null},
@@ -177,16 +179,16 @@ public class TelaAcessorio extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTableServicos.addMouseListener(new java.awt.event.MouseAdapter() {
+        jTableAcessorio.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTableServicosMouseClicked(evt);
+                jTableAcessorioMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(jTableServicos);
-        if (jTableServicos.getColumnModel().getColumnCount() > 0) {
-            jTableServicos.getColumnModel().getColumn(0).setMaxWidth(50);
-            jTableServicos.getColumnModel().getColumn(1).setMinWidth(90);
-            jTableServicos.getColumnModel().getColumn(1).setMaxWidth(90);
+        jScrollPane1.setViewportView(jTableAcessorio);
+        if (jTableAcessorio.getColumnModel().getColumnCount() > 0) {
+            jTableAcessorio.getColumnModel().getColumn(0).setMaxWidth(50);
+            jTableAcessorio.getColumnModel().getColumn(1).setMinWidth(90);
+            jTableAcessorio.getColumnModel().getColumn(1).setMaxWidth(90);
         }
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -372,10 +374,10 @@ public class TelaAcessorio extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1_descricaoKeyReleased
 
-    private void jTableServicosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableServicosMouseClicked
+    private void jTableAcessorioMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableAcessorioMouseClicked
         // TODO add your handling code here:
-        DefaultTableModel model = (DefaultTableModel)jTableServicos.getModel();
-        int selectedRowIndex = jTableServicos.getSelectedRow();
+        DefaultTableModel model = (DefaultTableModel)jTableAcessorio.getModel();
+        int selectedRowIndex = jTableAcessorio.getSelectedRow();
         
         jTextField1_ID.setText((String) model.getValueAt(selectedRowIndex, 0));
         Calendar calendar = Calendar.getInstance();
@@ -383,7 +385,7 @@ public class TelaAcessorio extends javax.swing.JInternalFrame {
         jYearChooser1_ano.setYear(calendar.get(Calendar.YEAR));
         
         jTextField1_descricao.setText((String) model.getValueAt(selectedRowIndex, 2));
-    }//GEN-LAST:event_jTableServicosMouseClicked
+    }//GEN-LAST:event_jTableAcessorioMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -396,7 +398,7 @@ public class TelaAcessorio extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTableServicos;
+    private javax.swing.JTable jTableAcessorio;
     private javax.swing.JTextField jTextField1_ID;
     private javax.swing.JTextField jTextField1_descricao;
     private com.toedter.calendar.JYearChooser jYearChooser1_ano;

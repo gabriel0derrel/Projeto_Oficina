@@ -88,33 +88,35 @@ public class TelaOrdemDeServico extends javax.swing.JInternalFrame {
         jTextField_ValorPago.setText("");
         jTextField_Diferenca.setText("");
     }
+    
     public void atualizarPrecosOrdem(int idOrdem){
-    try{
-        jTextField_ValorPago.setEnabled(false);
-            float valorTotal = 0;
-            itensPecaBD = new ItensPecaDAO();
-            List<ItensPeca> listaDePeca = null;
-            listaDePeca = itensPecaBD.listar();
-            for(int pos = 0; pos < listaDePeca.size(); pos++){
-                ItensPeca objItensPeca = listaDePeca.get(pos);
-                if(objItensPeca.getOrdem().getIdOrdem() == idOrdem){
-                    valorTotal += Float.parseFloat(objItensPeca.getValorTotal().replace("R$", "").replace(".", "").replace(",", ".").trim());
+        try{
+            jTextField_ValorPago.setEnabled(false);
+                float valorTotal = 0;
+                itensPecaBD = new ItensPecaDAO();
+                List<ItensPeca> listaDePeca = null;
+                listaDePeca = itensPecaBD.listar();
+                for(int pos = 0; pos < listaDePeca.size(); pos++){
+                    ItensPeca objItensPeca = listaDePeca.get(pos);
+                    if(objItensPeca.getOrdem().getIdOrdem() == idOrdem){
+                        valorTotal += Float.parseFloat(objItensPeca.getValorTotal().replace("R$", "").replace(".", "").replace(",", ".").trim());
+                    }
                 }
-            }
-            itensServicoBD = new ItensServicosDAO();
-            List<ItensServicos> listaDeServico = null;
-            listaDeServico = itensServicoBD.listar();
-            for(int pos = 0; pos < listaDeServico.size(); pos++){
-                ItensServicos objItensServico = listaDeServico.get(pos);
-                if(objItensServico.getOrdem().getIdOrdem() == idOrdem){
-                    valorTotal += Float.parseFloat(objItensServico.getPrecoFinal().replace("R$", "").replace(".", "").replace(",", ".").trim());
+                itensServicoBD = new ItensServicosDAO();
+                List<ItensServicos> listaDeServico = null;
+                listaDeServico = itensServicoBD.listar();
+                for(int pos = 0; pos < listaDeServico.size(); pos++){
+                    ItensServicos objItensServico = listaDeServico.get(pos);
+                    if(objItensServico.getOrdem().getIdOrdem() == idOrdem){
+                        valorTotal += Float.parseFloat(objItensServico.getPrecoFinal().replace("R$", "").replace(".", "").replace(",", ".").trim());
+                    }
                 }
-            }
-            jTextField_ValorTotal.setText(valorTotal+"");
-    } catch(Exception erro){
-        JOptionPane.showMessageDialog(rootPane, "Erro: " + erro.getMessage());
+                jTextField_ValorTotal.setText(valorTotal+"");
+        } catch(Exception erro){
+            JOptionPane.showMessageDialog(rootPane, "Erro: " + erro.getMessage());
+        }
     }
-    }
+    
     private void mostrarNaGrid(){
         try {
             jTextField_ValorPago.setEnabled(false);
@@ -371,12 +373,12 @@ public class TelaOrdemDeServico extends javax.swing.JInternalFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jTextField_dataInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel7))
-                                .addGap(25, 25, 25)
+                                    .addComponent(jLabel7)
+                                    .addComponent(jTextField_dataInicio, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel8)
-                                    .addComponent(jTextField_dataFim, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                                    .addComponent(jTextField_dataFim, javax.swing.GroupLayout.PREFERRED_SIZE, 106, javax.swing.GroupLayout.PREFERRED_SIZE)))
                             .addComponent(jButton_itensPeca)
                             .addComponent(jButton_itensServico)))
                     .addGroup(layout.createSequentialGroup()
@@ -495,57 +497,57 @@ public class TelaOrdemDeServico extends javax.swing.JInternalFrame {
             objeto.setVeiculo(new Veiculo(jComboBox_Veiculo.getSelectedItem().toString().split("-")[0]));
             
             if(!jTextField_ValorTotal.getText().replace(",", ".").matches("\\d+(\\.\\d{1,2})?")) throw new Exception("O Valor Total deve ser um número inteiro ou decimal com até duas casas decimais (ex.: 123 ou 123.45)");
-            objeto.setValorTotal(jTextField_ValorTotal.getText().replace(",", "."));
-            float valorTotal = Float.parseFloat(jTextField_ValorTotal.getText().replace(",", "."));
-            if(!jTextField_ValorPago.getText().replace(",", ".").matches("\\d+(\\.\\d{1,2})?")) throw new Exception("O Valor Pago deve ser um número inteiro ou decimal com até duas casas decimais (ex.: 123 ou 123.45)");
-            objeto.setValorPago(jTextField_ValorPago.getText().replace(",", "."));
-            float valorPago = Float.parseFloat(jTextField_ValorPago.getText().replace(",", "."));
-            float diferenca = valorTotal - valorPago;
-            if(diferenca < 0.0) throw new Exception("O Valor Pago não pode ser maior que o valor total");
-            objeto.setDiferenca(diferenca+"");
-            
-            objeto.setStatus(jComboBox_Status.getSelectedItem().toString());
-            ordemDB.alterar(objeto);
-            limparTela();
-            mostrarNaGrid();
-            return;
+                objeto.setValorTotal(jTextField_ValorTotal.getText().replace(",", "."));
+                float valorTotal = Float.parseFloat(jTextField_ValorTotal.getText().replace(",", "."));
+                if(!jTextField_ValorPago.getText().replace(",", ".").matches("\\d+(\\.\\d{1,2})?")) throw new Exception("O Valor Pago deve ser um número inteiro ou decimal com até duas casas decimais (ex.: 123 ou 123.45)");
+                objeto.setValorPago(jTextField_ValorPago.getText().replace(",", "."));
+                float valorPago = Float.parseFloat(jTextField_ValorPago.getText().replace(",", "."));
+                float diferenca = valorTotal - valorPago;
+                if(diferenca < 0.0) throw new Exception("O Valor Pago não pode ser maior que o valor total");
+                objeto.setDiferenca(diferenca+"");
+
+                objeto.setStatus(jComboBox_Status.getSelectedItem().toString());
+                ordemDB.alterar(objeto);
+                limparTela();
+                mostrarNaGrid();
+                return;
             }
             
             else if(jComboBox_Status.getSelectedItem().toString().compareTo("Orçamento")==0){
-            if(jTextField_ID.getText().isEmpty()) throw new Exception("ID vazio");
-            objeto.setIdOrdem(Integer.parseInt(jTextField_ID.getText()));
-            objeto.setDataInicio(objeto2.getDataInicio());
-            objeto.setDataFim(Calendar.getInstance().getTime());
-            objeto.setVeiculo(new Veiculo(jComboBox_Veiculo.getSelectedItem().toString().split("-")[0]));
-            if(!jTextField_ValorTotal.getText().replace(",", ".").matches("\\d+(\\.\\d{1,2})?")) throw new Exception("O Valor Total deve ser um número inteiro ou decimal com até duas casas decimais (ex.: 123 ou 123.45)");
-            objeto.setValorTotal(jTextField_ValorTotal.getText().replace(",", "."));
-            objeto.setValorPago(0+"");
-            objeto.setDiferenca(0+"");
-            
-            objeto.setStatus(jComboBox_Status.getSelectedItem().toString());
-            ordemDB.alterar(objeto);
-            limparTela();
-            mostrarNaGrid();
-            return;
+                if(jTextField_ID.getText().isEmpty()) throw new Exception("ID vazio");
+                objeto.setIdOrdem(Integer.parseInt(jTextField_ID.getText()));
+                objeto.setDataInicio(objeto2.getDataInicio());
+                objeto.setDataFim(Calendar.getInstance().getTime());
+                objeto.setVeiculo(new Veiculo(jComboBox_Veiculo.getSelectedItem().toString().split("-")[0]));
+                if(!jTextField_ValorTotal.getText().replace(",", ".").matches("\\d+(\\.\\d{1,2})?")) throw new Exception("O Valor Total deve ser um número inteiro ou decimal com até duas casas decimais (ex.: 123 ou 123.45)");
+                objeto.setValorTotal(jTextField_ValorTotal.getText().replace(",", "."));
+                objeto.setValorPago(0+"");
+                objeto.setDiferenca(0+"");
+
+                objeto.setStatus(jComboBox_Status.getSelectedItem().toString());
+                ordemDB.alterar(objeto);
+                limparTela();
+                mostrarNaGrid();
+                return;
             }
             
             else if(jComboBox_Status.getSelectedItem().toString().compareTo("Finalizado")==0){
-            if(jTextField_ID.getText().isEmpty()) throw new Exception("ID vazio");
-            objeto.setIdOrdem(Integer.parseInt(jTextField_ID.getText()));
-            objeto.setDataInicio(objeto2.getDataInicio());
-            objeto.setDataFim(Calendar.getInstance().getTime());
-            
-            objeto.setVeiculo(new Veiculo(jComboBox_Veiculo.getSelectedItem().toString().split("-")[0]));
-            
-            objeto.setValorTotal(jTextField_ValorTotal.getText().replace(",", "."));
-            objeto.setValorPago(jTextField_ValorPago.getText().replace(",", "."));
-            objeto.setDiferenca(jTextField_Diferenca.getText().replace(",", "."));
-            
-            objeto.setStatus(jComboBox_Status.getSelectedItem().toString());
-            ordemDB.alterar(objeto);
-            limparTela();
-            mostrarNaGrid();
-            return;
+                if(jTextField_ID.getText().isEmpty()) throw new Exception("ID vazio");
+                objeto.setIdOrdem(Integer.parseInt(jTextField_ID.getText()));
+                objeto.setDataInicio(objeto2.getDataInicio());
+                objeto.setDataFim(Calendar.getInstance().getTime());
+
+                objeto.setVeiculo(new Veiculo(jComboBox_Veiculo.getSelectedItem().toString().split("-")[0]));
+
+                objeto.setValorTotal(jTextField_ValorTotal.getText().replace(",", "."));
+                objeto.setValorPago(jTextField_ValorPago.getText().replace(",", "."));
+                objeto.setDiferenca(jTextField_Diferenca.getText().replace(",", "."));
+
+                objeto.setStatus(jComboBox_Status.getSelectedItem().toString());
+                ordemDB.alterar(objeto);
+                limparTela();
+                mostrarNaGrid();
+                return;
             }
             
             else{

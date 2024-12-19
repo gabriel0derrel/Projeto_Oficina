@@ -97,9 +97,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         jMenuItem_VeiculoAcessorio = new javax.swing.JMenuItem();
         jMenuItem_Proprietario = new javax.swing.JMenuItem();
         jMenu_PecasServicos = new javax.swing.JMenu();
-        jMenu_OpcoesPeca = new javax.swing.JMenu();
         jMenuItem_Peca = new javax.swing.JMenuItem();
-        jMenu_OpcoesServico = new javax.swing.JMenu();
         jMenuItem_Servico = new javax.swing.JMenuItem();
         jMenu_OrdemDeServico = new javax.swing.JMenu();
         jMenuFuncionario = new javax.swing.JMenu();
@@ -196,19 +194,13 @@ public class TelaPrincipal extends javax.swing.JFrame {
 
         jMenu_PecasServicos.setText("Peças e Serviços");
 
-        jMenu_OpcoesPeca.setText("Opções de Peça");
-
         jMenuItem_Peca.setText("Peça");
         jMenuItem_Peca.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jMenuItem_PecaActionPerformed(evt);
             }
         });
-        jMenu_OpcoesPeca.add(jMenuItem_Peca);
-
-        jMenu_PecasServicos.add(jMenu_OpcoesPeca);
-
-        jMenu_OpcoesServico.setText("Opções de Serviço");
+        jMenu_PecasServicos.add(jMenuItem_Peca);
 
         jMenuItem_Servico.setText("Serviço");
         jMenuItem_Servico.addActionListener(new java.awt.event.ActionListener() {
@@ -216,9 +208,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
                 jMenuItem_ServicoActionPerformed(evt);
             }
         });
-        jMenu_OpcoesServico.add(jMenuItem_Servico);
-
-        jMenu_PecasServicos.add(jMenu_OpcoesServico);
+        jMenu_PecasServicos.add(jMenuItem_Servico);
 
         jMenuBar_Opcoes.add(jMenu_PecasServicos);
 
@@ -425,7 +415,7 @@ public class TelaPrincipal extends javax.swing.JFrame {
         // Abrir parte do Serviço
         if(usuarioValidado){
             jDesktopPane_InputDeTela.removeAll();
-            TelaCadastroServicos telaServico = new TelaCadastroServicos();
+            TelaServico telaServico = new TelaServico();
             jDesktopPane_InputDeTela.add(telaServico);
             try {
                 telaServico.setVisible(true);
@@ -570,8 +560,6 @@ public class TelaPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenuItem jMenuItem_VeiculoAcessorio;
     private javax.swing.JMenu jMenu_ClientesVeiculos;
     private javax.swing.JMenu jMenu_Oficina;
-    private javax.swing.JMenu jMenu_OpcoesPeca;
-    private javax.swing.JMenu jMenu_OpcoesServico;
     private javax.swing.JMenu jMenu_OpcoesVeiculo;
     private javax.swing.JMenu jMenu_OrdemDeServico;
     private javax.swing.JMenu jMenu_PecasServicos;

@@ -33,27 +33,27 @@ public class TelaMarca extends javax.swing.JInternalFrame {
     }
     
     private void mostrarMarcaNaGrid(){
-    try {
-      List<Marca> listaDeMarca = new ArrayList<>();
-      listaDeMarca = null;
-      listaDeMarca = MarcaBD.listar();
-      DefaultTableModel model =  (DefaultTableModel) jTableServicos.getModel();
-      model.setNumRows(0); 
-      if(listaDeMarca.isEmpty()) 
-        throw new Exception("Lista de Marca BD Vazia");
-      for(int j = 0; j<2;j++){
-          jTableServicos.getColumnModel().getColumn(j);
-           }
-      for(int pos = 0; pos < listaDeMarca.size(); pos++){
-        Marca objMarca = listaDeMarca.get(pos);
-        String[] saida = new String[2];
-          saida[0] = objMarca.getIdMarca()+ "";
-          saida[1] = objMarca.getDescricao()+ "";
-        model.addRow(saida);
-      }  
-    } catch (Exception erro) {
-        JOptionPane.showMessageDialog(rootPane, erro.getMessage());
-      }    
+        try {
+            List<Marca> listaDeMarca = new ArrayList<>();
+            listaDeMarca = null;
+            listaDeMarca = MarcaBD.listar();
+            DefaultTableModel model =  (DefaultTableModel) jTableMarca.getModel();
+            model.setNumRows(0); 
+            if(listaDeMarca.isEmpty()) throw new Exception("Lista de Marca BD Vazia");
+            jTableMarca.setRowHeight(75);
+            for(int j = 0; j<2;j++){
+                jTableMarca.getColumnModel().getColumn(j).setCellRenderer(new MultiLineTableCellRenderer());
+            }
+            for(int pos = 0; pos < listaDeMarca.size(); pos++){
+                Marca objMarca = listaDeMarca.get(pos);
+                String[] saida = new String[2];
+                saida[0] = objMarca.getIdMarca()+ "";
+                saida[1] = objMarca.getDescricao()+ "";
+                model.addRow(saida);
+            }  
+        } catch (Exception erro) {
+            JOptionPane.showMessageDialog(rootPane, erro.getMessage());
+        }    
     }
 
     @SuppressWarnings("unchecked")
@@ -70,7 +70,7 @@ public class TelaMarca extends javax.swing.JInternalFrame {
         jButtonAlterar = new javax.swing.JButton();
         jButton_buscar = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTableServicos = new javax.swing.JTable();
+        jTableMarca = new javax.swing.JTable();
 
         jPanel1.setBackground(new java.awt.Color(153, 255, 153));
 
@@ -142,9 +142,9 @@ public class TelaMarca extends javax.swing.JInternalFrame {
             }
         });
 
-        jTableServicos.setBackground(new java.awt.Color(153, 255, 204));
-        jTableServicos.setFont(new java.awt.Font("Helvetica Neue", 3, 12)); // NOI18N
-        jTableServicos.setModel(new javax.swing.table.DefaultTableModel(
+        jTableMarca.setBackground(new java.awt.Color(153, 255, 204));
+        jTableMarca.setFont(new java.awt.Font("Helvetica Neue", 3, 12)); // NOI18N
+        jTableMarca.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null},
                 {null, null},
@@ -163,14 +163,14 @@ public class TelaMarca extends javax.swing.JInternalFrame {
                 return canEdit [columnIndex];
             }
         });
-        jTableServicos.addMouseListener(new java.awt.event.MouseAdapter() {
+        jTableMarca.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTableServicosMouseClicked(evt);
+                jTableMarcaMouseClicked(evt);
             }
         });
-        jScrollPane1.setViewportView(jTableServicos);
-        if (jTableServicos.getColumnModel().getColumnCount() > 0) {
-            jTableServicos.getColumnModel().getColumn(0).setMaxWidth(50);
+        jScrollPane1.setViewportView(jTableMarca);
+        if (jTableMarca.getColumnModel().getColumnCount() > 0) {
+            jTableMarca.getColumnModel().getColumn(0).setMaxWidth(50);
         }
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
@@ -309,14 +309,14 @@ public class TelaMarca extends javax.swing.JInternalFrame {
         // TODO add your handling code here:
     }//GEN-LAST:event_jTextField1_descricaoKeyReleased
 
-    private void jTableServicosMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableServicosMouseClicked
+    private void jTableMarcaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMarcaMouseClicked
         // TODO add your handling code here:
-        DefaultTableModel model = (DefaultTableModel)jTableServicos.getModel();
-        int selectedRowIndex = jTableServicos.getSelectedRow();
+        DefaultTableModel model = (DefaultTableModel)jTableMarca.getModel();
+        int selectedRowIndex = jTableMarca.getSelectedRow();
         
         jTextField1_ID.setText(model.getValueAt(selectedRowIndex, 0).toString());
         jTextField1_descricao.setText(model.getValueAt(selectedRowIndex, 1).toString());
-    }//GEN-LAST:event_jTableServicosMouseClicked
+    }//GEN-LAST:event_jTableMarcaMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -328,7 +328,7 @@ public class TelaMarca extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTableServicos;
+    private javax.swing.JTable jTableMarca;
     private javax.swing.JTextField jTextField1_ID;
     private javax.swing.JTextField jTextField1_descricao;
     // End of variables declaration//GEN-END:variables

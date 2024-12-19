@@ -44,9 +44,11 @@ public class TelaPeca extends javax.swing.JInternalFrame {
     if(listaDePeca != null){
     DefaultTableModel model =  (DefaultTableModel) jTable_Peca.getModel();
     model.setNumRows(0); 
-    if(listaDePeca.isEmpty()) 
-      throw new Exception("Lista de Peça BD Vazia");
- 
+    if(listaDePeca.isEmpty()) throw new Exception("Lista de Peça BD Vazia");
+    jTable_Peca.setRowHeight(75);
+    for(int j = 0; j<5;j++){
+        jTable_Peca.getColumnModel().getColumn(j).setCellRenderer(new MultiLineTableCellRenderer());
+    }
     for(int pos = 0; pos < listaDePeca.size(); pos++){
       Pecas objPeca = listaDePeca.get(pos);
       String[] saida = new String[5];

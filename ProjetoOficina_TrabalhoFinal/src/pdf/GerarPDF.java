@@ -136,7 +136,7 @@ public class GerarPDF {
             tabelaAcessorios.setSpacingAfter(10);
             tabelaAcessorios.setWidths(new int[]{1});
             for(int pos = 0; pos < listaDeAcessorio.size(); pos++){
-            tabelaAcessorios.addCell(new Phrase(listaDeAcessorio.get(pos).getDescricao(), fontTabela));
+                tabelaAcessorios.addCell(new Phrase(listaDeAcessorio.get(pos).getDescricao(), fontTabela));
             } 
             
             document.add(tabelaAcessorios);
@@ -157,10 +157,10 @@ public class GerarPDF {
             tabelaPecas.addCell(new Phrase("Vl Un", fontTabela));
             tabelaPecas.addCell(new Phrase("Total", fontTabela));
             for(int pos = 0; pos < listaDePecasOrdemAtual.size(); pos++){
-            tabelaPecas.addCell(new Phrase(listaDePecasOrdemAtual.get(pos).getPeca().getIdPeca()+"  "+listaDePecasOrdemAtual.get(pos).getPeca().getDescricaoPeca()+"    ("+listaDePecasOrdemAtual.get(pos).getPeca().getCodigoFabricante()+")", fontTexto));
-            tabelaPecas.addCell(new Phrase(listaDePecasOrdemAtual.get(pos).getQuantidade()+"", fontTexto));
-            tabelaPecas.addCell(new Phrase(listaDePecasOrdemAtual.get(pos).getValorUnitario(), fontTexto));
-            tabelaPecas.addCell(new Phrase(listaDePecasOrdemAtual.get(pos).getValorTotal()+"", fontTexto));
+                tabelaPecas.addCell(new Phrase(listaDePecasOrdemAtual.get(pos).getPeca().getIdPeca()+"  "+listaDePecasOrdemAtual.get(pos).getPeca().getDescricaoPeca()+"    ("+listaDePecasOrdemAtual.get(pos).getPeca().getCodigoFabricante()+")", fontTexto));
+                tabelaPecas.addCell(new Phrase(listaDePecasOrdemAtual.get(pos).getQuantidade()+"", fontTexto));
+                tabelaPecas.addCell(new Phrase(listaDePecasOrdemAtual.get(pos).getValorUnitario(), fontTexto));
+                tabelaPecas.addCell(new Phrase(listaDePecasOrdemAtual.get(pos).getValorTotal()+"", fontTexto));
             } 
 
             document.add(tabelaPecas);
@@ -179,12 +179,12 @@ public class GerarPDF {
             tabelaServicos.addCell(new Phrase("Total", fontTabela));
             
             for(int pos = 0; pos < listaDeServicoOrdemAtual.size(); pos++){
-            tabelaServicos.addCell(new Phrase(listaDeServicoOrdemAtual.get(pos).getServico().getDescricaoServico(), fontTexto));
-            tabelaServicos.addCell(new Phrase(listaDeServicoOrdemAtual.get(pos).getFuncionario().getNome(), fontTexto));
-            tabelaServicos.addCell(new Phrase(listaDeServicoOrdemAtual.get(pos).getOrdem().getDataInicio()+"", fontTexto));
-            tabelaServicos.addCell(new Phrase(listaDeServicoOrdemAtual.get(pos).getOrdem().getDataFim()+"", fontTexto));
-            tabelaServicos.addCell(new Phrase(listaDeServicoOrdemAtual.get(pos).getQuantidade()+"", fontTexto));
-            tabelaServicos.addCell(new Phrase(listaDeServicoOrdemAtual.get(pos).getPrecoFinal(), fontTexto));
+                tabelaServicos.addCell(new Phrase(listaDeServicoOrdemAtual.get(pos).getServico().getDescricaoServico(), fontTexto));
+                tabelaServicos.addCell(new Phrase(listaDeServicoOrdemAtual.get(pos).getFuncionario().getNome(), fontTexto));
+                tabelaServicos.addCell(new Phrase(listaDeServicoOrdemAtual.get(pos).getOrdem().getDataInicio()+"", fontTexto));
+                tabelaServicos.addCell(new Phrase(listaDeServicoOrdemAtual.get(pos).getOrdem().getDataFim()+"", fontTexto));
+                tabelaServicos.addCell(new Phrase(listaDeServicoOrdemAtual.get(pos).getQuantidade()+"", fontTexto));
+                tabelaServicos.addCell(new Phrase(listaDeServicoOrdemAtual.get(pos).getPrecoFinal(), fontTexto));
             }
             document.add(tabelaServicos);
 
