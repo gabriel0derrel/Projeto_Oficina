@@ -38,7 +38,7 @@ Antes de iniciar, certifique-se de ter instalado em sua máquina:
 
 ### ⚙️ Configuração do Banco de Dados
 1. Crie o banco de dados no PostgreSQL. O script necessário pode ser encontrado no arquivo:    
-   [OficinaDB.sql](https://github.com/Prizrak2/Projeto_Oficina/blob/main/OficinaDB.sql)
+   [OficinaDB.sql](https://github.com/Prizrak2/AutoManager/blob/main/OficinaDB.sql)
    
    Para criar manualmente, execute:
 
@@ -46,7 +46,7 @@ Antes de iniciar, certifique-se de ter instalado em sua máquina:
    CREATE DATABASE oficina;
 
 3. No código-fonte, localize o arquivo responsável pela conexão:    
-   [ConexaoBD.java](https://github.com/Prizrak2/Projeto_Oficina/blob/main/ProjetoOficina_TrabalhoFinal/src/conexao/ConexaoBD.java)
+   [ConexaoBD.java](https://github.com/Prizrak2/AutoManager/blob/main/ProjetoOficina_TrabalhoFinal/src/conexao/ConexaoBD.java)
    
    Edite os seguintes parâmetros:
 
