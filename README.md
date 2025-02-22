@@ -1,4 +1,4 @@
-# **AutoManager** 🚗
+# 🚗 **AutoManager**
 
 Este repositório contém um aplicativo desktop desenvolvido em **Java** com **PostgreSQL**, criado como projeto final da disciplina de **Projeto de Banco de Dados**. O sistema foi projetado para otimizar a gestão de oficinas mecânicas, permitindo o gerenciamento completo de ordens de serviço, clientes, veículos e serviços prestados.
 
@@ -80,7 +80,7 @@ Antes de iniciar, certifique-se de ter instalado em sua máquina:
 - O sistema foi desenvolvido para funcionar com os dados obtidos exclusivamente dos documentos em PDF fornecidos
 - Caso deseje modificar a estrutura do banco de dados, ajuste os scripts SQL e revise as conexões no código
 
-# Autores
+# 👥 Autores
 
 - [Gabriel Derrel](https://github.com/gabriel0derrel)
 - [Guilherme Ponciano Silva](https://github.com/Guilheme-collab)
