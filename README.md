@@ -82,5 +82,6 @@ Antes de iniciar, certifique-se de ter instalado em sua máquina:
 
 # Autores
 
-- [Lucas Pereira Nunes](https://github.com/Prizrak2)
 - [Gabriel Derrel](https://github.com/gabriel0derrel)
+- [Guilherme Ponciano Silva](https://github.com/Guilheme-collab)
+- [Lucas Pereira Nunes](https://github.com/Prizrak2)
