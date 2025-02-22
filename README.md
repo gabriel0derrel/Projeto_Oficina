@@ -1,8 +1,8 @@
 # **AutoManager** 🚗
 
-Este repositório contém um aplicativo desktop desenvolvido em Java com PostgreSQL, criado como projeto final da disciplina de **Projeto de Banco de Dados**. O sistema foi projetado para otimizar a gestão de oficinas mecânicas, permitindo o gerenciamento completo de ordens de serviço, clientes, veículos e serviços prestados.
+Este repositório contém um aplicativo desktop desenvolvido em **Java** com **PostgreSQL**, criado como projeto final da disciplina de **Projeto de Banco de Dados**. O sistema foi projetado para otimizar a gestão de oficinas mecânicas, permitindo o gerenciamento completo de ordens de serviço, clientes, veículos e serviços prestados.
 
-Este projeto foi desenvolvido a partir da análise de documentos em PDF anexados no primeira diretório do projeto e entrevistas realizadas com o professor responsável.
+Este projeto foi desenvolvido a partir da análise de documentos em **PDF** anexados no primeira diretório do projeto e entrevistas realizadas com o professor responsável.
 
 # ✨ Principais Funcionalidades
 
