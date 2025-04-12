@@ -1,18 +1,18 @@
-# 🚗 **AutoManager**
+# **AutoManager**
 
 Este repositório contém um aplicativo desktop desenvolvido em **Java** com **PostgreSQL**, criado como projeto final da disciplina de **Projeto de Banco de Dados**. O sistema foi projetado para otimizar a gestão de oficinas mecânicas, permitindo o gerenciamento completo de ordens de serviço, clientes, veículos e serviços prestados.
 
 Este projeto foi desenvolvido a partir da análise de documentos em **PDF** anexados no primeira diretório do projeto e entrevistas realizadas com o professor responsável.
 
-# ✨ Principais Funcionalidades
+# Principais Funcionalidades
 
-✅ Emissão de Ordens de Serviço – Geração e exportação de O.S em PDF    
-✅ Cadastro e Gerenciamento de Clientes – Adição, edição e consulta de clientes    
-✅ Gestão de Veículos – Registro de veículos e histórico de serviços    
-✅ Controle de Serviços – Listagem e detalhamento dos serviços prestados    
-✅ Autenticação de Usuários – Controle de acesso restrito para administradores    
+Emissão de Ordens de Serviço – Geração e exportação de O.S em PDF    
+Cadastro e Gerenciamento de Clientes – Adição, edição e consulta de clientes    
+Gestão de Veículos – Registro de veículos e histórico de serviços    
+Controle de Serviços – Listagem e detalhamento dos serviços prestados    
+Autenticação de Usuários – Controle de acesso restrito para administradores    
 
-# 🛠️ Tecnologias Utilizadas
+# Tecnologias Utilizadas
 
 O projeto foi desenvolvido com as seguintes tecnologias:
 
@@ -28,7 +28,7 @@ O projeto foi desenvolvido com as seguintes tecnologias:
 
 # Instalação e Configuração
 
-### 📥 Pré-requisitos
+### Pré-requisitos
 
 Antes de iniciar, certifique-se de ter instalado em sua máquina:
 
@@ -36,7 +36,7 @@ Antes de iniciar, certifique-se de ter instalado em sua máquina:
 - **PostgreSQL** (com um banco de dados configurado)
 - **Apache Ant**
 
-### ⚙️ Configuração do Banco de Dados
+### Configuração do Banco de Dados
 1. Crie o banco de dados no PostgreSQL. O script necessário pode ser encontrado no arquivo:    
    [OficinaDB.sql](https://github.com/Prizrak2/AutoManager/blob/main/OficinaDB.sql)
    
@@ -55,7 +55,7 @@ Antes de iniciar, certifique-se de ter instalado em sua máquina:
    String usuario = "seu_usuario";
    String senha = "sua_senha";
 
-### ▶️ Executando o Projeto
+### Executando o Projeto
 1. Clone o repositório:
 
    ```bash
@@ -76,7 +76,7 @@ Antes de iniciar, certifique-se de ter instalado em sua máquina:
    ```bash
    ant run
 
-# 📌 Observações
+# Observações
 - O sistema foi desenvolvido para funcionar com os dados obtidos exclusivamente dos documentos em PDF fornecidos
 - Caso deseje modificar a estrutura do banco de dados, ajuste os scripts SQL e revise as conexões no código
 
