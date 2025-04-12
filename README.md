@@ -6,11 +6,11 @@ Este projeto foi desenvolvido a partir da análise de documentos em **PDF** anex
 
 # Principais Funcionalidades
 
-Emissão de Ordens de Serviço – Geração e exportação de O.S em PDF    
-Cadastro e Gerenciamento de Clientes – Adição, edição e consulta de clientes    
-Gestão de Veículos – Registro de veículos e histórico de serviços    
-Controle de Serviços – Listagem e detalhamento dos serviços prestados    
-Autenticação de Usuários – Controle de acesso restrito para administradores    
+- Emissão de Ordens de Serviço – Geração e exportação de O.S em PDF    
+- Cadastro e Gerenciamento de Clientes – Adição, edição e consulta de clientes    
+- Gestão de Veículos – Registro de veículos e histórico de serviços    
+- Controle de Serviços – Listagem e detalhamento dos serviços prestados    
+- Autenticação de Usuários – Controle de acesso restrito para administradores    
 
 # Tecnologias Utilizadas
 
