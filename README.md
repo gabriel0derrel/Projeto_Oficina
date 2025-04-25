@@ -85,3 +85,8 @@ Antes de iniciar, certifique-se de ter instalado em sua máquina:
 - [Gabriel Derrel](https://github.com/gabriel0derrel)
 - [Guilherme Ponciano Silva](https://github.com/Guilheme-collab)
 - [Lucas Pereira Nunes](https://github.com/Prizrak2)
+
+# Imagens
+![Screenshot](https://github.com/user-attachments/assets/225d7360-3ee5-473a-be39-3dc1b06b28c0)
+![Screenshot](https://github.com/user-attachments/assets/aaef36ac-df52-4cee-836e-88368c2c7582)
+![Screenshot](https://github.com/user-attachments/assets/4d5ed59f-0654-4a0a-9e0b-38f6d748116e)
